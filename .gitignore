@@ -1,0 +1,6 @@
+.vs/
+*.sln
+Chatter/bin
+Chatter/obj
+Chatter.Tests/bin
+Chatter.Tests/obj
