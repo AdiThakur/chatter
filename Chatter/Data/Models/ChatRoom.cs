@@ -2,7 +2,9 @@
 {
     public class ChatRoom
     {
-        public long Id { get; set; }
+        public string Id { get; set; }
+
+        public string Description { get; set; } = string.Empty;
 
         public ICollection<User>? Users { get; set; }
 

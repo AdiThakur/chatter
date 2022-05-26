@@ -13,7 +13,7 @@ namespace Chatter.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Database=Chatter;Username=postgres;Password=postgres");
+            optionsBuilder.UseNpgsql("Host=localhost;Database=Chatter;Username=postgres;Password=postgres;Include Error Detail=true");
         }
     }
 }

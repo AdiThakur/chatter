@@ -13,7 +13,7 @@ namespace Chatter.Data.Repos
             await context.SaveChangesAsync();
         }
 
-        public Task<ChatRoom> GetChatRoomWithUsersAndMessagesAsync(long chatRoomId)
+        public Task<ChatRoom> GetChatRoomWithUsersAndMessagesAsync(string chatRoomId)
         {
             return context.ChatRooms
                 .Where(chatRoom => chatRoom.Id == chatRoomId)

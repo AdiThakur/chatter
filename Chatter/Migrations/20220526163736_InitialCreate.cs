@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -13,8 +14,8 @@ namespace Chatter.Migrations
                 name: "ChatRooms",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -38,7 +39,7 @@ namespace Chatter.Migrations
                 name: "ChatRoomUser",
                 columns: table => new
                 {
-                    ChatRoomsId = table.Column<long>(type: "bigint", nullable: false),
+                    ChatRoomsId = table.Column<string>(type: "text", nullable: false),
                     UsersId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -64,8 +65,9 @@ namespace Chatter.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    TimeStamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Content = table.Column<string>(type: "text", nullable: false),
-                    ChatRoomId = table.Column<long>(type: "bigint", nullable: false),
+                    ChatRoomId = table.Column<string>(type: "text", nullable: false),
                     AuthorId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
