@@ -1,18 +1,37 @@
 using Chatter.Data;
+using Chatter.Data.Repos;
 
-var builder = WebApplication.CreateBuilder(args);
+namespace Chatter
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+            // Add services to the container.
 
-builder.Services.AddControllers();
-builder.Services.AddDbContext<ChatterContext>();
+            builder.Services.AddControllers();
+            builder.Services.AddDbContext<ChatterContext>();
 
-var app = builder.Build();
+            RegisterRepos(builder.Services);
 
-// Configure the HTTP request pipeline.
+            var app = builder.Build();
 
-app.UseAuthorization();
+            // Configure the HTTP request pipeline.
 
-app.MapControllers();
+            app.UseAuthorization();
 
-app.Run();
+            app.MapControllers();
+
+            app.Run();
+        }
+
+        public static void RegisterRepos(IServiceCollection services)
+        {
+            services.AddScoped<ChatRoomsRepo>();
+            services.AddScoped<MessagesRepo>();
+            services.AddScoped<UsersRepo>();
+        }
+    }
+}

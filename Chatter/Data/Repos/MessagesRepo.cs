@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Chatter.Data.Repos
 {
-    public class MessageRepo : BaseRepo
+    public class MessagesRepo : BaseRepo
     {
-        public MessageRepo(ChatterContext context) : base(context) {}
+        public MessagesRepo(ChatterContext context) : base(context) {}
 
         public async Task AddMessageAsync(Message message)
         {
@@ -13,9 +13,9 @@ namespace Chatter.Data.Repos
             await context.SaveChangesAsync();
         }
 
-        public Task<Message> GetMessageAsync(long messageId)
+        public async Task<Message?> GetMessageAsync(long messageId)
         {
-            return context.Messages
+            return await context.Messages
                 .Where(message => message.Id == messageId)
                 .Include(message => message.ChatRoom)
                 .Include(message => message.Author)

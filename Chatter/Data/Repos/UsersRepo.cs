@@ -13,9 +13,9 @@ namespace Chatter.Data.Repos
             await context.SaveChangesAsync();
         }
 
-        public Task<User> GetUserWithChatRoomsAsync(long userId)
+        public async Task<User?> GetUserWithChatRoomsAsync(long userId)
         {
-            return context.Users
+            return await context.Users
                 .Where(u => u.Id == userId)
                 .Include(u => u.ChatRooms)
                 .FirstAsync<User>();
