@@ -3,25 +3,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Chatter.Data.Repos
 {
-    public class UsersRepo
+    public class UsersRepo : BaseRepo
     {
-        private readonly ChatterContext _context;
+        public UsersRepo(ChatterContext context) : base(context) {}
 
-        public UsersRepo(ChatterContext context)
+        public async Task AddUserAsync(User user)
         {
-            _context = context;
+            await context.Users.AddAsync(user);
+            await context.SaveChangesAsync();
         }
 
-        public async Task AddUser(User user)
+        public Task<User> GetUserWithChatRoomsAsync(long userId)
         {
-            await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
-        }
-
-        public Task<User> GetUserWithChatRooms(User user)
-        {
-            return _context.Users
-                .Where(u => u.Id == user.Id)
+            return context.Users
+                .Where(u => u.Id == userId)
                 .Include(u => u.ChatRooms)
                 .FirstAsync<User>();
         }
