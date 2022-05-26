@@ -5,9 +5,9 @@ namespace Chatter.Data.Repos
 {
     public class UsersRepo
     {
-        private readonly ChatRoomContext _context;
+        private readonly ChatterContext _context;
 
-        public UsersRepo(ChatRoomContext context)
+        public UsersRepo(ChatterContext context)
         {
             _context = context;
         }

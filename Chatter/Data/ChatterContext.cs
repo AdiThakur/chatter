@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Chatter.Data
 {
-    public class ChatRoomContext : DbContext
+    public class ChatterContext : DbContext
     {
         public DbSet<ChatRoom> ChatRooms { get; set; }
 
@@ -13,7 +13,7 @@ namespace Chatter.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Database=ChatRoom;Username=postgres;Password=postgres");
+            optionsBuilder.UseNpgsql("Host=localhost;Database=Chatter;Username=postgres;Password=postgres");
         }
     }
 }
