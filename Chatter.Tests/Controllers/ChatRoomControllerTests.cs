@@ -20,8 +20,7 @@ namespace Chatter.Tests.Controllers
 
         public ChatRoomControllerTests()
         {
-            _fixture = new Fixture()
-                .Customize(new AutoMoqCustomization());
+            _fixture = new Fixture().Customize(new AutoMoqCustomization());
             _fixture.OmitAutoProperties = true;
 
             _mockChatRoomsRepo = _fixture.Freeze<Mock<IChatRoomsRepo>>();
@@ -51,7 +50,7 @@ namespace Chatter.Tests.Controllers
             var chatRoomToAdd = new ChatRoom { Id = id };
 
             _mockChatRoomsRepo
-                .Setup(repo => repo.GetChatRoomAsync(It.Is<string>(newId => newId == id)))
+                .Setup(repo => repo.GetChatRoomAsync(id))
                 .ReturnsAsync(new ChatRoom { Id = id });
 
             // Act

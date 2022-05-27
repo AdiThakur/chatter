@@ -15,11 +15,11 @@ namespace Chatter.Data.Repos
 
     public class ChatRoomsRepo : BaseRepo, IChatRoomsRepo
     {
-        private readonly UsersRepo _usersRepo;
+        private readonly IUsersRepo _usersRepo;
 
         public ChatRoomsRepo(
             ChatterContext context,
-            UsersRepo usersRepo
+            IUsersRepo usersRepo
         ) : base(context)
         {
             _usersRepo = usersRepo;
@@ -39,7 +39,7 @@ namespace Chatter.Data.Repos
                 throw new ArgumentException($"ChatRoom {chatRoomId} does not exist");
             }
 
-            var userToAdd = await _usersRepo.GetUser(userToAddId);
+            var userToAdd = await _usersRepo.GetUserAsync(userToAddId);
             if (userToAdd == null)
             {
                 throw new ArgumentException($"ChatRoom {userToAddId} does not exist");

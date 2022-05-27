@@ -31,7 +31,7 @@ namespace Chatter
         {
             services.AddScoped<IChatRoomsRepo, ChatRoomsRepo>();
             services.AddScoped<MessagesRepo>();
-            services.AddScoped<UsersRepo>();
+            services.AddScoped<IUsersRepo, UsersRepo>();
         }
     }
 }

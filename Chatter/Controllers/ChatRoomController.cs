@@ -10,9 +10,8 @@ namespace Chatter.Controllers
     {
         private readonly IChatRoomsRepo _chatRoomsRepo;
 
-        public ChatRoomController(
-            IChatRoomsRepo chatRoomsRepo
-        ) {
+        public ChatRoomController(IChatRoomsRepo chatRoomsRepo)
+        {
             _chatRoomsRepo = chatRoomsRepo;
         }
 
