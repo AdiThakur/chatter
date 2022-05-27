@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Xunit;
 using AutoFixture;
 using AutoFixture.AutoMoq;
+using System.Collections.Generic;
 
 namespace Chatter.Tests.Controllers
 {
@@ -15,6 +16,7 @@ namespace Chatter.Tests.Controllers
         private readonly IFixture _fixture;
 
         private readonly Mock<IChatRoomsRepo> _mockChatRoomsRepo;
+        private readonly Mock<IUsersRepo> _mockUsersRepo;
 
         private readonly ChatRoomController _sut;
 
@@ -24,6 +26,7 @@ namespace Chatter.Tests.Controllers
             _fixture.OmitAutoProperties = true;
 
             _mockChatRoomsRepo = _fixture.Freeze<Mock<IChatRoomsRepo>>();
+            _mockUsersRepo = _fixture.Freeze<Mock<IUsersRepo>>();
 
             _sut = _fixture.Create<ChatRoomController>();
         }
@@ -76,23 +79,64 @@ namespace Chatter.Tests.Controllers
             Assert.IsType<OkResult>(actionResult);
         }
 
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData("123")]
-        [InlineData("1234567")]
-        public async Task AddUserToChatRoomAsync_chatRoomId_MustBeSixCharactersLong(string? id)
+        [Fact]
+        public async Task AddUserToChatRoomAsync_ChatRoomDoesNotExist_ReturnsBadRequest()
         {
-            var actionResult = await _sut.AddUserToChatRoomAsync(id, 123);
+            // Arrange
+            var chatRoomId = "123";
 
+            _mockChatRoomsRepo
+                .Setup(repo => repo.GetChatRoomAsync(chatRoomId))
+                .ReturnsAsync((ChatRoom?)null);
+
+            // Act
+            var actionResult = await _sut.AddUserToChatRoomAsync(chatRoomId, null);
+
+            // Assert
             Assert.IsType<BadRequestObjectResult>(actionResult);
         }
 
         [Fact]
-        public async Task AddUserToChatRoomAsync_NullUserToAddId_ReturnsBadRequest()
+        public async Task AddUserToChatRoomAsync_UserDoesNotExist_ReturnsBadRequest()
         {
-            var actionResult = await _sut.AddUserToChatRoomAsync("123456", null);
+            // Arrange
+            var userId = 123;
+            var userToAdd = new User { Id = userId };
 
+            _mockUsersRepo
+                .Setup(repo => repo.GetUserAsync(userId))
+                .ReturnsAsync((User?)null);
+
+            // Act
+            var actionResult = await _sut.AddUserToChatRoomAsync("123456", userToAdd);
+
+            // Assert
+            Assert.IsType<BadRequestObjectResult>(actionResult);
+        }
+
+        [Fact]
+        public async Task AddUserToChatRoomAsync_UserAlreadyInChatRoom_ReturnsBadRequest()
+        {
+            // Arrange
+            var userId = 123;
+            var userToAdd = new User { Id = userId };
+            var chatRoom = new ChatRoom
+            {
+                Id = "123456",
+                Users = new List<User> { { userToAdd } }
+            };
+
+            _mockChatRoomsRepo
+                .Setup(repo => repo.GetChatRoomAsync(chatRoom.Id))
+                .ReturnsAsync(chatRoom);
+            _mockUsersRepo
+                .Setup(repo => repo.GetUserAsync(userId))
+                .ReturnsAsync((User?)null);
+
+            // Act
+            var actionResult = await _sut.AddUserToChatRoomAsync(chatRoom.Id, userToAdd);
+
+            // Assert
             Assert.IsType<BadRequestObjectResult>(actionResult);
         }
     }
