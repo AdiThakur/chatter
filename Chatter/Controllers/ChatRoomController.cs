@@ -1,4 +1,5 @@
-﻿using Chatter.Data.Models;
+﻿using Chatter.Data;
+using Chatter.Data.Models;
 using Chatter.Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,15 +10,20 @@ namespace Chatter.Controllers
     public class ChatRoomController : ControllerBase
     {
         private readonly IChatRoomsRepo _chatRoomsRepo;
+        private readonly IUsersRepo _usersRepo;
 
-        public ChatRoomController(IChatRoomsRepo chatRoomsRepo)
+        public ChatRoomController(
+            IChatRoomsRepo chatRoomsRepo,
+            IUsersRepo usersRepo
+        )
         {
             _chatRoomsRepo = chatRoomsRepo;
+            _usersRepo = usersRepo;
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> CreateChatRoomAsync(ChatRoom chatRoomToAdd)
         {
             if (chatRoomToAdd == null ||
@@ -38,30 +44,33 @@ namespace Chatter.Controllers
         }
 
         [HttpPost("{chatRoomId}/user")]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> AddUserToChatRoomAsync([FromRoute] string? chatRoomId, long? userToAddId)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> AddUserToChatRoomAsync([FromRoute] string? chatRoomId, User? userToAdd)
         {
-            if (string.IsNullOrEmpty(chatRoomId) ||
-                chatRoomId.Length != ChatRoom.IdLength)
+            // Validate ChatRoom
+            var chatRoom = await _chatRoomsRepo.GetChatRoomAsync(chatRoomId);
+            if (chatRoom == null)
             {
-                return BadRequest("Id must be a 6 character string");
-            }
-            
-            if (userToAddId == null)
-            {
-                return BadRequest("User not specified");
+                return BadRequest("Invalid ChatRoom");
             }
 
-            try
+            // Validate User
+            var user = await _usersRepo.GetUserAsync(userToAdd?.Id);
+            if (user == null)
             {
-                await _chatRoomsRepo.AddUserToChatRoom(chatRoomId, userToAddId.Value);
-                return Ok();
+                return BadRequest("Invalid User");
             }
-            catch (ArgumentException argEx)
+
+            if (chatRoom.Users.Any(userInChatRoom => userInChatRoom.Id == user.Id))
             {
-                return BadRequest(argEx.Message);
+                // This probably shouldn't be a BadRequest; this error has to do with Business Logic
+                return BadRequest("User is already in ChatRoom");
             }
+
+            await _chatRoomsRepo.AddUserToChatRoom(chatRoom, user);
+
+            return Ok();
         }
 
         [HttpGet]
@@ -73,7 +82,8 @@ namespace Chatter.Controllers
 
         [HttpGet("{chatRoomId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ChatRoom?>> GetChatRoom([FromRoute] string? chatRoomId)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<ChatRoomModel?>> GetChatRoom([FromRoute] string? chatRoomId)
         {
             if (string.IsNullOrEmpty(chatRoomId) ||
                 chatRoomId.Length != ChatRoom.IdLength)
@@ -81,7 +91,9 @@ namespace Chatter.Controllers
                 return BadRequest("Id must be a 6 character string!");
             }
 
-            return await _chatRoomsRepo.GetChatRoomAsync(chatRoomId);
+            var chatRoom = await _chatRoomsRepo.GetChatRoomAsync(chatRoomId);
+
+            return Ok(chatRoom.ToModel());
         }
     }
 }

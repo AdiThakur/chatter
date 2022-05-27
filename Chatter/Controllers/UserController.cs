@@ -16,6 +16,8 @@ namespace Chatter.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<User?>> AddUserAync(User userToAdd)
         {
             if (string.IsNullOrEmpty(userToAdd.DisplayName))
@@ -34,15 +36,17 @@ namespace Chatter.Controllers
         }
 
         [HttpGet]
-        public async Task<List<User>> GetUsersAsync()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<User>>> GetUsersAsync()
         {
-            return await _usersRepo.GetUsersAsync();
+            return Ok(await _usersRepo.GetUsersAsync());
         }
 
         [HttpGet("{userId}")]
-        public async Task<User?> GetUserAsync([FromRoute] long userId)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<User?>> GetUserAsync([FromRoute] long userId)
         {
-            return await _usersRepo.GetUserAsync(userId);
+            return Ok(await _usersRepo.GetUserAsync(userId));
         }
     }
 }

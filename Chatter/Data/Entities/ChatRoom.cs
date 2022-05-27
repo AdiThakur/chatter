@@ -8,8 +8,8 @@
 
         public string Description { get; set; } = string.Empty;
 
-        public ICollection<User>? Users { get; set; }
+        public ICollection<User> Users { get; set; } = new List<User>();
 
-        public ICollection<Message>? Messages { get; set; }
+        public ICollection<Message> Messages { get; set; } = new List<Message>();
     }
 }
