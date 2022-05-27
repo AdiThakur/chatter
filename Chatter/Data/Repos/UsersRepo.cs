@@ -13,6 +13,13 @@ namespace Chatter.Data.Repos
             await context.SaveChangesAsync();
         }
 
+        public async Task<User?> GetUser(long userId)
+        {
+            return await context.Users
+               .Where(u => u.Id == userId)
+               .FirstAsync<User>(); ;
+        }
+
         public async Task<User?> GetUserWithChatRoomsAsync(long userId)
         {
             return await context.Users
