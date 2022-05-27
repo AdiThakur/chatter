@@ -3,7 +3,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Chatter.Data.Repos
 {
-    public class ChatRoomsRepo : BaseRepo
+    public interface IChatRoomsRepo
+    {
+        Task AddChatRoomAsync(ChatRoom chatRoom);
+        Task AddUserToChatRoom(string chatRoomId, long userToAddId);
+        Task<ChatRoom?> GetChatRoomAsync(string chatRoomId);
+        Task<List<ChatRoom>> GetChatRoomsAsync();
+        Task<ChatRoom?> GetChatRoomWithUsersAndMessagesAsync(string chatRoomId);
+        Task<ChatRoom?> GetChatRoomWithUsersAsync(string chatRoomId);
+    }
+
+    public class ChatRoomsRepo : BaseRepo, IChatRoomsRepo
     {
         private readonly UsersRepo _usersRepo;
 

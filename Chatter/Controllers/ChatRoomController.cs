@@ -8,10 +8,10 @@ namespace Chatter.Controllers
     [Route("api/[controller]")]
     public class ChatRoomController : ControllerBase
     {
-        private readonly ChatRoomsRepo _chatRoomsRepo;
+        private readonly IChatRoomsRepo _chatRoomsRepo;
 
         public ChatRoomController(
-            ChatRoomsRepo chatRoomsRepo
+            IChatRoomsRepo chatRoomsRepo
         ) {
             _chatRoomsRepo = chatRoomsRepo;
         }
@@ -43,7 +43,8 @@ namespace Chatter.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult> AddUserToChatRoomAsync([FromRoute] string? chatRoomId, long? userToAddId)
         {
-            if (string.IsNullOrEmpty(chatRoomId))
+            if (string.IsNullOrEmpty(chatRoomId) ||
+                chatRoomId.Length != ChatRoom.IdLength)
             {
                 return BadRequest("Id must be a 6 character string");
             }
@@ -75,7 +76,8 @@ namespace Chatter.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<ChatRoom?>> GetChatRoom([FromRoute] string? chatRoomId)
         {
-            if (string.IsNullOrEmpty(chatRoomId))
+            if (string.IsNullOrEmpty(chatRoomId) ||
+                chatRoomId.Length != ChatRoom.IdLength)
             {
                 return BadRequest("Id must be a 6 character string!");
             }

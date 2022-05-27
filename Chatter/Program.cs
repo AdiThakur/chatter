@@ -29,7 +29,7 @@ namespace Chatter
 
         public static void RegisterRepos(IServiceCollection services)
         {
-            services.AddScoped<ChatRoomsRepo>();
+            services.AddScoped<IChatRoomsRepo, ChatRoomsRepo>();
             services.AddScoped<MessagesRepo>();
             services.AddScoped<UsersRepo>();
         }
