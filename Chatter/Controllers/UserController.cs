@@ -1,4 +1,5 @@
-﻿using Chatter.Data.Models;
+﻿using Chatter.Data;
+using Chatter.Data.Models;
 using Chatter.Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +19,7 @@ namespace Chatter.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<User?>> AddUserAync(User userToAdd)
+        public async Task<ActionResult<UserModel?>> AddUserAync(User userToAdd)
         {
             if (string.IsNullOrEmpty(userToAdd.DisplayName))
             {
@@ -32,21 +33,25 @@ namespace Chatter.Controllers
             userToAdd.Id = 0;
             var createdUser = await _usersRepo.AddUserAsync(userToAdd);
 
-            return Ok(createdUser);
+            return Ok(createdUser.ToModel());
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<List<User>>> GetUsersAsync()
         {
-            return Ok(await _usersRepo.GetUsersAsync());
+            var users = await _usersRepo.GetUsersAsync();
+
+            return Ok(users.ToModels());
         }
 
         [HttpGet("{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<User?>> GetUserAsync([FromRoute] long userId)
+        public async Task<ActionResult<UserModel?>> GetUserAsync([FromRoute] long userId)
         {
-            return Ok(await _usersRepo.GetUserAsync(userId));
+            var user = await _usersRepo.GetUserAsync(userId);
+
+            return Ok(user.ToModel());
         }
     }
 }

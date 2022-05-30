@@ -37,7 +37,9 @@ namespace Chatter.Data.Repos
 
         public async Task<List<ChatRoom>> GetChatRoomsAsync()
         {
-            return await context.ChatRooms.ToListAsync();
+            return await context.ChatRooms
+                .Include(chatRoom => chatRoom.Users)
+                .ToListAsync();
         }
 
         public async Task<ChatRoom?> GetChatRoomAsync(string? chatRoomId)
