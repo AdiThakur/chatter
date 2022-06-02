@@ -28,13 +28,6 @@ namespace Chatter.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> CreateChatRoomAsync(ChatRoomModel chatRoomToAdd)
         {
-            if (chatRoomToAdd == null ||
-                string.IsNullOrEmpty(chatRoomToAdd.Id) ||
-                chatRoomToAdd.Id.Length != ChatRoom.IdLength)
-            {
-                return BadRequest("Id must be a 6 character string");
-            }
-
             if (await _chatRoomsRepo.GetChatRoomAsync(chatRoomToAdd.Id) != null)
             {
                 return BadRequest("Id must be unique");
@@ -95,12 +88,6 @@ namespace Chatter.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ChatRoomModel?>> GetChatRoom([FromRoute] string? chatRoomId)
         {
-            if (string.IsNullOrEmpty(chatRoomId) ||
-                chatRoomId.Length != ChatRoom.IdLength)
-            {
-                return BadRequest("Id must be a 6 character string!");
-            }
-
             var chatRoom = await _chatRoomsRepo.GetChatRoomAsync(chatRoomId);
 
             return Ok(chatRoom.ToModel());

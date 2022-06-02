@@ -31,12 +31,7 @@ namespace Chatter.Controllers
         [HttpPost]
         public async Task<ActionResult<UserModel?>> RegisterAsync(CredentialsModel credentials)
         {
-            if (string.IsNullOrEmpty(credentials.UserName) || string.IsNullOrEmpty(credentials.Password))
-            {
-                return BadRequest("Username and Password must be specified");
-            }
-
-            if ((await _usersRepo.GetUserAsync(credentials.UserName)) != null)
+            if ((await _usersRepo.GetUserAsync(credentials.Username)) != null)
             {
                 return BadRequest("Username is taken!");
             }
@@ -44,7 +39,7 @@ namespace Chatter.Controllers
             // Todo: Hash password before storing in DB
             var userToAdd = new User
             {
-                UserName = credentials.UserName,
+                Username = credentials.Username,
                 Password = credentials.Password
             };
             var addedUser = await _usersRepo.AddUserAsync(userToAdd);
@@ -58,7 +53,7 @@ namespace Chatter.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<string>> LoginAsync(CredentialsModel credentials)
         {
-            var user = await _usersRepo.GetUserAsync(credentials.UserName);
+            var user = await _usersRepo.GetUserAsync(credentials.Username);
             if (user == null)
             {
                 return NotFound("User not found");
@@ -73,7 +68,7 @@ namespace Chatter.Controllers
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.UserName)
+                new Claim(ClaimTypes.NameIdentifier, user.Username)
             };
 
             var token = new JwtSecurityToken(
