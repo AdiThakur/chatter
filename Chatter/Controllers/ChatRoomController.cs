@@ -24,7 +24,7 @@ namespace Chatter.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> CreateChatRoomAsync(ChatRoom chatRoomToAdd)
+        public async Task<ActionResult> CreateChatRoomAsync(ChatRoomModel chatRoomToAdd)
         {
             if (chatRoomToAdd == null ||
                 string.IsNullOrEmpty(chatRoomToAdd.Id) ||
@@ -38,7 +38,13 @@ namespace Chatter.Controllers
                 return BadRequest("Id must be unique");
             }
 
-            await _chatRoomsRepo.AddChatRoomAsync(chatRoomToAdd);
+            await _chatRoomsRepo.AddChatRoomAsync(
+                new ChatRoom
+                {
+                    Id = chatRoomToAdd.Id,
+                    Description = chatRoomToAdd.Description
+                }
+            );
 
             return Ok();
         }
@@ -46,7 +52,7 @@ namespace Chatter.Controllers
         [HttpPost("{chatRoomId}/user")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> AddUserToChatRoomAsync([FromRoute] string? chatRoomId, User? userToAdd)
+        public async Task<ActionResult> AddUserToChatRoomAsync([FromRoute] string? chatRoomId, UserModel? userToAdd)
         {
             // Validate ChatRoom
             var chatRoom = await _chatRoomsRepo.GetChatRoomAsync(chatRoomId);

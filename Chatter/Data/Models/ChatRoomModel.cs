@@ -1,12 +1,17 @@
-﻿namespace Chatter.Data.Models
+﻿using System.Text.Json.Serialization;
+
+namespace Chatter.Data.Models
 {
     public class ChatRoomModel
     {
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
-        public string Description { get; set; } = string.Empty;
+        public string? Description { get; set; } = string.Empty;
 
-        public ICollection<UserModel> Users { get; set; }
+        public ICollection<UserModel>? Users { get; set; }
+
+        [JsonConstructor]
+        public ChatRoomModel() { }
 
         public ChatRoomModel(ChatRoom chatRoomEntity)
         {

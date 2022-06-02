@@ -38,7 +38,7 @@ namespace Chatter.Tests.Controllers
         [InlineData("1234567")]
         public async Task CreateChatRoomAsync_chatRoomToAdd_MustHaveASixCharacterId(string? id)
         {
-            var chatRoomToAdd = new ChatRoom { Id = id };
+            var chatRoomToAdd = new ChatRoomModel { Id = id };
 
             var actionResult = await _sut.CreateChatRoomAsync(chatRoomToAdd);
 
@@ -50,7 +50,7 @@ namespace Chatter.Tests.Controllers
         {
             // Arrange
             var id = "123456";
-            var chatRoomToAdd = new ChatRoom { Id = id };
+            var chatRoomToAdd = new ChatRoomModel { Id = id };
 
             _mockChatRoomsRepo
                 .Setup(repo => repo.GetChatRoomAsync(id))
@@ -66,7 +66,7 @@ namespace Chatter.Tests.Controllers
         public async Task CreateChatRoomAsync_ValidId_ReturnsOk()
         {
             // Arrange
-            var chatRoomToAdd = new ChatRoom { Id = "123456" };
+            var chatRoomToAdd = new ChatRoomModel { Id = "123456" };
 
             _mockChatRoomsRepo
                 .Setup(repo => repo.GetChatRoomAsync(It.IsAny<string>()))
@@ -101,7 +101,7 @@ namespace Chatter.Tests.Controllers
         {
             // Arrange
             var userId = 123;
-            var userToAdd = new User { Id = userId };
+            var userToAdd = new UserModel { Id = userId };
 
             _mockUsersRepo
                 .Setup(repo => repo.GetUserAsync(userId))
@@ -119,11 +119,11 @@ namespace Chatter.Tests.Controllers
         {
             // Arrange
             var userId = 123;
-            var userToAdd = new User { Id = userId };
+            var userToAdd = new UserModel { Id = userId };
             var chatRoom = new ChatRoom
             {
                 Id = "123456",
-                Users = new List<User> { { userToAdd } }
+                Users = new List<User> { new User { Id = userId } }
             };
 
             _mockChatRoomsRepo
