@@ -8,7 +8,7 @@ namespace Chatter.Data.Repos
         Task<User?> AddUserAsync(User user);
         Task<List<User>> GetUsersAsync();
         Task<User?> GetUserAsync(long? userId);
-        Task<User?> GetUserAsync(string displayName);
+        Task<User?> GetUserAsync(string? displayName);
         Task<User?> GetUserWithChatRoomsAsync(long userId);
     }
 
@@ -40,8 +40,13 @@ namespace Chatter.Data.Repos
                .FirstOrDefaultAsync();
         }
 
-        public async Task<User?> GetUserAsync(string displayName)
+        public async Task<User?> GetUserAsync(string? displayName)
         {
+            if (displayName == null)
+            {
+                return null;
+            }
+
             return await context.Users
                .Where(u => u.UserName == displayName)
                .FirstOrDefaultAsync();

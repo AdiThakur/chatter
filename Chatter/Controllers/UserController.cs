@@ -3,23 +3,33 @@ using Chatter.Data.Models;
 using Chatter.Data.Repos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace Chatter.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
+        private readonly IConfiguration _config;
         private readonly IUsersRepo _usersRepo;
 
-        public UserController(IUsersRepo usersRepo)
+        public UserController(
+            IConfiguration config,
+            IUsersRepo usersRepo
+        )
         {
+            _config = config;
             _usersRepo = usersRepo;
         }
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<ActionResult<UserModel?>> RegisterAsync(LoginModel credentials)
+        public async Task<ActionResult<UserModel?>> RegisterAsync(CredentialsModel credentials)
         {
             if (string.IsNullOrEmpty(credentials.UserName) || string.IsNullOrEmpty(credentials.Password))
             {
@@ -40,6 +50,41 @@ namespace Chatter.Controllers
             var addedUser = await _usersRepo.AddUserAsync(userToAdd);
 
             return Ok(addedUser.ToModel());
+        }
+
+        [AllowAnonymous]
+        [HttpPost("login")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<string>> LoginAsync(CredentialsModel credentials)
+        {
+            var user = await _usersRepo.GetUserAsync(credentials.UserName);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            if (credentials.Password != user.Password)
+            {
+                return BadRequest("Incorrect Password");
+            }
+
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.UserName)
+            };
+
+            var token = new JwtSecurityToken(
+                _config["Jwt:Issuer"],
+                _config["Jwt:Audience"],
+                claims,
+                expires: DateTime.Now.AddMinutes(15),
+                signingCredentials: signingCredentials
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         [HttpGet]

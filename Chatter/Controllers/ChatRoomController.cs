@@ -1,10 +1,12 @@
 ﻿using Chatter.Data;
 using Chatter.Data.Models;
 using Chatter.Data.Repos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Chatter.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class ChatRoomController : ControllerBase

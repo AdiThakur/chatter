@@ -1,6 +1,6 @@
 ﻿namespace Chatter.Data.Models
 {
-    public class LoginModel
+    public class CredentialsModel
     {
         public string? UserName { get; set; }
 

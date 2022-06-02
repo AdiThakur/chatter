@@ -1,5 +1,8 @@
 using Chatter.Data;
 using Chatter.Data.Repos;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Chatter
 {
@@ -13,6 +16,24 @@ namespace Chatter
 
             builder.Services.AddControllers();
             builder.Services.AddDbContext<ChatterContext>();
+            builder.Services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateLifetime = true,
+
+                        ValidateIssuer = true,
+                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+
+                        ValidateAudience = true,
+                        ValidAudience = builder.Configuration["Jwt:Audience"],
+
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+                    };
+                });
 
             RegisterRepos(builder.Services);
 
@@ -20,6 +41,7 @@ namespace Chatter
 
             // Configure the HTTP request pipeline.
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
@@ -37,8 +59,8 @@ namespace Chatter
 }
 
 // TODO
-// 1. Add MessageController
-// 2. Add tests for MessageController
-// 3. Update all of the controllers to ensure that their actions accept and return models, and not entities
-// 4. Need to introduce a layer to house all of the business logic. Currently, the controllers are responsible for this.
+// - Add MessageController
+// - Add tests for MessageController
+// - Update all of the controllers to ensure that their actions accept and return models, and not entities
+// - Need to introduce a layer to house all of the business logic. Currently, the controllers are responsible for this.
 //    I want my controllers to be slim, and only reponsible for API related tasks, such as enforcing authentication and authorization.
