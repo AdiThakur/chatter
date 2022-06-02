@@ -31,54 +31,31 @@ namespace Chatter.Tests.Controllers
         [Theory]
         [InlineData(null)]
         [InlineData("")]
-        public async Task AddUserAsync_InvalidDisplayName_ReturnsBadRequest(string? displayName)
+        public async Task RegisterAsync_InvalidUserName_ReturnsBadRequest(string? userName)
         {
-            var userToAdd = new User { DisplayName = displayName };
+            var credentials = new LoginModel { UserName = userName, Password = "Password" };
 
-            var actionResult = await _sut.AddUserAync(userToAdd);
+            var actionResult = await _sut.RegisterAsync(credentials);
 
             Assert.IsType<BadRequestObjectResult>(actionResult.Result);
         }
 
         [Fact]
-        public async Task AddUserAsync_ExistingDisplayName_ReturnsBadRequest()
+        public async Task RegisterAsync_ExistingUserName_ReturnsBadRequest()
         {
             // Arrange
-            var displayName = "DisplayName";
-            var userToAdd = new User { DisplayName = displayName };
+            var userName = "Username";
+            var credentials = new LoginModel { UserName = userName, Password = "Password" };
 
             _mockUsersRepo
-                .Setup(repo => repo.GetUserAsync(displayName))
-                .ReturnsAsync(new User { DisplayName = displayName });
+                .Setup(repo => repo.GetUserAsync(userName))
+                .ReturnsAsync(new User { UserName = userName });
             
             // Act
-            var actionResult = await _sut.AddUserAync(userToAdd);
+            var actionResult = await _sut.RegisterAsync(credentials);
 
             // Assert
             Assert.IsType<BadRequestObjectResult>(actionResult.Result);
-        }
-
-        [Fact]
-        public async Task AddUserAsync_NewDisplayName_ResetsId()
-        {
-            // Arrange
-            var userToAdd = new User
-            {
-                Id = 10,
-                DisplayName = "DisplayName"
-            };
-
-            _mockUsersRepo
-                .Setup(repo => repo.GetUserAsync(It.IsAny<string>()))
-                .ReturnsAsync((User?)null);
-
-            // Act
-            var actionResult = await _sut.AddUserAync(userToAdd);
-
-            // Assert
-            _mockUsersRepo
-                .Verify(repo => repo.AddUserAsync(It.Is<User>(u => u.Id == 0)));
-            Assert.IsType<OkObjectResult>(actionResult.Result);
         }
     }
 }

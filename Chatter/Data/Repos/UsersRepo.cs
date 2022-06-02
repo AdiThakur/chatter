@@ -43,7 +43,7 @@ namespace Chatter.Data.Repos
         public async Task<User?> GetUserAsync(string displayName)
         {
             return await context.Users
-               .Where(u => u.DisplayName == displayName)
+               .Where(u => u.UserName == displayName)
                .FirstOrDefaultAsync();
         }
 

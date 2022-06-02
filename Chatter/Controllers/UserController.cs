@@ -1,6 +1,7 @@
 ﻿using Chatter.Data;
 using Chatter.Data.Models;
 using Chatter.Data.Repos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Chatter.Controllers
@@ -16,24 +17,29 @@ namespace Chatter.Controllers
             _usersRepo = usersRepo;
         }
 
+        [AllowAnonymous]
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<UserModel?>> AddUserAync(User userToAdd)
+        public async Task<ActionResult<UserModel?>> RegisterAsync(LoginModel credentials)
         {
-            if (string.IsNullOrEmpty(userToAdd.DisplayName))
+            if (string.IsNullOrEmpty(credentials.UserName) || string.IsNullOrEmpty(credentials.Password))
             {
-                return BadRequest("DisplayName cannot be empty");
-            }
-            if (await _usersRepo.GetUserAsync(userToAdd.DisplayName) != null)
-            {
-                return BadRequest("Please select a different DisplayName");
+                return BadRequest("Username and Password must be specified");
             }
 
-            userToAdd.Id = 0;
-            var createdUser = await _usersRepo.AddUserAsync(userToAdd);
+            if ((await _usersRepo.GetUserAsync(credentials.UserName)) != null)
+            {
+                return BadRequest("Username is taken!");
+            }
 
-            return Ok(createdUser.ToModel());
+            // Todo: Hash password before storing in DB
+            var userToAdd = new User
+            {
+                UserName = credentials.UserName,
+                Password = credentials.Password
+            };
+            var addedUser = await _usersRepo.AddUserAsync(userToAdd);
+
+            return Ok(addedUser.ToModel());
         }
 
         [HttpGet]

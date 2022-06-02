@@ -4,14 +4,14 @@
     {
         public long Id { get; set; }
 
-        public string DisplayName { get; set; }
+        public string UserName { get; set; }
 
         public ICollection<string> ChatRooms { get; set; }
 
         public UserModel(User userEntity)
         {
             Id = userEntity.Id;
-            DisplayName = userEntity.DisplayName;
+            UserName = userEntity.UserName;
             ChatRooms = userEntity.ChatRooms.Select(chatRoomEntity => chatRoomEntity.Id).ToList();
         }
     }
