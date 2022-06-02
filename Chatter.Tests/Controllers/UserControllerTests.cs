@@ -33,7 +33,7 @@ namespace Chatter.Tests.Controllers
         [InlineData("")]
         public async Task RegisterAsync_InvalidUserName_ReturnsBadRequest(string? userName)
         {
-            var credentials = new CredentialsModel { UserName = userName, Password = "Password" };
+            var credentials = new CredentialsModel { Username = userName, Password = "Password" };
 
             var actionResult = await _sut.RegisterAsync(credentials);
 
@@ -45,11 +45,11 @@ namespace Chatter.Tests.Controllers
         {
             // Arrange
             var userName = "Username";
-            var credentials = new CredentialsModel { UserName = userName, Password = "Password" };
+            var credentials = new CredentialsModel { Username = userName, Password = "Password" };
 
             _mockUsersRepo
                 .Setup(repo => repo.GetUserAsync(userName))
-                .ReturnsAsync(new User { UserName = userName });
+                .ReturnsAsync(new User { Username = userName });
             
             // Act
             var actionResult = await _sut.RegisterAsync(credentials);

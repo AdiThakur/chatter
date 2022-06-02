@@ -48,7 +48,7 @@ namespace Chatter.Data.Repos
             }
 
             return await context.Users
-               .Where(u => u.UserName == displayName)
+               .Where(u => u.Username == displayName)
                .FirstOrDefaultAsync();
         }
 

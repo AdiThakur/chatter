@@ -1,9 +1,21 @@
-﻿namespace Chatter.Data.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Chatter.Data.Models
 {
     public class CredentialsModel
     {
-        public string? UserName { get; set; }
+        [MinLength(5)]
+        [MaxLength(20)]
+        public string Username { get; set; }
 
-        public string? Password { get; set; }
+        [MinLength(15)]
+        [MaxLength(30)]
+        public string Password { get; set; }
+
+        public CredentialsModel(string username, string password)
+        {
+            Username = username;
+            Password = password;
+        }
     }
 }

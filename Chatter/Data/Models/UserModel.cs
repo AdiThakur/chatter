@@ -4,20 +4,31 @@ namespace Chatter.Data.Models
 {
     public class UserModel
     {
-        public long? Id { get; set; }
+        public long Id { get; set; }
 
-        public string? UserName { get; set; }
+        public string Username { get; set; }
 
         public ICollection<string>? ChatRooms { get; set; }
 
         [JsonConstructor]
-        public UserModel() {}
+        public UserModel(
+            long id,
+            string username,
+            ICollection<string>? chatRooms
+        )
+        {
+            Id = id;
+            Username = username;
+            ChatRooms = chatRooms;
+        }
 
         public UserModel(User userEntity)
         {
             Id = userEntity.Id;
-            UserName = userEntity.UserName;
-            ChatRooms = userEntity.ChatRooms.Select(chatRoomEntity => chatRoomEntity.Id).ToList();
+            Username = userEntity.Username;
+            ChatRooms = userEntity.ChatRooms
+                .Select(chatRoomEntity => chatRoomEntity.Id)
+                .ToList();
         }
     }
 }
