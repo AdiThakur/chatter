@@ -1,7 +1,6 @@
 ﻿using Chatter.Data;
-using Chatter.Data.Entities;
 using Chatter.Data.Models;
-using Chatter.Data.Repos;
+using Chatter.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,65 +11,28 @@ namespace Chatter.Controllers
     [Route("api/[controller]")]
     public class ChatRoomController : ControllerBase
     {
-        private readonly IChatRoomsRepo _chatRoomsRepo;
-        private readonly IUsersRepo _usersRepo;
+        private readonly IChatRoomService _chatRoomService;
 
-        public ChatRoomController(
-            IChatRoomsRepo chatRoomsRepo,
-            IUsersRepo usersRepo
-        )
+        public ChatRoomController(IChatRoomService chatRoomService)
         {
-            _chatRoomsRepo = chatRoomsRepo;
-            _usersRepo = usersRepo;
+            _chatRoomService = chatRoomService;
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> CreateChatRoomAsync(ChatRoomModel chatRoomToAdd)
         {
-            if (await _chatRoomsRepo.GetChatRoomAsync(chatRoomToAdd.Id) != null)
-            {
-                return BadRequest("Id must be unique");
-            }
-
-            await _chatRoomsRepo.AddChatRoomAsync(
-                new ChatRoom
-                {
-                    Id = chatRoomToAdd.Id,
-                    Description = chatRoomToAdd.Description
-                }
+            await _chatRoomService.CreateChatRoomAsync(
+                chatRoomToAdd.Id,
+                chatRoomToAdd.Description
             );
 
             return Ok();
         }
 
         [HttpPost("{chatRoomId}/user")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> AddUserToChatRoomAsync([FromRoute] string? chatRoomId, UserModel? userToAdd)
+        public async Task<ActionResult> AddUserToChatRoomAsync([FromRoute] string chatRoomId, UserModel userToAdd)
         {
-            // Validate ChatRoom
-            var chatRoom = await _chatRoomsRepo.GetChatRoomAsync(chatRoomId);
-            if (chatRoom == null)
-            {
-                return BadRequest("Invalid ChatRoom");
-            }
-
-            // Validate User
-            var user = await _usersRepo.GetUserAsync(userToAdd?.Id);
-            if (user == null)
-            {
-                return BadRequest("Invalid User");
-            }
-
-            if (chatRoom.Users.Any(userInChatRoom => userInChatRoom.Id == user.Id))
-            {
-                // This probably shouldn't be a BadRequest; this error has to do with Business Logic
-                return BadRequest("User is already in ChatRoom");
-            }
-
-            await _chatRoomsRepo.AddUserToChatRoom(chatRoom, user);
+            await _chatRoomService.AddUserToChatRoomAsync(chatRoomId, userToAdd.Id);
 
             return Ok();
         }
@@ -79,17 +41,15 @@ namespace Chatter.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<List<ChatRoomModel>>> GetChatRooms()
         {
-            var chatRooms = await _chatRoomsRepo.GetChatRoomsAsync();
+            var chatRooms = await _chatRoomService.GetChatRoomsAsync();
 
             return Ok(chatRooms.ToModels());
         }
 
         [HttpGet("{chatRoomId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<ChatRoomModel?>> GetChatRoom([FromRoute] string? chatRoomId)
+        public async Task<ActionResult<ChatRoomModel?>> GetChatRoom([FromRoute] string chatRoomId)
         {
-            var chatRoom = await _chatRoomsRepo.GetChatRoomAsync(chatRoomId);
+            var chatRoom = await _chatRoomService.GetChatRoomAsync(chatRoomId);
 
             return Ok(chatRoom.ToModel());
         }

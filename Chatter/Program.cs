@@ -54,11 +54,11 @@ namespace Chatter
                     if (contextFeature != null &&
                         contextFeature.Error is UserException)
                     {
-                        var error = contextFeature.Error as UserException;
+                        var error = (contextFeature.Error as UserException)!;
                         context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                         context.Response.ContentType = "application/json";
                         await context.Response.WriteAsJsonAsync(
-                            new ErrorDetails(error.Title, error.Message)
+                            new ErrorDetails(error.Title, error.Description)
                         );
                     }
                 });
@@ -81,7 +81,9 @@ namespace Chatter
 
         public static void RegisterServices(IServiceCollection services)
         {
+            // TODO: Want these to be Singletons, but they're lightweight and stateless, so Scoped shouldn't be too bad for now
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IChatRoomService, ChatRoomService>();
         }
     }
 }
@@ -89,6 +91,4 @@ namespace Chatter
 // TODO
 // - Add MessageController
 // - Add tests for MessageController
-// - Update all of the controllers to ensure that their actions accept and return models, and not entities
-// - Need to introduce a layer to house all of the business logic. Currently, the controllers are responsible for this.
-//    I want my controllers to be slim, and only reponsible for API related tasks, such as enforcing authentication and authorization.
+// - Cleanup Program.cs
