@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Chatter.Data.Entities;
+using System.Text.Json.Serialization;
 
 namespace Chatter.Data.Models
 {

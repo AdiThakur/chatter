@@ -1,4 +1,5 @@
 ﻿using Chatter.Data;
+using Chatter.Data.Entities;
 using Chatter.Data.Models;
 using Chatter.Data.Repos;
 using Microsoft.AspNetCore.Authorization;

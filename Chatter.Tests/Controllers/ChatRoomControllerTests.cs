@@ -1,5 +1,5 @@
 ﻿using Chatter.Controllers;
-using Chatter.Data.Models;
+using Chatter.Data.Entities;
 using Chatter.Data.Repos;
 using Moq;
 using Microsoft.AspNetCore.Mvc;

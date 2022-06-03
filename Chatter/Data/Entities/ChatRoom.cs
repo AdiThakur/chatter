@@ -1,4 +1,4 @@
-﻿namespace Chatter.Data.Models
+﻿namespace Chatter.Data.Entities
 {
     public class ChatRoom
     {

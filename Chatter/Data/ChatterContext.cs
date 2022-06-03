@@ -1,4 +1,4 @@
-﻿using Chatter.Data.Models;
+﻿using Chatter.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Chatter.Data

@@ -1,7 +1,7 @@
 ﻿using AutoFixture;
 using AutoFixture.AutoMoq;
 using Chatter.Controllers;
-using Chatter.Data.Models;
+using Chatter.Data.Entities;
 using Chatter.Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Moq;

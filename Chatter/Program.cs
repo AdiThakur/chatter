@@ -1,6 +1,8 @@
 using Chatter.Data;
+using Chatter.Data.Models;
 using Chatter.Data.Repos;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -40,6 +42,25 @@ namespace Chatter
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
+
+            app.UseExceptionHandler(options =>
+            {
+                options.Run(async (context) =>
+                {
+                    var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+
+                    if (contextFeature != null &&
+                        contextFeature.Error is UserException)
+                    {
+                        var error = contextFeature.Error as UserException;
+                        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                        context.Response.ContentType = "application/json";
+                        await context.Response.WriteAsJsonAsync(
+                            new ErrorDetails(error.Title, error.Message)
+                        );
+                    }
+                });
+            });
 
             app.UseAuthentication();
             app.UseAuthorization();
