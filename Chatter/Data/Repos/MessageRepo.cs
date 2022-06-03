@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Chatter.Data.Repos
 {
-    public class MessagesRepo : BaseRepo
+    public class MessageRepo : BaseRepo
     {
-        public MessagesRepo(ChatterContext context) : base(context) {}
+        public MessageRepo(ChatterContext context) : base(context) {}
 
         public async Task AddMessageAsync(Message message)
         {

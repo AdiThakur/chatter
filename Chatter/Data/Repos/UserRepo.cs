@@ -12,9 +12,9 @@ namespace Chatter.Data.Repos
         Task<User?> GetUserWithChatRoomsAsync(long userId);
     }
 
-    public class UsersRepo : BaseRepo, IUsersRepo
+    public class UserRepo : BaseRepo, IUsersRepo
     {
-        public UsersRepo(ChatterContext context) : base(context) { }
+        public UserRepo(ChatterContext context) : base(context) { }
 
         public async Task<User?> AddUserAsync(User user)
         {

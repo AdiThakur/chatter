@@ -11,11 +11,11 @@ namespace Chatter.Data.Repos
         Task<ChatRoom?> GetChatRoomAsync(string? chatRoomId);
     }
 
-    public class ChatRoomsRepo : BaseRepo, IChatRoomsRepo
+    public class ChatRoomRepo : BaseRepo, IChatRoomsRepo
     {
         private readonly IUsersRepo _usersRepo;
 
-        public ChatRoomsRepo(
+        public ChatRoomRepo(
             ChatterContext context,
             IUsersRepo usersRepo
         ) : base(context)

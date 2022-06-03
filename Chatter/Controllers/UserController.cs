@@ -1,13 +1,9 @@
 ﻿using Chatter.Data;
 using Chatter.Data.Entities;
 using Chatter.Data.Models;
-using Chatter.Data.Repos;
+using Chatter.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace Chatter.Controllers
 {
@@ -16,78 +12,42 @@ namespace Chatter.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly IConfiguration _config;
-        private readonly IUsersRepo _usersRepo;
+        private readonly IUserService _userService;
 
-        public UserController(
-            IConfiguration config,
-            IUsersRepo usersRepo
-        )
+        public UserController(IUserService userService)
         {
-            _config = config;
-            _usersRepo = usersRepo;
+            _userService = userService;
         }
 
         [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult<UserModel?>> RegisterAsync(CredentialsModel credentials)
         {
-            if ((await _usersRepo.GetUserAsync(credentials.Username)) != null)
-            {
-                return BadRequest("Username is taken!");
-            }
-
-            // Todo: Hash password before storing in DB
-            var userToAdd = new User
-            {
-                Username = credentials.Username,
-                Password = credentials.Password
-            };
-            var addedUser = await _usersRepo.AddUserAsync(userToAdd);
+            var addedUser = await _userService.RegisterAsync(
+                credentials.Username,
+                credentials.Password
+            );
 
             return Ok(addedUser.ToModel());
         }
 
         [AllowAnonymous]
         [HttpPost("login")]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<string>> LoginAsync(CredentialsModel credentials)
         {
-            var user = await _usersRepo.GetUserAsync(credentials.Username);
-            if (user == null)
-            {
-                return NotFound("User not found");
-            }
-
-            if (credentials.Password != user.Password)
-            {
-                return BadRequest("Incorrect Password");
-            }
-
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-            var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Username)
-            };
-
-            var token = new JwtSecurityToken(
-                _config["Jwt:Issuer"],
-                _config["Jwt:Audience"],
-                claims,
-                expires: DateTime.Now.AddMinutes(15),
-                signingCredentials: signingCredentials
+            var jwt = await _userService.LoginAsync(
+                credentials.Username,
+                credentials.Password
             );
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return Ok(jwt);
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<List<User>>> GetUsersAsync()
         {
-            var users = await _usersRepo.GetUsersAsync();
+            var users = await _userService.GetUsersAsync();
 
             return Ok(users.ToModels());
         }
@@ -96,7 +56,7 @@ namespace Chatter.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<UserModel?>> GetUserAsync([FromRoute] long userId)
         {
-            var user = await _usersRepo.GetUserAsync(userId);
+            var user = await _userService.GetUserAsync(userId);
 
             return Ok(user.ToModel());
         }

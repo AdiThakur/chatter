@@ -1,6 +1,7 @@
 using Chatter.Data;
 using Chatter.Data.Models;
 using Chatter.Data.Repos;
+using Chatter.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.IdentityModel.Tokens;
@@ -38,6 +39,7 @@ namespace Chatter
                 });
 
             RegisterRepos(builder.Services);
+            RegisterServices(builder.Services);
 
             var app = builder.Build();
 
@@ -72,9 +74,14 @@ namespace Chatter
 
         public static void RegisterRepos(IServiceCollection services)
         {
-            services.AddScoped<IChatRoomsRepo, ChatRoomsRepo>();
-            services.AddScoped<MessagesRepo>();
-            services.AddScoped<IUsersRepo, UsersRepo>();
+            services.AddScoped<IChatRoomsRepo, ChatRoomRepo>();
+            services.AddScoped<MessageRepo>();
+            services.AddScoped<IUsersRepo, UserRepo>();
+        }
+
+        public static void RegisterServices(IServiceCollection services)
+        {
+            services.AddScoped<IUserService, UserService>();
         }
     }
 }
