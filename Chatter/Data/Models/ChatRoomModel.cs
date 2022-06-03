@@ -14,13 +14,13 @@ namespace Chatter.Data.Models
         [MaxLength(300)]
         public string Description { get; set; }
 
-        public ICollection<UserModel>? Users { get; set; }
+        public ICollection<string>? Users { get; set; }
 
         [JsonConstructor]
         public ChatRoomModel(
             string id,
             string description,
-            ICollection<UserModel>? users
+            ICollection<string>? users
         )
         {
             Id = id;
@@ -33,7 +33,7 @@ namespace Chatter.Data.Models
             Id = chatRoomEntity.Id;
             Description = chatRoomEntity.Description;
             Users = chatRoomEntity.Users
-                .Select(userEntity => new UserModel(userEntity))
+                .Select(userEntity => userEntity.Username)
                 .ToList();
         }
     }

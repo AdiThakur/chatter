@@ -52,26 +52,17 @@ namespace Chatter.Services
         public async Task<string> LoginAsync(string username, string password)
         {
             var user = await _usersRepo.GetUserAsync(username);
-            if (user == null)
+            if (user == null || password != user.Password)
             {
                 throw new UserException(
-                     "Invalid Username",
-                     "This user does not exist"
-                 );
-            }
-
-            if (password != user.Password)
-            {
-                // TODO: Should ideally return a less specific message
-                throw new UserException(
-                     "Invalid Password",
-                     "Password does not match"
+                     "Invalid Credentials",
+                     "The supplied Username or Password is not correct"
                  );
             }
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Username)
+                new Claim(ClaimTypes.Name, user.Username)
             };
 
             return GenerateJwt(claims);
@@ -89,8 +80,12 @@ namespace Chatter.Services
 
         private string GenerateJwt(List<Claim> claims)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-            var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var securityKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(_config["Jwt:Key"])
+            );
+            var signingCredentials = new SigningCredentials(
+                securityKey, SecurityAlgorithms.HmacSha256
+            );
 
             var token = new JwtSecurityToken(
                 _config["Jwt:Issuer"],

@@ -62,7 +62,7 @@ namespace Chatter.Services
             {
                 throw new UserException(
                      "Invalid Username",
-                     "This user does not exist"
+                     "User does not exist"
                  );
             }
 
