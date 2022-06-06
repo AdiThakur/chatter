@@ -7,7 +7,7 @@ using Moq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Chatter.Tests.Controllers
+namespace Chatter.Tests.Services
 {
     public class UserServiceTests
     {

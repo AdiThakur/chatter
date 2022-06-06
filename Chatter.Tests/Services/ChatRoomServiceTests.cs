@@ -8,7 +8,7 @@ using AutoFixture.AutoMoq;
 using System.Collections.Generic;
 using Chatter.Services;
 
-namespace Chatter.Tests.Controllers
+namespace Chatter.Tests.Services
 {
     public class ChatRoomServiceTests
     {
