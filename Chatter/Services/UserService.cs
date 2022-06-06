@@ -18,14 +18,17 @@ namespace Chatter.Services
     public class UserService : IUserService
     {
         private readonly IConfiguration _config;
+        private readonly IPasswordService _passwordService;
         private readonly IUsersRepo _usersRepo;
 
         public UserService(
             IConfiguration config,
+            IPasswordService passwordService,
             IUsersRepo usersRepo
         )
         {
             _config = config;
+            _passwordService = passwordService;
             _usersRepo = usersRepo;
         }
 
@@ -39,11 +42,12 @@ namespace Chatter.Services
                 );
             }
 
-            // Todo: Hash password before storing in DB
+            var passwordHash = _passwordService.Hash(password);
+
             var userToAdd = new User
             {
                 Username = username,
-                Password = password
+                PasswordHash = passwordHash
             };
 
             return await _usersRepo.AddUserAsync(userToAdd);
@@ -52,7 +56,7 @@ namespace Chatter.Services
         public async Task<string> LoginAsync(string username, string password)
         {
             var user = await _usersRepo.GetUserAsync(username);
-            if (user == null || password != user.Password)
+            if (user == null || !_passwordService.Verify(password, user.PasswordHash))
             {
                 throw new UserException(
                      "Invalid Credentials",

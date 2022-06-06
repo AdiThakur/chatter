@@ -13,6 +13,7 @@ namespace Chatter.Tests.Controllers
     {
         private readonly IFixture _fixture;
 
+        private readonly Mock<IPasswordService> _passwordServiceMock;
         private readonly Mock<IUsersRepo> _mockUsersRepo;
 
         private readonly UserService _sut;
@@ -21,6 +22,7 @@ namespace Chatter.Tests.Controllers
         {
             _fixture = new Fixture().Customize(new AutoMoqCustomization());
 
+            _passwordServiceMock = _fixture.Freeze<Mock<IPasswordService>>();
             _mockUsersRepo = _fixture.Freeze<Mock<IUsersRepo>>();
 
             _sut = _fixture.Create<UserService>();
@@ -73,13 +75,16 @@ namespace Chatter.Tests.Controllers
             var username = "username";
             var password = "password";
 
+            _passwordServiceMock
+                .Setup(service => service.Verify(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(false);
             _mockUsersRepo
                 .Setup(repo => repo.GetUserAsync(username))
                 .ReturnsAsync(
                     new User
                     {
                         Username = username,
-                        Password = "different_password"
+                        PasswordHash = "different_password"
                     }
                 );
 

@@ -6,7 +6,7 @@
 
         public string Username { get; set; }
 
-        public string Password { get; set; }
+        public string PasswordHash { get; set; }
 
         public ICollection<ChatRoom> ChatRooms { get; set; } = new List<ChatRoom>();
 
