@@ -8,24 +8,27 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from "./login/login.component";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
-  declarations: [
-	AppComponent,
-	LoginComponent
-  ],
-  imports: [
-	  BrowserModule,
-	  HttpClientModule,
-	  BrowserAnimationsModule,
-	  MatFormFieldModule,
-	  MatInputModule,
-	  MatButtonModule,
-	  FormsModule,
-	  HttpClientModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+	declarations: [
+		AppComponent,
+		LoginComponent,
+		RegisterComponent
+	],
+	imports: [
+		BrowserModule,
+		HttpClientModule,
+		BrowserAnimationsModule,
+		MatFormFieldModule,
+		MatInputModule,
+		MatButtonModule,
+		FormsModule,
+		HttpClientModule,
+		ReactiveFormsModule
+	],
+	providers: [],
+	bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,0 +1,77 @@
+<div class="login-background">
+	<div class="login-input-container">
+		<h1 class="login-title">Register</h1>
+
+		<!-- Username input group -->
+		<p class="login-label">Username</p>
+		<mat-form-field appearance="outline">
+			<input
+				matInput
+				placeholder="Username"
+				[formControl]="usernameFormControl"
+			/>
+			<mat-error
+				*ngIf="usernameFormControl.hasError('email')"
+			>
+				Invalid email
+			</mat-error>
+			<mat-error
+				*ngIf="usernameFormControl.hasError('required')"
+			>
+				Email is required
+			</mat-error>
+		</mat-form-field>
+
+		<!-- Password input group -->
+		<p class="login-label">Password</p>
+		<mat-form-field
+			appearance="outline"
+		>
+			<input
+				matInput
+				type="password"
+				placeholder="Password"
+				[formControl]="passwordFormControl"
+			/>
+			<mat-error>Invalid password</mat-error>
+		</mat-form-field>
+
+		<!-- Confirm password input group -->
+		<p class="login-label">Confirm Password</p>
+		<mat-form-field
+			appearance="outline"
+		>
+			<input
+				matInput
+				type="password"
+				placeholder="Password"
+				[formControl]="confirmPasswordFormControl"
+			/>
+			<mat-error
+				*ngIf="confirmPasswordFormControl.hasError('required')"
+			>
+				Confirm password is required
+			</mat-error>
+			<mat-error
+				*ngIf="confirmPasswordFormControl.hasError('misMatch')"
+			>
+				Passwords do not match
+			</mat-error>
+		</mat-form-field>
+
+		<!-- Next button -->
+		<button
+			mat-raised-button
+			color="accent"
+			class="login-button"
+			[disabled]="usernameFormControl.invalid || passwordFormControl.invalid || confirmPasswordFormControl.invalid"
+		>
+			Next
+		</button>
+
+		<span class="login-sign-up-prompt">
+			<p class="login-sign-up-text">Have an account?</p>
+		 	<a class="login-sign-up-link">Log in</a>
+		</span>
+	</div>
+</div>
