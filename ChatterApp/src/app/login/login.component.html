@@ -1,0 +1,40 @@
+<div class="login-background">
+	<div class="login-input-container">
+		<h1 class="login-title">chatter</h1>
+
+		<p class="login-label">Username</p>
+		<mat-form-field appearance="outline">
+			<input
+				matInput
+				placeholder="Username"
+				[(ngModel)]="username"
+			/>
+		</mat-form-field>
+
+		<p class="login-label">Password</p>
+		<mat-form-field
+			appearance="outline"
+		>
+			<input
+				matInput
+				type="password"
+				placeholder="Password"
+				[(ngModel)]="password"
+			/>
+		</mat-form-field>
+
+		<button
+			mat-raised-button
+			color="accent"
+			class="login-button"
+			(click)="login()"
+		>
+			Login
+		</button>
+
+		<span class="login-sign-up-prompt">
+			<p class="login-sign-up-text">New to chatter?</p>
+		 	<a class="login-sign-up-link">Sign Up</a>
+		</span>
+	</div>
+</div>

@@ -1,4 +1,5 @@
 .vs/
+.idea/
 *.sln
 Chatter/bin
 Chatter/obj
