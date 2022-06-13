@@ -1,4 +1,4 @@
-.login-background {
+.register-background {
 	height: 100%;
 	width: 100%;
 	display: flex;
@@ -8,9 +8,9 @@
 	background-color: #3f51b5;
 }
 
-.login-input-container {
-	height: fit-content;
-	width: 400px;
+.register-step-container {
+	height: 685px;
+	width: 600px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -19,12 +19,12 @@
 	border-radius: 15px;
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5) ;
 
-	background-color: #f1f1f1;
+	background-color: #ffffff;
 }
 
 .login-title {
 	padding: 30px;
-	margin-bottom: 50px;
+	margin-bottom: 25px;
 
 	text-align: center;
 	font-size: 65px;
@@ -50,30 +50,17 @@ mat-form-field.mat-form-field {
 	font-size: 18px;
 }
 
-.login-button {
-	/*width: 200px;*/
+.register-stepper-control-tray {
+	display: inline-flex;
 	width: 100%;
-	margin-top: 50px;
-	margin-bottom: 10px;
+	height: fit-content;
+	margin-top: 25px;
+	align-items: flex-end;
+	justify-content: flex-end;
+}
+.register-stepper-control {
+	width: 10rem;
 	padding: 10px;
 
-	font-size: 20px;
-}
-
-.login-sign-up-prompt {
-	display: inline-flex;
-	justify-content: end;
-	width: 100%;
-	font-size: 16px;
-	font-weight: lighter;
-	color: gray;
-}
-.login-sign-up-text {
-	margin: 0 5px 0 0;
-	padding: 0;
-	width: fit-content;
-}
-.login-sign-up-link {
-	font-weight: bolder;
-	color: blue;
+	font-size: 18px;
 }

@@ -1,77 +1,89 @@
-<div class="login-background">
-	<div class="login-input-container">
-		<h1 class="login-title">Register</h1>
-
-		<!-- Username input group -->
-		<p class="login-label">Username</p>
-		<mat-form-field appearance="outline">
-			<input
-				matInput
-				placeholder="Username"
-				[formControl]="usernameFormControl"
-			/>
-			<mat-error
-				*ngIf="usernameFormControl.hasError('email')"
+<div class="register-background">
+	<div class="register-step-container">
+		<mat-stepper [linear]="true">
+			<!-- STEP 1: Account Details-->
+			<mat-step
+				label="Account Details"
+				[stepControl]="accountDetailsFormGroup"
 			>
-				Invalid email
-			</mat-error>
-			<mat-error
-				*ngIf="usernameFormControl.hasError('required')"
-			>
-				Email is required
-			</mat-error>
-		</mat-form-field>
+				<h1 class="login-title">register</h1>
 
-		<!-- Password input group -->
-		<p class="login-label">Password</p>
-		<mat-form-field
-			appearance="outline"
-		>
-			<input
-				matInput
-				type="password"
-				placeholder="Password"
-				[formControl]="passwordFormControl"
-			/>
-			<mat-error>Invalid password</mat-error>
-		</mat-form-field>
+				<!-- Username input group -->
+				<p class="login-label">Username</p>
+				<mat-form-field appearance="outline">
+					<input
+						matInput
+						placeholder="Username"
+						[formControl]="usernameFormControl"
+					/>
+					<mat-error
+						*ngIf="usernameFormControl.hasError('email')"
+					>
+						Invalid email
+					</mat-error>
+					<mat-error
+						*ngIf="usernameFormControl.hasError('required')"
+					>
+						Email is required
+					</mat-error>
+				</mat-form-field>
 
-		<!-- Confirm password input group -->
-		<p class="login-label">Confirm Password</p>
-		<mat-form-field
-			appearance="outline"
-		>
-			<input
-				matInput
-				type="password"
-				placeholder="Password"
-				[formControl]="confirmPasswordFormControl"
-			/>
-			<mat-error
-				*ngIf="confirmPasswordFormControl.hasError('required')"
-			>
-				Confirm password is required
-			</mat-error>
-			<mat-error
-				*ngIf="confirmPasswordFormControl.hasError('misMatch')"
-			>
-				Passwords do not match
-			</mat-error>
-		</mat-form-field>
+				<!-- Password input group -->
+				<p class="login-label">Password</p>
+				<mat-form-field
+					appearance="outline"
+				>
+					<input
+						matInput
+						type="password"
+						placeholder="Password"
+						[formControl]="passwordFormControl"
+					/>
+					<mat-error>Invalid password</mat-error>
+				</mat-form-field>
 
-		<!-- Next button -->
-		<button
-			mat-raised-button
-			color="accent"
-			class="login-button"
-			[disabled]="usernameFormControl.invalid || passwordFormControl.invalid || confirmPasswordFormControl.invalid"
-		>
-			Next
-		</button>
+				<!-- Confirm password input group -->
+				<p class="login-label">Confirm Password</p>
+				<mat-form-field
+					appearance="outline"
+				>
+					<input
+						matInput
+						type="password"
+						placeholder="Password"
+						[formControl]="confirmPasswordFormControl"
+					/>
+					<mat-error
+						*ngIf="confirmPasswordFormControl.hasError('required')"
+					>
+						Confirm password is required
+					</mat-error>
+					<mat-error
+						*ngIf="confirmPasswordFormControl.hasError('misMatch')"
+					>
+						Passwords do not match
+					</mat-error>
+				</mat-form-field>
 
-		<span class="login-sign-up-prompt">
-			<p class="login-sign-up-text">Have an account?</p>
-		 	<a class="login-sign-up-link">Log in</a>
-		</span>
+				<!-- Next Button -->
+				<div class="register-stepper-control-tray">
+					<button
+						class="register-stepper-control"
+						mat-raised-button
+						matStepperNext
+						color="accent"
+						[disabled]="accountDetailsFormGroup.invalid"
+					>
+						Next
+					</button>
+				</div>
+			</mat-step>
+			<mat-step label="Profile Picture">
+				<h1>Step2</h1>
+			</mat-step>
+			<mat-step label="Chatrooms">
+				<h1>Step2</h1>
+			</mat-step>
+		</mat-stepper>
 	</div>
 </div>
