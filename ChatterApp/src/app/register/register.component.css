@@ -9,7 +9,7 @@
 }
 
 .register-step-container {
-	height: 685px;
+	height: 672px;
 	width: 600px;
 	display: flex;
 	flex-direction: column;
@@ -28,6 +28,15 @@
 
 	text-align: center;
 	font-size: 65px;
+	font-weight: lighter;
+	color: gray;
+}
+.login-subtitle {
+	padding: 30px;
+	margin-bottom: 25px;
+
+	text-align: center;
+	font-size: 40px;
 	font-weight: lighter;
 	color: gray;
 }
@@ -54,13 +63,33 @@ mat-form-field.mat-form-field {
 	display: inline-flex;
 	width: 100%;
 	height: fit-content;
-	margin-top: 25px;
-	align-items: flex-end;
-	justify-content: flex-end;
+	margin-top: 55px;
+	align-items: center;
+	justify-content: center;
 }
 .register-stepper-control {
-	width: 10rem;
-	padding: 10px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
 
-	font-size: 18px;
+.register-avatar-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-gap: 2rem;
+}
+.register-avatar-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.register-avatar, .register-avatar-clicked {
+	box-sizing: border-box;
+	height: 110px;
+	width: 110px;
+	padding: 5px;
+	margin: 0;
+}
+.register-avatar-clicked {
+	border: 3px solid #ff4081;
+	border-radius: 15px;
 }

@@ -1,12 +1,15 @@
 <div class="register-background">
 	<div class="register-step-container">
 		<mat-stepper [linear]="true">
+
+
 			<!-- STEP 1: Account Details-->
 			<mat-step
 				label="Account Details"
 				[stepControl]="accountDetailsFormGroup"
 			>
 				<h1 class="login-title">register</h1>
+
 
 				<!-- Username input group -->
 				<p class="login-label">Username</p>
@@ -28,6 +31,7 @@
 					</mat-error>
 				</mat-form-field>
 
+
 				<!-- Password input group -->
 				<p class="login-label">Password</p>
 				<mat-form-field
@@ -41,6 +45,7 @@
 					/>
 					<mat-error>Invalid password</mat-error>
 				</mat-form-field>
+
 
 				<!-- Confirm password input group -->
 				<p class="login-label">Confirm Password</p>
@@ -65,25 +70,81 @@
 					</mat-error>
 				</mat-form-field>
 
-				<!-- Next Button -->
+
+				<!-- Stepper Controls -->
 				<div class="register-stepper-control-tray">
 					<button
 						class="register-stepper-control"
-						mat-raised-button
+						mat-fab
+						matStepperPrevious
+						color="accent"
+						[disabled]="true"
+					>
+						<mat-icon>arrow_back</mat-icon>
+					</button>
+					<button
+						class="register-stepper-control"
+						mat-fab
 						matStepperNext
 						color="accent"
 						[disabled]="accountDetailsFormGroup.invalid"
 					>
-						Next
+						<mat-icon>arrow_forward</mat-icon>
 					</button>
 				</div>
 			</mat-step>
-			<mat-step label="Profile Picture">
-				<h1>Step2</h1>
+
+			<!-- STEP 2: Avatar-->
+			<mat-step
+				label="Profile Picture"
+				[completed]="isAvatarSelected"
+			>
+				<h1 class="login-subtitle">Pick an Avatar</h1>
+
+				<!-- Avatar Grid-->
+				<div class="register-avatar-grid">
+					<div
+						class="register-avatar-container"
+						*ngFor="let avatar of avatars"
+					>
+						<img
+							class="{{ avatar === selectedAvatar ? 'register-avatar-clicked' : 'register-avatar' }}"
+							[src]="'../../assets/' + avatar"
+							[alt]="avatar"
+							(click)="selectAvatar(avatar)"
+						>
+					</div>
+				</div>
+
+				<!-- Stepper Controls -->
+				<div class="register-stepper-control-tray">
+					<button
+						class="register-stepper-control"
+						mat-fab
+						matStepperPrevious
+						color="accent"
+					>
+						<mat-icon>arrow_back</mat-icon>
+					</button>
+					<button
+						class="register-stepper-control"
+						mat-fab
+						matStepperNext
+						color="accent"
+						[disabled]="!isAvatarSelected"
+					>
+						<mat-icon>arrow_forward</mat-icon>
+					</button>
+				</div>
 			</mat-step>
+
+
+			<!-- STEP 3: Chatrooms -->
 			<mat-step label="Chatrooms">
 				<h1>Step2</h1>
 			</mat-step>
+
+
 		</mat-stepper>
 	</div>
 </div>
