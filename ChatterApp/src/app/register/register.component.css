@@ -9,17 +9,26 @@
 }
 
 .register-step-container {
-	height: 672px;
-	width: 600px;
+	height: 45rem;
+	width: 35rem;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: 50px;
+	justify-content: center;
+	padding: 50px 15px 50px 15px;
 
 	border-radius: 15px;
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5) ;
 
 	background-color: #ffffff;
+}
+
+.register-step-content-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 35rem;
+	width: 100%;
 }
 
 .login-title {
@@ -33,7 +42,7 @@
 }
 .login-subtitle {
 	padding: 30px;
-	margin-bottom: 25px;
+	margin-bottom: 10px;
 
 	text-align: center;
 	font-size: 40px;
@@ -63,7 +72,6 @@ mat-form-field.mat-form-field {
 	display: inline-flex;
 	width: 100%;
 	height: fit-content;
-	margin-top: 55px;
 	align-items: center;
 	justify-content: center;
 }
@@ -92,4 +100,26 @@ mat-form-field.mat-form-field {
 .register-avatar-clicked {
 	border: 3px solid #ff4081;
 	border-radius: 15px;
+}
+
+.register-avatar-big {
+	height: 200px;
+	width: 200px;
+	padding: 0 30px 30px 30px;
+	margin: 0;
+}
+.register-username {
+	margin: 10px;
+
+	text-align: center;
+	font-size: 25px;
+	font-weight: lighter;
+	color: gray;
+}
+.register-submit-button {
+	width: 150px;
+	margin-top: 30px;
+	padding: 10px;
+
+	font-size: 16px;
 }

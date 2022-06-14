@@ -2,74 +2,71 @@
 	<div class="register-step-container">
 		<mat-stepper [linear]="true">
 
-
 			<!-- STEP 1: Account Details-->
 			<mat-step
-				label="Account Details"
+				label="Account"
 				[stepControl]="accountDetailsFormGroup"
 			>
-				<h1 class="login-title">register</h1>
+				<div class="register-step-content-container">
+					<h1 class="login-title">register</h1>
 
+					<!-- Username input group -->
+					<p class="login-label">Username</p>
+					<mat-form-field appearance="outline">
+						<input
+							matInput
+							placeholder="Username"
+							[formControl]="usernameFormControl"
+						/>
+						<mat-error
+							*ngIf="usernameFormControl.hasError('email')"
+						>
+							Invalid email
+						</mat-error>
+						<mat-error
+							*ngIf="usernameFormControl.hasError('required')"
+						>
+							Email is required
+						</mat-error>
+					</mat-form-field>
 
-				<!-- Username input group -->
-				<p class="login-label">Username</p>
-				<mat-form-field appearance="outline">
-					<input
-						matInput
-						placeholder="Username"
-						[formControl]="usernameFormControl"
-					/>
-					<mat-error
-						*ngIf="usernameFormControl.hasError('email')"
+					<!-- Password input group -->
+					<p class="login-label">Password</p>
+					<mat-form-field
+						appearance="outline"
 					>
-						Invalid email
-					</mat-error>
-					<mat-error
-						*ngIf="usernameFormControl.hasError('required')"
+						<input
+							matInput
+							type="password"
+							placeholder="Password"
+							[formControl]="passwordFormControl"
+						/>
+						<mat-error>Invalid password</mat-error>
+					</mat-form-field>
+
+					<!-- Confirm password input group -->
+					<p class="login-label">Confirm Password</p>
+					<mat-form-field
+						appearance="outline"
 					>
-						Email is required
-					</mat-error>
-				</mat-form-field>
-
-
-				<!-- Password input group -->
-				<p class="login-label">Password</p>
-				<mat-form-field
-					appearance="outline"
-				>
-					<input
-						matInput
-						type="password"
-						placeholder="Password"
-						[formControl]="passwordFormControl"
-					/>
-					<mat-error>Invalid password</mat-error>
-				</mat-form-field>
-
-
-				<!-- Confirm password input group -->
-				<p class="login-label">Confirm Password</p>
-				<mat-form-field
-					appearance="outline"
-				>
-					<input
-						matInput
-						type="password"
-						placeholder="Password"
-						[formControl]="confirmPasswordFormControl"
-					/>
-					<mat-error
-						*ngIf="confirmPasswordFormControl.hasError('required')"
-					>
-						Confirm password is required
-					</mat-error>
-					<mat-error
-						*ngIf="confirmPasswordFormControl.hasError('misMatch')"
-					>
-						Passwords do not match
-					</mat-error>
-				</mat-form-field>
-
+						<input
+							matInput
+							type="password"
+							placeholder="Password"
+							[formControl]="confirmPasswordFormControl"
+						/>
+						<mat-error
+							*ngIf="confirmPasswordFormControl.hasError('required')"
+						>
+							Confirm password is required
+						</mat-error>
+						<mat-error
+							*ngIf="confirmPasswordFormControl.hasError('misMatch')"
+						>
+							Passwords do not match
+						</mat-error>
+					</mat-form-field>
+				</div>
 
 				<!-- Stepper Controls -->
 				<div class="register-stepper-control-tray">
@@ -96,23 +93,25 @@
 
 			<!-- STEP 2: Avatar-->
 			<mat-step
-				label="Profile Picture"
+				label="Avatar"
 				[completed]="isAvatarSelected"
 			>
-				<h1 class="login-subtitle">Pick an Avatar</h1>
+				<div class="register-step-content-container">
+					<h1 class="login-subtitle">pick an avatar</h1>
 
-				<!-- Avatar Grid-->
-				<div class="register-avatar-grid">
-					<div
-						class="register-avatar-container"
-						*ngFor="let avatar of avatars"
-					>
-						<img
-							class="{{ avatar === selectedAvatar ? 'register-avatar-clicked' : 'register-avatar' }}"
-							[src]="'../../assets/' + avatar"
-							[alt]="avatar"
-							(click)="selectAvatar(avatar)"
+					<!-- Avatar Grid-->
+					<div class="register-avatar-grid">
+						<div
+							class="register-avatar-container"
+							*ngFor="let avatar of avatars"
 						>
+							<img
+								class="{{ avatar === selectedAvatar ? 'register-avatar-clicked' : 'register-avatar' }}"
+								[src]="'../../assets/' + avatar"
+								[alt]="avatar"
+								(click)="selectAvatar(avatar)"
+							>
+						</div>
 					</div>
 				</div>
 
@@ -138,12 +137,49 @@
 				</div>
 			</mat-step>
 
+			<!-- STEP 3: Finish -->
+			<mat-step label="Finish">
+				<div class="register-step-content-container" [style.justify-content]="'center'">
+					<img
+						class="register-avatar-big"
+						[src]="'../../assets/' + selectedAvatar"
+						[alt]="selectedAvatar"
+					>
+					<p class="register-username">
+						adi_thakur@gmail.com
+					</p>
+					<button
+						class="register-submit-button "
+						mat-raised-button
+						color="primary"
+					>
+						Create Account
+					</button>
 
-			<!-- STEP 3: Chatrooms -->
-			<mat-step label="Chatrooms">
-				<h1>Step2</h1>
+
+				</div>
+
+				<!-- Stepper Controls -->
+				<div class="register-stepper-control-tray">
+					<button
+						class="register-stepper-control"
+						mat-fab
+						matStepperPrevious
+						color="accent"
+					>
+						<mat-icon>arrow_back</mat-icon>
+					</button>
+					<button
+						class="register-stepper-control"
+						mat-fab
+						matStepperNext
+						color="accent"
+						[disabled]="true"
+					>
+						<mat-icon>arrow_forward</mat-icon>
+					</button>
+				</div>
 			</mat-step>
-
 
 		</mat-stepper>
 	</div>
