@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-
-interface Chatroom {
-	id: string,
-	description: string
-}
+import { RegistrationService } from "../registration.service";
 
 @Component({
 	selector: 'register',
@@ -13,10 +9,8 @@ interface Chatroom {
 })
 export class RegisterComponent implements OnInit {
 
-	accountDetailsFormGroup!: FormGroup;
-	usernameFormControl!: FormControl;
-	passwordFormControl!: FormControl;
-	confirmPasswordFormControl!: FormControl;
+	username = "";
+	password = "";
 
 	isAvatarSelected = false;
 	selectedAvatar: string = "";
@@ -26,25 +20,40 @@ export class RegisterComponent implements OnInit {
 		"avatar6.png", "avatar7.png", "avatar8.png", "avatar9.png",
 	];
 
+	accountDetailsFormGroup!: FormGroup;
+	usernameFormControl!: FormControl;
+	passwordFormControl!: FormControl;
+	confirmPasswordFormControl!: FormControl;
 	chatRoomFormControl!: FormControl;
-	selectedChatrooms: Chatroom[] = [
-		{ id: 'CSC301', description: 'Software Engineering' },
-		{ id: 'BIO120', description: 'Intro to Biology' },
-		{ id: 'CSC265', description: 'Literal Hell' },
-		{ id: 'MAT135', description: 'Calculus A' }
-	];
 
-	constructor() {}
+	constructor(private registrationService: RegistrationService) {}
 
 	ngOnInit(): void {
 
 		this.usernameFormControl =
-			new FormControl('', [Validators.required, Validators.email]);
+			new FormControl('', [
+				Validators.required,
+				Validators.minLength(5),
+				Validators.maxLength(20)
+			]
+		);
+		this.usernameFormControl.valueChanges.subscribe(
+			value => this.username = value
+		);
+
 		this.passwordFormControl =
-			new FormControl('', Validators.required);
+			new FormControl('', [
+				Validators.required,
+				Validators.minLength(15),
+				Validators.maxLength(30)
+			]
+		);
+		this.passwordFormControl.valueChanges.subscribe(
+			value => this.password = value
+		);
+
 		this.confirmPasswordFormControl =
 			new FormControl('', Validators.required);
-
 		this.confirmPasswordFormControl.valueChanges.subscribe((value: string) => {
 			if (value != this.passwordFormControl.value) {
 				this.confirmPasswordFormControl.setErrors({ misMatch: true });
@@ -60,8 +69,14 @@ export class RegisterComponent implements OnInit {
 		this.chatRoomFormControl = new FormControl('');
 	}
 
-	selectAvatar(avatarId: string): void {
+	public selectAvatar(avatarId: string): void {
 		this.selectedAvatar = avatarId;
 		this.isAvatarSelected = true;
+	}
+
+	public register(): void {
+		this.registrationService.register(
+			this.username, this.password, this.selectedAvatar
+		);
 	}
 }

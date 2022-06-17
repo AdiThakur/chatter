@@ -19,14 +19,19 @@
 							[formControl]="usernameFormControl"
 						/>
 						<mat-error
-							*ngIf="usernameFormControl.hasError('email')"
+							*ngIf="usernameFormControl.errors?.['required']"
 						>
-							Invalid email
+							Username is required
 						</mat-error>
 						<mat-error
-							*ngIf="usernameFormControl.hasError('required')"
+							*ngIf="usernameFormControl.errors?.['minlength']"
 						>
-							Email is required
+							Username must at least have 5 characters
+						</mat-error>
+						<mat-error
+							*ngIf="usernameFormControl.errors?.['maxlength']"
+						>
+							Username cannot be longer than 20 characters
 						</mat-error>
 					</mat-form-field>
 
@@ -146,12 +151,13 @@
 						[alt]="selectedAvatar"
 					>
 					<p class="register-username">
-						adi_thakur@gmail.com
+						{{ username }}
 					</p>
 					<button
-						class="register-submit-button "
+						class="register-submit-button"
 						mat-raised-button
 						color="primary"
+						(click)="register()"
 					>
 						Create Account
 					</button>
