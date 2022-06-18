@@ -46,6 +46,7 @@
 							placeholder="Password"
 							[formControl]="passwordFormControl"
 						/>
+						<!-- TODO: Add specific mat-error elements for each possible error -->
 						<mat-error>Invalid password</mat-error>
 					</mat-form-field>
 
@@ -112,7 +113,7 @@
 						>
 							<img
 								class="{{ avatar === selectedAvatar ? 'register-avatar-clicked' : 'register-avatar' }}"
-								[src]="'../../assets/' + avatar"
+								[src]="'assets/' + avatar"
 								[alt]="avatar"
 								(click)="selectAvatar(avatar)"
 							>
@@ -147,8 +148,9 @@
 				<div class="register-step-content-container" [style.justify-content]="'center'">
 					<img
 						class="register-avatar-big"
-						[src]="'../../assets/' + selectedAvatar"
+						[src]="'assets/' + selectedAvatar"
 						[alt]="selectedAvatar"
+						*ngIf="isAvatarSelected"
 					>
 					<p class="register-username">
 						{{ username }}

@@ -41,7 +41,7 @@ namespace Chatter.Tests.Services
             
             // Act
             var uex = await Assert.ThrowsAsync<UserException>(
-                () => _sut.RegisterAsync(username, password)
+                () => _sut.RegisterAsync(username, password, string.Empty)
             );
 
             // Assert

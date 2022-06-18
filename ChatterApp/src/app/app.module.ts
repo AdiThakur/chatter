@@ -12,6 +12,7 @@ import { LoginComponent } from "./login/login.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RegisterComponent } from './register/register.component';
 import { MatIconModule } from "@angular/material/icon";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 @NgModule({
 	declarations: [
@@ -30,7 +31,8 @@ import { MatIconModule } from "@angular/material/icon";
 		HttpClientModule,
 		ReactiveFormsModule,
 		MatStepperModule,
-		MatIconModule
+		MatIconModule,
+		MatSnackBarModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]

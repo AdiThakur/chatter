@@ -8,6 +8,8 @@
 
         public string PasswordHash { get; set; }
 
+        public string AvatarUri { get; set; }
+
         public ICollection<ChatRoom> ChatRooms { get; set; } = new List<ChatRoom>();
 
         public ICollection<Message> Messages { get; set; } = new List<Message>();

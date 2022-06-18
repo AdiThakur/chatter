@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { RegistrationService } from "../registration.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { HttpErrorResponse } from "@angular/common/http";
+import { TypeAssertions } from "../helpers/type-assertions";
+import { ErrorDetails } from "../../../generated_types/error-details";
 
 @Component({
 	selector: 'register',
@@ -26,7 +30,10 @@ export class RegisterComponent implements OnInit {
 	confirmPasswordFormControl!: FormControl;
 	chatRoomFormControl!: FormControl;
 
-	constructor(private registrationService: RegistrationService) {}
+	constructor(
+		private snackbar: MatSnackBar,
+		private registrationService: RegistrationService
+	) {}
 
 	ngOnInit(): void {
 
@@ -75,8 +82,33 @@ export class RegisterComponent implements OnInit {
 	}
 
 	public register(): void {
+
 		this.registrationService.register(
 			this.username, this.password, this.selectedAvatar
+		).subscribe(
+			(userModel => {
+				this.snackbar.open("User created successfully", '', {
+					duration: 5000
+				});
+				console.log(userModel)
+			}),
+			((error: HttpErrorResponse) => {
+				let errorDetails = error.error;
+				if (!TypeAssertions.isErrorDetails(errorDetails)) {
+					return;
+				}
+
+				let openSnackbar = this.snackbar.open(
+					`${errorDetails.title}: ${errorDetails.description}`,
+					'Dismiss',
+				);
+				openSnackbar
+					.onAction()
+					.subscribe(() => {
+						openSnackbar.dismiss();
+					}
+				);
+			})
 		);
 	}
 }

@@ -82,6 +82,7 @@ namespace Chatter
         public static void RegisterServices(IServiceCollection services)
         {
             services.AddSingleton<IPasswordService, PasswordService>();
+            services.AddSingleton<IAvatarService, AvatarService>();
             // TODO: Want these to be Singletons, but they're lightweight and stateless, so Scoped shouldn't be too bad for now
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IChatRoomService, ChatRoomService>();

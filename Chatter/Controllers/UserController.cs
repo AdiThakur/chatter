@@ -21,11 +21,12 @@ namespace Chatter.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<ActionResult<UserModel?>> RegisterAsync(CredentialsModel credentials)
+        public async Task<ActionResult<UserModel?>> RegisterAsync(RegistrationModel registrationDetails)
         {
             var addedUser = await _userService.RegisterAsync(
-                credentials.Username,
-                credentials.Password
+                registrationDetails.Username,
+                registrationDetails.Password,
+                registrationDetails.AvatarId
             );
 
             return Ok(addedUser.ToModel());

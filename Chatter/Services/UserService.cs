@@ -12,27 +12,30 @@ namespace Chatter.Services
         Task<User?> GetUserAsync(long userId);
         Task<List<User>> GetUsersAsync();
         Task<string> LoginAsync(string username, string password);
-        Task<User?> RegisterAsync(string username, string password);
+        Task<User?> RegisterAsync(string username, string password, string avatarId);
     }
 
     public class UserService : IUserService
     {
         private readonly IConfiguration _config;
         private readonly IPasswordService _passwordService;
+        private readonly IAvatarService _avatarService;
         private readonly IUsersRepo _usersRepo;
 
         public UserService(
             IConfiguration config,
             IPasswordService passwordService,
+            IAvatarService avatarService,
             IUsersRepo usersRepo
         )
         {
             _config = config;
             _passwordService = passwordService;
+            _avatarService = avatarService;
             _usersRepo = usersRepo;
         }
 
-        public async Task<User?> RegisterAsync(string username, string password)
+        public async Task<User?> RegisterAsync(string username, string password, string avatarId)
         {
             if ((await _usersRepo.GetUserAsync(username)) != null)
             {
@@ -42,12 +45,22 @@ namespace Chatter.Services
                 );
             }
 
+            var avatarUri = _avatarService.GetUriFromId(avatarId);
+            if (avatarUri == null)
+            {
+                throw new UserException(
+                    "Invalid Avatar",
+                    "Please specify a valid Avatar"
+                );
+            }
+
             var passwordHash = _passwordService.Hash(password);
 
             var userToAdd = new User
             {
                 Username = username,
-                PasswordHash = passwordHash
+                PasswordHash = passwordHash,
+                AvatarUri = avatarUri
             };
 
             return await _usersRepo.AddUserAsync(userToAdd);
