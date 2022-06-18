@@ -42,10 +42,20 @@
 					>
 						<input
 							matInput
-							type="password"
 							placeholder="Password"
+							spellcheck="false"
+							[type]="isPasswordShown ? 'text' : 'password'"
 							[formControl]="passwordFormControl"
 						/>
+						<button
+							mat-icon-button
+							matSuffix
+							(click)="isPasswordShown = !isPasswordShown"
+						>
+							<mat-icon>
+								{{ isPasswordShown ? 'visibility_off' : 'visibility' }}
+							</mat-icon>
+						</button>
 						<!-- TODO: Add specific mat-error elements for each possible error -->
 						<mat-error>Invalid password</mat-error>
 					</mat-form-field>
@@ -57,10 +67,20 @@
 					>
 						<input
 							matInput
-							type="password"
 							placeholder="Password"
+							spellcheck="false"
+							[type]="isPasswordShown ? 'text' : 'password'"
 							[formControl]="confirmPasswordFormControl"
 						/>
+						<button
+							mat-icon-button
+							matSuffix
+							(click)="isPasswordShown = !isPasswordShown"
+						>
+							<mat-icon>
+								{{ isPasswordShown ? 'visibility_off' : 'visibility' }}
+							</mat-icon>
+						</button>
 						<mat-error
 							*ngIf="confirmPasswordFormControl.hasError('required')"
 						>
@@ -80,7 +100,7 @@
 						class="register-stepper-control"
 						mat-fab
 						matStepperPrevious
-						color="accent"
+						color="primary"
 						[disabled]="true"
 					>
 						<mat-icon>arrow_back</mat-icon>
@@ -89,7 +109,7 @@
 						class="register-stepper-control"
 						mat-fab
 						matStepperNext
-						color="accent"
+						color="primary"
 						[disabled]="accountDetailsFormGroup.invalid"
 					>
 						<mat-icon>arrow_forward</mat-icon>
@@ -127,7 +147,7 @@
 						class="register-stepper-control"
 						mat-fab
 						matStepperPrevious
-						color="accent"
+						color="primary"
 					>
 						<mat-icon>arrow_back</mat-icon>
 					</button>
@@ -135,7 +155,7 @@
 						class="register-stepper-control"
 						mat-fab
 						matStepperNext
-						color="accent"
+						color="primary"
 						[disabled]="!isAvatarSelected"
 					>
 						<mat-icon>arrow_forward</mat-icon>
@@ -158,7 +178,7 @@
 					<button
 						class="register-submit-button"
 						mat-raised-button
-						color="primary"
+						color="accent"
 						(click)="register()"
 					>
 						Create Account
@@ -173,7 +193,7 @@
 						class="register-stepper-control"
 						mat-fab
 						matStepperPrevious
-						color="accent"
+						color="primary"
 					>
 						<mat-icon>arrow_back</mat-icon>
 					</button>
@@ -181,7 +201,7 @@
 						class="register-stepper-control"
 						mat-fab
 						matStepperNext
-						color="accent"
+						color="primary"
 						[disabled]="true"
 					>
 						<mat-icon>arrow_forward</mat-icon>

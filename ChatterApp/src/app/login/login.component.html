@@ -17,10 +17,20 @@
 		>
 			<input
 				matInput
-				type="password"
 				placeholder="Password"
+				spellcheck="false"
+				[type]="isPasswordShown ? 'text' : 'password'"
 				[(ngModel)]="password"
 			/>
+			<button
+				mat-icon-button
+				matSuffix
+				(click)="isPasswordShown = !isPasswordShown"
+			>
+				<mat-icon>
+					{{ isPasswordShown ? 'visibility_off' : 'visibility' }}
+				</mat-icon>
+			</button>
 		</mat-form-field>
 
 		<button

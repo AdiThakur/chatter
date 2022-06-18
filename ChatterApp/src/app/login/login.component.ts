@@ -8,8 +8,9 @@ import { HttpClient } from "@angular/common/http";
 })
 export class LoginComponent implements OnInit {
 
-	public username = "";
-	public password = "";
+	username = "";
+	password = "";
+	isPasswordShown = false;
 
 	constructor(private httpClient: HttpClient) {}
 

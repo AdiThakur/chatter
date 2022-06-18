@@ -14,6 +14,7 @@ export class RegisterComponent implements OnInit {
 
 	username = "";
 	password = "";
+	isPasswordShown = false;
 
 	isAvatarSelected = false;
 	selectedAvatar: string = "";
