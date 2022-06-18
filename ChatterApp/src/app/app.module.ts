@@ -14,6 +14,7 @@ import { RegisterComponent } from './register/register.component';
 import { MatIconModule } from "@angular/material/icon";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { ToastComponent } from './toast/toast.component';
+import { RoutingModule } from "./routing/routing.module";
 
 @NgModule({
 	declarations: [
@@ -34,7 +35,8 @@ import { ToastComponent } from './toast/toast.component';
 		ReactiveFormsModule,
 		MatStepperModule,
 		MatIconModule,
-		MatSnackBarModule
+		MatSnackBarModule,
+		RoutingModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]
