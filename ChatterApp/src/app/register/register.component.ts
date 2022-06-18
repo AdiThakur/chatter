@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { RegistrationService } from "../registration.service";
-import { MatSnackBar } from "@angular/material/snack-bar";
+import { RegistrationService } from "./registration.service";
 import { HttpErrorResponse } from "@angular/common/http";
 import { TypeAssertions } from "../helpers/type-assertions";
-import { ErrorDetails } from "../../../generated_types/error-details";
+import { ToastService } from "../toast/toast.service";
 
 @Component({
 	selector: 'register',
@@ -31,7 +30,7 @@ export class RegisterComponent implements OnInit {
 	chatRoomFormControl!: FormControl;
 
 	constructor(
-		private snackbar: MatSnackBar,
+		private toastService: ToastService,
 		private registrationService: RegistrationService
 	) {}
 
@@ -86,11 +85,12 @@ export class RegisterComponent implements OnInit {
 		this.registrationService.register(
 			this.username, this.password, this.selectedAvatar
 		).subscribe(
-			(userModel => {
-				this.snackbar.open("User created successfully", '', {
+			((userModel) => {
+				this.toastService.createToast({
+					title: "User created successfully",
+					type: "success",
 					duration: 5000
 				});
-				console.log(userModel)
 			}),
 			((error: HttpErrorResponse) => {
 				let errorDetails = error.error;
@@ -98,16 +98,12 @@ export class RegisterComponent implements OnInit {
 					return;
 				}
 
-				let openSnackbar = this.snackbar.open(
-					`${errorDetails.title}: ${errorDetails.description}`,
-					'Dismiss',
-				);
-				openSnackbar
-					.onAction()
-					.subscribe(() => {
-						openSnackbar.dismiss();
-					}
-				);
+				this.toastService.createToast({
+					title: errorDetails.title,
+					description: errorDetails.description,
+					type: "error",
+					duration: 5000
+				});
 			})
 		);
 	}

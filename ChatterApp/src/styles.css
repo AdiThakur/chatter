@@ -9,3 +9,13 @@ body {
 	padding: 0;
 	font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.success.mat-snack-bar-container {
+	background-color: #8df5b8;
+}
+.informational.mat-snack-bar-container {
+	background-color: lightblue;
+}
+.error.mat-snack-bar-container {
+	background-color: palevioletred;
+}

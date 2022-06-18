@@ -1,0 +1,16 @@
+.toast-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
+	color: #363636;
+}
+
+.toast-title {
+	font-weight: normal;
+	font-size: 18px;
+	font-style: oblique;
+}
+.toast-content {
+	font-size: 16px;
+}
