@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { RegistrationService } from "./registration.service";
-import { HttpErrorResponse } from "@angular/common/http";
-import { TypeAssertions } from "../helpers/type-assertions";
 import { ToastService } from "../toast/toast.service";
+import { UserModel } from "../../../generated_types/user-model";
+import { RegistrationModel } from "../../../generated_types/registration-model";
+import { HttpService } from "../helpers/http.service";
 
 @Component({
 	selector: 'register',
@@ -31,41 +31,19 @@ export class RegisterComponent implements OnInit {
 	chatRoomFormControl!: FormControl;
 
 	constructor(
-		private toastService: ToastService,
-		private registrationService: RegistrationService
+		private httpService: HttpService,
+		private toastService: ToastService
 	) {}
 
 	ngOnInit(): void {
+		this.setupForms();
+	}
 
-		this.usernameFormControl =
-			new FormControl('', [
-				Validators.required,
-				Validators.minLength(5),
-				Validators.maxLength(20)
-			]
-		);
-		this.usernameFormControl.valueChanges.subscribe(
-			value => this.username = value
-		);
-
-		this.passwordFormControl =
-			new FormControl('', [
-				Validators.required,
-				Validators.minLength(15),
-				Validators.maxLength(30)
-			]
-		);
-		this.passwordFormControl.valueChanges.subscribe(
-			value => this.password = value
-		);
-
-		this.confirmPasswordFormControl =
-			new FormControl('', Validators.required);
-		this.confirmPasswordFormControl.valueChanges.subscribe((value: string) => {
-			if (value != this.passwordFormControl.value) {
-				this.confirmPasswordFormControl.setErrors({ misMatch: true });
-			}
-		});
+	private setupForms()
+	{
+		this.setupUsernameForm();
+		this.setupPasswordForm();
+		this.setupConfirmPasswordForm();
 
 		this.accountDetailsFormGroup = new FormGroup({
 			username: this.usernameFormControl,
@@ -76,6 +54,46 @@ export class RegisterComponent implements OnInit {
 		this.chatRoomFormControl = new FormControl('');
 	}
 
+	private setupUsernameForm()	{
+		this.usernameFormControl =
+			new FormControl('', [
+					Validators.required,
+					Validators.minLength(5),
+					Validators.maxLength(20)
+				]
+			);
+		this.usernameFormControl.valueChanges.subscribe(
+			value => this.username = value
+		);
+	}
+
+	private setupPasswordForm() {
+		this.passwordFormControl =
+			new FormControl('', [
+					Validators.required,
+					Validators.minLength(15),
+					Validators.maxLength(30)
+				]
+			);
+		this.passwordFormControl.valueChanges.subscribe(
+			value => this.password = value
+		);
+	}
+
+	private setupConfirmPasswordForm() {
+		this.confirmPasswordFormControl =
+			new FormControl('', Validators.required);
+		this.confirmPasswordFormControl.valueChanges.subscribe(
+			(value: string) => {
+				if (value != this.passwordFormControl.value) {
+					this.confirmPasswordFormControl.setErrors(
+						{ misMatch: true }
+					);
+				}
+			}
+		);
+	}
+
 	public selectAvatar(avatarId: string): void {
 		this.selectedAvatar = avatarId;
 		this.isAvatarSelected = true;
@@ -83,29 +101,22 @@ export class RegisterComponent implements OnInit {
 
 	public register(): void {
 
-		this.registrationService.register(
-			this.username, this.password, this.selectedAvatar
+		let registrationModel: RegistrationModel = {
+			username: this.username,
+			password: this.password,
+			avatarId: this.selectedAvatar
+		};
+
+		this.httpService.post<UserModel>(
+			'api/User', registrationModel
 		).subscribe(
-			((userModel) => {
+			(userModel) => {
 				this.toastService.createToast({
 					title: "User created successfully",
 					type: "success",
 					duration: 5000
 				});
-			}),
-			((error: HttpErrorResponse) => {
-				let errorDetails = error.error;
-				if (!TypeAssertions.isErrorDetails(errorDetails)) {
-					return;
-				}
-
-				this.toastService.createToast({
-					title: errorDetails.title,
-					description: errorDetails.description,
-					type: "error",
-					duration: 5000
-				});
-			})
+			}
 		);
 	}
 }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpService } from "../helpers/http.service";
+import { AuthenticationModel } from "../../../generated_types/authentication-model";
+import { ToastService } from "../toast/toast.service";
 
 @Component({
 	selector: 'login',
@@ -12,21 +14,26 @@ export class LoginComponent implements OnInit {
 	password = "";
 	isPasswordShown = false;
 
-	constructor(private httpClient: HttpClient) {}
+	constructor(
+		private httpService: HttpService,
+		private toastService: ToastService
+	) {}
 
 	ngOnInit(): void {}
 
 	public login(): void {
-		this.httpClient.post<string>(
+		this.httpService.post<AuthenticationModel>(
 			"api/user/login",
 			{ username: this.username, password: this.password }
-		).subscribe({
-			next: (response: string) => {
-				console.log("Congratulations, you were able to login!", response)
-			},
-			error: (err) => {
-				console.log("Ruh-ruh, something went wrong!", err)
+		).subscribe(
+			authModel => {
+				this.toastService.createToast({
+					title: "Login Successful",
+					description: authModel.jwt,
+					type: "success",
+					duration: 5000
+				});
 			}
-		})
+		)
 	}
 }

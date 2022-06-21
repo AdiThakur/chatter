@@ -16,6 +16,7 @@ export class ToastComponent {
 		private matSnackbarRef: MatSnackBarRef<ToastComponent>,
 		@Inject(MAT_SNACK_BAR_DATA) private data: ToastData
 	) {
+		// TODO: The title and desc should be truncated if too long
 		this.title = data.title;
 		this.description = data.description;
 	}

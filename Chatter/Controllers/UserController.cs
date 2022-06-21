@@ -41,7 +41,7 @@ namespace Chatter.Controllers
                 credentials.Password
             );
 
-            return Ok(jwt);
+            return Ok(new AuthenticationModel(jwt));
         }
 
         [HttpGet]
