@@ -15,6 +15,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { ToastComponent } from './toast/toast.component';
 import { RoutingModule } from "./routing/routing.module";
+import { httpInterceptorProviders } from "./interceptors";
 
 @NgModule({
 	declarations: [
@@ -38,7 +39,9 @@ import { RoutingModule } from "./routing/routing.module";
 		MatSnackBarModule,
 		RoutingModule
 	],
-	providers: [],
+	providers: [
+		httpInterceptorProviders
+	],
 	bootstrap: [AppComponent]
 })
 export class AppModule {}
