@@ -7,7 +7,7 @@ import { tap } from "rxjs/operators";
 @Injectable({
 	providedIn: 'root'
 })
-export class LoginService {
+export class AuthService {
 
 	public static JWT_KEY = "jwt";
 
@@ -33,6 +33,6 @@ export class LoginService {
 	}
 
 	private storeJwt(jwt: string): void {
-		localStorage.setItem(LoginService.JWT_KEY, jwt);
+		localStorage.setItem(AuthService.JWT_KEY, jwt);
 	}
 }

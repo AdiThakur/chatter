@@ -6,7 +6,7 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { LoginService } from "../login/login.service";
+import { AuthService } from "../shared-services/auth.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -14,7 +14,7 @@ export class AuthInterceptor implements HttpInterceptor {
 	private readonly AUTHORIZATION_HEADER_KEY = 'Authorization';
 
 	private getJwtFromLocalStorage(): string | null {
-		return localStorage.getItem(LoginService.JWT_KEY);
+		return localStorage.getItem(AuthService.JWT_KEY);
 	}
 
 	private addAuthorizationHeader(request: HttpRequest<unknown>, jwt: string): void {

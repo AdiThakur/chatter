@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastService } from "../toast/toast.service";
-import { LoginService } from "./login.service";
+import { AuthService } from "../shared-services/auth.service";
 
 @Component({
 	selector: 'login',
@@ -14,14 +14,14 @@ export class LoginComponent implements OnInit {
 	isPasswordShown = false;
 
 	constructor(
-		private loginService: LoginService,
+		private authService: AuthService,
 		private toastService: ToastService
 	) {}
 
 	ngOnInit(): void {}
 
 	public login(): void {
-		this.loginService
+		this.authService
 			.login(this.username, this.password)
 			.subscribe(authModel => {
 				this.toastService.createToast({
