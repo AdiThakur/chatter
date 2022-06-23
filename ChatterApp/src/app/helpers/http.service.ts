@@ -42,4 +42,14 @@ export class HttpService {
 				})
 			);
 	}
+
+	public get<T>(url: string): Observable<T> {
+		return this.httpClient
+			.get<T>(url)
+			.pipe(
+				catchError((error, _) => {
+					return this.handleError<T>(error, _);
+				})
+			);
+	}
 }
