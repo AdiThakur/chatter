@@ -5,7 +5,7 @@ namespace Chatter.TypeGen
 {
     public class ChatterGenerationSpec : GenerationSpec
     {
-        private const string OutputDir = "../ChatterApp/generated_types";
+        private const string OutputDir = "../ChatterApp/src/types";
 
         public override void OnBeforeGeneration(OnBeforeGenerationArgs args)
         {

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from "../helpers/http.service";
 import { Observable } from "rxjs";
-import { AuthenticationModel } from "../../../generated_types/authentication-model";
 import { tap } from "rxjs/operators";
+import { AuthenticationModel } from "../../types/authentication-model";
+import { Jwt } from "../../types/jwt";
 
 @Injectable({
 	providedIn: 'root'
@@ -12,11 +13,23 @@ export class AuthService {
 	public static JWT_KEY = "jwt";
 
 	private _isUserLoggedIn = false;
+	private jwt: null | Jwt;
 
-	constructor(private httpService: HttpService) {}
+	constructor(
+		private httpService: HttpService
+	) {
+		let encodedJwt = this.loadJwt();
+		if (encodedJwt != null) {
+			this.jwt = new Jwt(encodedJwt);
+		}
+	}
 
-	private isUserLoggedIn(): boolean {
-		return this._isUserLoggedIn;
+	public isUserLoggedIn(): boolean {
+		if (this.jwt == null) {
+			return false;
+		}
+
+		return this.jwt.isValid();
 	}
 
 	public login(username: string, password: string): Observable<AuthenticationModel> {
@@ -30,6 +43,10 @@ export class AuthService {
 					this._isUserLoggedIn = true;
 				})
 			);
+	}
+
+	private loadJwt(): null | string {
+		return localStorage.getItem(AuthService.JWT_KEY);
 	}
 
 	private storeJwt(jwt: string): void {

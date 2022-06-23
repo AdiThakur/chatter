@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ToastService } from "../toast/toast.service";
-import { UserModel } from "../../../generated_types/user-model";
-import { RegistrationModel } from "../../../generated_types/registration-model";
+import { UserModel } from "../../types/user-model";
+import { RegistrationModel } from "../../types/registration-model";
 import { HttpService } from "../helpers/http.service";
 
 @Component({
