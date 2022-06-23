@@ -16,13 +16,15 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { ToastComponent } from './toast/toast.component';
 import { RoutingModule } from "./routing/routing.module";
 import { httpInterceptorProviders } from "./interceptors";
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		LoginComponent,
 		RegisterComponent,
-		ToastComponent
+		ToastComponent,
+		HomeComponent
 	],
 	imports: [
 		BrowserModule,
