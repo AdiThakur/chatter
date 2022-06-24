@@ -79,7 +79,8 @@ namespace Chatter.Services
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.Username)
+                new Claim("id", user.Id.ToString()),
+                new Claim("name", user.Username)
             };
 
             return GenerateJwt(claims);
@@ -108,7 +109,7 @@ namespace Chatter.Services
                 _config["Jwt:Issuer"],
                 _config["Jwt:Audience"],
                 claims,
-                expires: DateTime.Now.AddMinutes(15),
+                expires: DateTime.Now.AddHours(1),
                 signingCredentials: signingCredentials
             );
 
