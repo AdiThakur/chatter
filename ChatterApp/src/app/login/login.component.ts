@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastService } from "../toast/toast.service";
 import { AuthService } from "../shared-services/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
 	selector: 'login',
@@ -14,8 +15,8 @@ export class LoginComponent implements OnInit {
 	isPasswordShown = false;
 
 	constructor(
-		private authService: AuthService,
-		private toastService: ToastService
+		private router: Router,
+		private authService: AuthService
 	) {}
 
 	ngOnInit(): void {}
@@ -23,12 +24,8 @@ export class LoginComponent implements OnInit {
 	public login(): void {
 		this.authService
 			.login(this.username, this.password)
-			.subscribe(authModel => {
-				this.toastService.createToast({
-					title: "Login successful!",
-					type: "success",
-					duration: 5000
-				});
+			.subscribe(() => {
+				this.router.navigate(['/home']);
 			});
 	}
 }
