@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from "../helpers/http.service";
+import { HttpService } from "./http.service";
 import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 import { AuthenticationModel } from "../../types/authentication-model";
@@ -13,7 +13,7 @@ export class AuthService {
 
 	public userId: null | number;
 
-	private jwt: null | Jwt;
+	private jwt: null | Jwt = null;
 
 	constructor(
 		private httpService: HttpService

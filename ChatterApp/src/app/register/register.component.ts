@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ToastService } from "../toast/toast.service";
 import { UserModel } from "../../types/user-model";
 import { RegistrationModel } from "../../types/registration-model";
-import { HttpService } from "../helpers/http.service";
+import { HttpService } from "../services/http.service";
 
 @Component({
 	selector: 'register',

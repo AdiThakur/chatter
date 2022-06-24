@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse} from "@angular/common/http";
 import { ToastService } from "../toast/toast.service";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
-import { TypeAssertions}  from "./type-assertions";
+import { TypeAssertions}  from "../helpers/type-assertions";
 
 @Injectable({
 	providedIn: 'root'
