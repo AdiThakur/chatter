@@ -11,7 +11,7 @@ import { JwtStorageHelper } from "../helpers/jwt-storage-helper";
 })
 export class AuthService {
 
-	public userId: null | number;
+	public hasUserSeenLogin = false;
 
 	private jwt: null | Jwt = null;
 
@@ -19,10 +19,13 @@ export class AuthService {
 		private httpService: HttpService
 	) {
 		this.loadJwt();
-		this.userId  = this.jwt?.getClaim("id") as null | number;
 	}
 
-	public isUserLoggedIn(): boolean {
+	public get userId(): null | number {
+		return this.jwt?.getClaim("id") as null | number;
+	}
+
+	public isJwtValid(): boolean {
 		if (this.jwt == null) {
 			return false;
 		}
