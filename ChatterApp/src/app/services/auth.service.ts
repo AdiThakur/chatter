@@ -4,18 +4,18 @@ import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 import { AuthenticationModel } from "../../types/authentication-model";
 import { Jwt } from "../../types/jwt";
-import { JwtStorageHelper } from "../helpers/jwt-storage-helper";
+import { LocalStorageService, SessionStorageService } from "./storage.service";
 
 @Injectable({
 	providedIn: 'root'
 })
 export class AuthService {
 
-	public hasUserSeenLogin = false;
-
 	private jwt: null | Jwt = null;
 
 	constructor(
+		private localStorageService: LocalStorageService,
+		private sessionStorageService: SessionStorageService,
 		private httpService: HttpService
 	) {
 		this.loadJwt();
@@ -23,6 +23,19 @@ export class AuthService {
 
 	public get userId(): null | number {
 		return this.jwt?.getClaim("id") as null | number;
+	}
+
+	public get hasUserSeenLogin(): boolean {
+		let isLoggedIn = this.sessionStorageService.read<boolean>("isLoggedIn");
+		if (isLoggedIn == null) {
+			return false;
+		}
+
+		return isLoggedIn;
+	}
+
+	public set hasUserSeenLogin(hasSeenLogin: boolean) {
+		this.sessionStorageService.write("isLoggedIn", hasSeenLogin);
 	}
 
 	public isJwtValid(): boolean {
@@ -40,14 +53,18 @@ export class AuthService {
 				{ username, password }
 			).pipe(
 				tap(authModel => {
-					JwtStorageHelper.writeEncodedJwt(authModel.jwt);
+					this.storeJwt(authModel.jwt);
 					this.loadJwt();
 				})
 			);
 	}
 
+	private storeJwt(jwt: string): void {
+		this.localStorageService.write("jwt", jwt);
+	}
+
 	private loadJwt(): void {
-		let encodedJwt = JwtStorageHelper.readEncodedJwt();
+		let encodedJwt = this.localStorageService.read<string>("jwt");
 		if (encodedJwt != null) {
 			this.jwt = new Jwt(encodedJwt);
 		}

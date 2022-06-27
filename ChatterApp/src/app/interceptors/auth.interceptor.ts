@@ -6,12 +6,14 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { JwtStorageHelper } from "../helpers/jwt-storage-helper";
+import { LocalStorageService } from "../services/storage.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
 	private readonly AUTHORIZATION_HEADER_KEY = 'Authorization';
+
+	constructor(private localStorageService: LocalStorageService) {}
 
 	private addAuthorizationHeader(request: HttpRequest<unknown>, jwt: string): HttpRequest<unknown> {
 		return request.clone({
@@ -24,7 +26,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
 	intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
-		let jwt = JwtStorageHelper.readEncodedJwt();
+		let jwt = this.localStorageService.read<string>("jwt");
 
 		if (jwt == null) {
 			return next.handle(request);
