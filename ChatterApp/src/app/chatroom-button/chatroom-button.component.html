@@ -4,12 +4,12 @@
 	<div class="chatroom-button-message-container">
 		<img
 			class="chatroom-button-message-user-icon"
-			src="assets/avatar2.png"
-			alt="avatar2.png"
+			[src]="latestMessage.authorAvatarUri"
+			alt="{{ latestMessage.authorAvatarUri }}"
 		>
 		<div class="chatroom-button-message-details">
-			<p class="chatroom-button-message-sender"> shadyman </p>
-			<p class="chatroom-button-message-content"> Hey mans hows it goin... </p>
+			<p class="chatroom-button-message-sender"> {{ latestMessage.authorName }} </p>
+			<p class="chatroom-button-message-content"> {{ latestMessage.content }}</p>
 		</div>
 	</div>
 </div>

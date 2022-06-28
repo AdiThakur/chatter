@@ -9,17 +9,21 @@ namespace Chatter.Data.Models
 
         public string Username { get; set; }
 
+        public string AvatarUri { get; set; }
+
         public ICollection<string>? ChatRooms { get; set; }
 
         [JsonConstructor]
         public UserModel(
             long id,
             string username,
+            string avatarUri,
             ICollection<string>? chatRooms
         )
         {
             Id = id;
             Username = username;
+            AvatarUri = avatarUri;
             ChatRooms = chatRooms;
         }
 
@@ -27,6 +31,7 @@ namespace Chatter.Data.Models
         {
             Id = userEntity.Id;
             Username = userEntity.Username;
+            AvatarUri = userEntity.AvatarUri;
             ChatRooms = userEntity.ChatRooms
                 .Select(chatRoomEntity => chatRoomEntity.Id)
                 .ToList();

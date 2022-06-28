@@ -6,5 +6,6 @@
 export class UserModel {
     id: number;
     username: string;
+    avatarUri: string;
     chatRooms: string[];
 }
