@@ -1,0 +1,16 @@
+.chatroom-list-container {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 100%;
+
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+.chatroom-list-search {
+	margin-bottom: 20px;
+}
+.chatroom-list-search .mat-form-field-wrapper{
+	padding-bottom: 0;
+}

@@ -17,6 +17,8 @@ import { ToastComponent } from './toast/toast.component';
 import { RoutingModule } from "./routing/routing.module";
 import { httpInterceptorProviders } from "./interceptors";
 import { HomeComponent } from './home/home.component';
+import { ChatroomListComponent } from './chatroom-list/chatroom-list.component';
+import { ChatroomButtonComponent } from './chatroom-button/chatroom-button.component';
 
 @NgModule({
 	declarations: [
@@ -24,7 +26,9 @@ import { HomeComponent } from './home/home.component';
 		LoginComponent,
 		RegisterComponent,
 		ToastComponent,
-		HomeComponent
+		HomeComponent,
+		ChatroomListComponent,
+		ChatroomButtonComponent
 	],
 	imports: [
 		BrowserModule,
@@ -46,4 +50,5 @@ import { HomeComponent } from './home/home.component';
 	],
 	bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}

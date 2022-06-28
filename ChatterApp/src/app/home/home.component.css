@@ -10,10 +10,13 @@
 	flex-direction: row;
 	height: 93%;
 	width: 100%;
-	background-color: white;
 }
 .home-chatroom-list-container {
 	height: 100%;
 	width: 25%;
-	background-color: #ff4081;
+}
+.home-content-container {
+	height: 100%;
+	width: 75%;
+	background-color: lightgray;
 }
