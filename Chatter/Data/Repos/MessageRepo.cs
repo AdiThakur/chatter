@@ -3,7 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Chatter.Data.Repos
 {
-    public class MessageRepo : BaseRepo
+    public interface IMessageRepo
+    {
+        Task AddMessageAsync(Message message);
+        Task<Message?> GetMessageAsync(long messageId);
+        Task<List<Message>> GetLatestMessagesForChatRoomAsync(string chatRoomId, int count);
+    }
+
+    public class MessageRepo : BaseRepo, IMessageRepo
     {
         public MessageRepo(ChatterContext context) : base(context) {}
 
@@ -20,6 +27,17 @@ namespace Chatter.Data.Repos
                 .Include(message => message.ChatRoom)
                 .Include(message => message.Author)
                 .FirstAsync();
+        }
+
+        public async Task<List<Message>> GetLatestMessagesForChatRoomAsync(string chatRoomId, int count)
+        {
+            return await context.Messages
+                .OrderByDescending(message => message.TimeStamp)
+                .Where(message => message.ChatRoom.Id == chatRoomId)
+                .Include(message => message.Author)
+                .Include(message => message.ChatRoom)
+                .Take(count)
+                .ToListAsync();
         }
     }
 }

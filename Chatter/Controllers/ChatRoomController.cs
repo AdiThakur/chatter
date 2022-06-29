@@ -53,5 +53,26 @@ namespace Chatter.Controllers
 
             return Ok(chatRoom.ToModel());
         }
+
+        [HttpGet("{chatRoomId}/messages")]
+        public async Task<ActionResult<List<ChatRoomModel>>> GetMessagesInChatRoom(
+            [FromRoute] string? chatRoomId,
+            [FromQuery] int? count
+        )
+        {
+            if (chatRoomId == null)
+            {
+                return BadRequest("ChatRoomId must be specified");
+            }
+
+            if (count == null || count < 1 || count > 100)
+            {
+                return BadRequest("Invalid count specified");
+            }
+
+            var messages = await _chatRoomService.GetLatestMessagesForChatRoomAsync(chatRoomId, count.Value);
+
+            return Ok(messages.ToModels());
+        }
     }
 }

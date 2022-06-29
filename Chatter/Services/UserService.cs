@@ -20,24 +20,24 @@ namespace Chatter.Services
         private readonly IConfiguration _config;
         private readonly IPasswordService _passwordService;
         private readonly IAvatarService _avatarService;
-        private readonly IUsersRepo _usersRepo;
+        private readonly IUserRepo _userRepo;
 
         public UserService(
             IConfiguration config,
             IPasswordService passwordService,
             IAvatarService avatarService,
-            IUsersRepo usersRepo
+            IUserRepo userRepo
         )
         {
             _config = config;
             _passwordService = passwordService;
             _avatarService = avatarService;
-            _usersRepo = usersRepo;
+            _userRepo = userRepo;
         }
 
         public async Task<User?> RegisterAsync(string username, string password, string avatarId)
         {
-            if ((await _usersRepo.GetUserAsync(username)) != null)
+            if ((await _userRepo.GetUserAsync(username)) != null)
             {
                 throw new UserException(
                     "Invalid Username",
@@ -63,12 +63,12 @@ namespace Chatter.Services
                 AvatarUri = avatarUri
             };
 
-            return await _usersRepo.AddUserAsync(userToAdd);
+            return await _userRepo.AddUserAsync(userToAdd);
         }
 
         public async Task<string> LoginAsync(string username, string password)
         {
-            var user = await _usersRepo.GetUserAsync(username);
+            var user = await _userRepo.GetUserAsync(username);
             if (user == null || !_passwordService.Verify(password, user.PasswordHash))
             {
                 throw new UserException(
@@ -88,12 +88,12 @@ namespace Chatter.Services
 
         public async Task<List<User>> GetUsersAsync()
         {
-            return await _usersRepo.GetUsersAsync();
+            return await _userRepo.GetUsersAsync();
         }
 
         public async Task<User?> GetUserAsync(long userId)
         {
-            return await _usersRepo.GetUserWithChatRoomsAsync(userId);
+            return await _userRepo.GetUserWithChatRoomsAsync(userId);
         }
 
         private string GenerateJwt(List<Claim> claims)

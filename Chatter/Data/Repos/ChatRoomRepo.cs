@@ -13,14 +13,14 @@ namespace Chatter.Data.Repos
 
     public class ChatRoomRepo : BaseRepo, IChatRoomsRepo
     {
-        private readonly IUsersRepo _usersRepo;
+        private readonly IUserRepo _userRepo;
 
         public ChatRoomRepo(
             ChatterContext context,
-            IUsersRepo usersRepo
+            IUserRepo userRepo
         ) : base(context)
         {
-            _usersRepo = usersRepo;
+            _userRepo = userRepo;
         }
 
         public async Task AddChatRoomAsync(ChatRoom chatRoom)

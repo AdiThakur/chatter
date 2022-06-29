@@ -34,10 +34,11 @@ export class HomeComponent implements OnInit {
 	}
 
 	private handleInvalidSession(): void {
-		this.router.navigate(['/'])
+		this.router.navigate(['/login'])
 			.then(() => {
 				this.toastService.createToast({
 					title: "Session Expired",
+					description: "Please sign in again",
 					type: "error",
 					duration: 2000
 				});

@@ -15,7 +15,7 @@ namespace Chatter.Tests.Services
         private readonly IFixture _fixture;
 
         private readonly Mock<IChatRoomsRepo> _mockChatRoomsRepo;
-        private readonly Mock<IUsersRepo> _mockUsersRepo;
+        private readonly Mock<IUserRepo> _mockUsersRepo;
 
         private readonly ChatRoomService _sut;
 
@@ -24,7 +24,7 @@ namespace Chatter.Tests.Services
             _fixture = new Fixture().Customize(new AutoMoqCustomization());
 
             _mockChatRoomsRepo = _fixture.Freeze<Mock<IChatRoomsRepo>>();
-            _mockUsersRepo = _fixture.Freeze<Mock<IUsersRepo>>();
+            _mockUsersRepo = _fixture.Freeze<Mock<IUserRepo>>();
 
             _sut = _fixture.Create<ChatRoomService>();
         }

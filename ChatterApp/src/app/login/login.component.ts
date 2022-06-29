@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
 
 	ngOnInit(): void {
 		if (this.authService.isJwtValid()) {
-			this.continueNavigation();
+			this.allowNavigation();
 		}
 	}
 
@@ -36,11 +36,13 @@ export class LoginComponent implements OnInit {
 		this.authService
 			.login(this.username, this.password)
 			.subscribe(() => {
-				this.continueNavigation();
+				this.allowNavigation();
 			});
 	}
 
-	private continueNavigation(): void {
+	private allowNavigation(): void {
+		this.authService.hasUserSeenLogin = true;
+
 		if (this.redirectUrl == undefined) {
 			this.router.navigate(["/"]);
 		} else {

@@ -75,8 +75,8 @@ namespace Chatter
         public static void RegisterRepos(IServiceCollection services)
         {
             services.AddScoped<IChatRoomsRepo, ChatRoomRepo>();
-            services.AddScoped<MessageRepo>();
-            services.AddScoped<IUsersRepo, UserRepo>();
+            services.AddScoped<IUserRepo, UserRepo>();
+            services.AddScoped<IMessageRepo, MessageRepo>();
         }
 
         public static void RegisterServices(IServiceCollection services)

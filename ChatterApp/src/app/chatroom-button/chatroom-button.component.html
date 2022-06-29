@@ -1,7 +1,15 @@
 <div class="chatroom-button-container">
 	<h1 class="chatroom-button-title">{{ chatRoom.id }}</h1>
 	<p class="chatroom-button-desc">{{ chatRoom.description }}</p>
-	<div class="chatroom-button-message-container">
+	<div
+		*ngIf="latestMessage == null"
+	>
+		<p class="chatroom-button-desc">No messages to show...</p>
+	</div>
+	<div
+		class="chatroom-button-message-container"
+		*ngIf="latestMessage != null"
+	>
 		<img
 			class="chatroom-button-message-user-icon"
 			[src]="latestMessage.authorAvatarUri"

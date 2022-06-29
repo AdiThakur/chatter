@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Chatter.Data.Repos
 {
-    public interface IUsersRepo
+    public interface IUserRepo
     {
         Task<User?> AddUserAsync(User user);
         Task<List<User>> GetUsersAsync();
@@ -12,7 +12,7 @@ namespace Chatter.Data.Repos
         Task<User?> GetUserWithChatRoomsAsync(long userId);
     }
 
-    public class UserRepo : BaseRepo, IUsersRepo
+    public class UserRepo : BaseRepo, IUserRepo
     {
         public UserRepo(ChatterContext context) : base(context) { }
 

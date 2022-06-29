@@ -34,5 +34,20 @@ namespace Chatter.Data
         {
             return userEntities.Select(userEntity => userEntity.ToModel()).ToList();
         }
+
+        public static MessageModel? ToModel(this Message? messageEntity)
+        {
+            if (messageEntity == null)
+            {
+                return null;
+            }
+
+            return new MessageModel(messageEntity);
+        }
+
+        public static List<MessageModel?> ToModels(this List<Message> messageEntities)
+        {
+            return messageEntities.Select(messageEntity => messageEntity.ToModel()).ToList();
+        }
     }
 }

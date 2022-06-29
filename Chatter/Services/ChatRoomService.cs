@@ -9,20 +9,24 @@ namespace Chatter.Services
         Task CreateChatRoomAsync(string chatRoomId, string chatRoomDesc);
         Task<ChatRoom?> GetChatRoomAsync(string? chatRoomId);
         Task<List<ChatRoom>> GetChatRoomsAsync();
+        Task<List<Message>> GetLatestMessagesForChatRoomAsync(string chatRoomId, int count);
     }
 
     public class ChatRoomService : IChatRoomService
     {
         private readonly IChatRoomsRepo _chatRoomsRepo;
-        private readonly IUsersRepo _usersRepo;
+        private readonly IUserRepo _userRepo;
+        private readonly IMessageRepo _messagesRepo;
 
         public ChatRoomService(
             IChatRoomsRepo chatRoomsRepo,
-            IUsersRepo usersRepo
+            IUserRepo userRepo,
+            IMessageRepo messageRepo
         )
         {
             _chatRoomsRepo = chatRoomsRepo;
-            _usersRepo = usersRepo;
+            _userRepo = userRepo;
+            _messagesRepo = messageRepo;
         }
 
         public async Task CreateChatRoomAsync(string chatRoomId, string chatRoomDesc)
@@ -57,7 +61,7 @@ namespace Chatter.Services
             }
 
             // Validate User
-            var user = await _usersRepo.GetUserAsync(userId);
+            var user = await _userRepo.GetUserAsync(userId);
             if (user == null)
             {
                 throw new UserException(
@@ -82,6 +86,11 @@ namespace Chatter.Services
         public async Task<ChatRoom?> GetChatRoomAsync(string? chatRoomId)
         {
             return await _chatRoomsRepo.GetChatRoomAsync(chatRoomId);
+        }
+
+        public async Task<List<Message>> GetLatestMessagesForChatRoomAsync(string chatRoomId, int count)
+        {
+            return await _messagesRepo.GetLatestMessagesForChatRoomAsync(chatRoomId, count);
         }
     }
 }
