@@ -61,5 +61,21 @@ namespace Chatter.Controllers
 
             return Ok(user.ToModel());
         }
+
+        [HttpGet("{userId}/chatrooms")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<ChatRoomModel>>> GetChatRoomsForUserAsync([FromRoute] long userId)
+        {
+            var user = await _userService.GetUserAsync(userId);
+
+            if (user == null)
+            {
+                return Ok(new List<ChatRoomModel>());
+            }
+            else
+            {
+                return Ok(user.ChatRooms.ToModels());
+            }
+        }
     }
 }

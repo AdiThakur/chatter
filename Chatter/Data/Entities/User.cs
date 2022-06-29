@@ -10,8 +10,8 @@
 
         public string AvatarUri { get; set; }
 
-        public ICollection<ChatRoom> ChatRooms { get; set; } = new List<ChatRoom>();
+        public List<ChatRoom> ChatRooms { get; set; } = new List<ChatRoom>();
 
-        public ICollection<Message> Messages { get; set; } = new List<Message>();
+        public List<Message> Messages { get; set; } = new List<Message>();
     }
 }

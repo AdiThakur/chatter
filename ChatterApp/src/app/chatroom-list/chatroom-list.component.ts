@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { UserService } from "../services/user.service";
 import { ChatRoomModel } from "../../types/chat-room-model";
-import { HttpService } from "../services/http.service";
 import { MessageModel } from "../../types/message-model";
+import { ChatRoomService } from "../services/chat-room.service";
 
 @Component({
 	selector: 'chatroom-list',
@@ -23,26 +22,14 @@ export class ChatroomListComponent implements OnInit {
 	}
 
 	constructor(
-		private httpService: HttpService,
-		private userService: UserService
+		private chatRoomService: ChatRoomService
 	) {}
 
 	ngOnInit(): void {
-
-		// TODO: get chatrooms from backend
-		this.chatRooms = [
-			{
-				id: "CSC301",
-				description: "Into to Software Engineering",
-				users: ["adityathakur", "adi"]
-			},
-			{
-				id: "CSC309",
-				description: "Into to Web Development",
-				users: ["adityathakur", "adi", "john", "jane"]
-			},
-		]
-
+		this.chatRoomService
+			.getChatRooms()
+			.subscribe((chatRooms) => {
+				this.chatRooms = chatRooms;
+			});
 	}
-
 }

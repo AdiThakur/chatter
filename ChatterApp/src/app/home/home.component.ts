@@ -3,11 +3,13 @@ import { AuthService } from "../services/auth.service";
 import { UserService } from "../services/user.service";
 import { Router } from "@angular/router";
 import { ToastService } from "../toast/toast.service";
+import { ChatRoomService } from "../services/chat-room.service";
 
 @Component({
 	selector: 'app-home',
 	templateUrl: './home.component.html',
-	styleUrls: ['./home.component.css']
+	styleUrls: ['./home.component.css'],
+	providers: [ChatRoomService]
 })
 export class HomeComponent implements OnInit {
 
@@ -22,15 +24,13 @@ export class HomeComponent implements OnInit {
 
 	ngOnInit(): void {
 		let userId = this.authService.userId;
+		// TODO: Move the user-loading process to a Guard
 		this.userService
 			.loadUser(userId)
 			.subscribe(
-				() => this.loadChatRooms(),
+				() => this.isLoading = false,
 				() => this.handleInvalidSession()
 			);
-	}
-
-	private loadChatRooms(): void {
 	}
 
 	private handleInvalidSession(): void {

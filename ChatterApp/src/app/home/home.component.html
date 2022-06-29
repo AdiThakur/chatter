@@ -1,5 +1,11 @@
 <div class="home-nav-bar"></div>
-<div class="home-body">
+<h1 *ngIf="isLoading == true">
+	Loading...
+</h1>
+<div
+	class="home-body"
+	*ngIf="isLoading == false"
+>
 	<div class="home-chatroom-list-container">
 		<chatroom-list></chatroom-list>
 	</div>

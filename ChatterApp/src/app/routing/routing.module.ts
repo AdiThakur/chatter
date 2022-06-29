@@ -10,7 +10,6 @@ const routes: Route[] = [
 	{ path: 'login', component: LoginComponent },
 	{ path: 'register', component: RegisterComponent, canActivate: [UnAuthGuard]},
 	{ path: '', component: HomeComponent,  canActivate: [AuthGuard] },
-	{ path: '**', redirectTo: '' }
 ];
 
 @NgModule({

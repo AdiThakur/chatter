@@ -6,6 +6,7 @@
 
 	padding: 20px;
 	box-sizing: border-box;
+	overflow: auto;
 }
 
 .chatroom-list-search {

@@ -93,7 +93,7 @@ namespace Chatter.Services
 
         public async Task<User?> GetUserAsync(long userId)
         {
-            return await _usersRepo.GetUserAsync(userId);
+            return await _usersRepo.GetUserWithChatRoomsAsync(userId);
         }
 
         private string GenerateJwt(List<Claim> claims)
