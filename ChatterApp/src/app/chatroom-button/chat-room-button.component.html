@@ -1,4 +1,7 @@
-<div class="chatroom-button-container">
+<div
+	class="chatroom-button-container"
+	(click)="selectChatRoom()"
+>
 	<h1 class="chatroom-button-title">{{ chatRoom.id }}</h1>
 	<p class="chatroom-button-desc">{{ chatRoom.description }}</p>
 	<div

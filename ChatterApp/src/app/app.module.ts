@@ -18,7 +18,8 @@ import { RoutingModule } from "./routing/routing.module";
 import { httpInterceptorProviders } from "./interceptors";
 import { HomeComponent } from './home/home.component';
 import { ChatroomListComponent } from './chatroom-list/chatroom-list.component';
-import { ChatroomButtonComponent } from './chatroom-button/chatroom-button.component';
+import { ChatRoomButtonComponent } from './chatroom-button/chat-room-button.component';
+import { ChatRoomComponent } from './chat-room/chat-room.component';
 
 @NgModule({
 	declarations: [
@@ -28,7 +29,8 @@ import { ChatroomButtonComponent } from './chatroom-button/chatroom-button.compo
 		ToastComponent,
 		HomeComponent,
 		ChatroomListComponent,
-		ChatroomButtonComponent
+		ChatRoomButtonComponent,
+		ChatRoomComponent
 	],
 	imports: [
 		BrowserModule,

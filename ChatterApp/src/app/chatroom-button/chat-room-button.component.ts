@@ -2,13 +2,14 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ChatRoomModel } from "../../types/chat-room-model";
 import { MessageModel } from "../../types/message-model";
 import { ChatRoomService } from "../services/chat-room.service";
+import { Router } from "@angular/router";
 
 @Component({
 	selector: 'chatroom-button',
-	templateUrl: './chatroom-button.component.html',
-	styleUrls: ['./chatroom-button.component.css']
+	templateUrl: './chat-room-button.component.html',
+	styleUrls: ['./chat-room-button.component.css']
 })
-export class ChatroomButtonComponent implements OnInit {
+export class ChatRoomButtonComponent implements OnInit {
 
 	@Input()
 	public chatRoom: ChatRoomModel;
@@ -16,6 +17,7 @@ export class ChatroomButtonComponent implements OnInit {
 	public latestMessage: null | MessageModel;
 
 	constructor(
+		private router: Router,
 		private chatRoomService: ChatRoomService
 	) {}
 
@@ -26,5 +28,9 @@ export class ChatroomButtonComponent implements OnInit {
 				this.latestMessage = latestMessage;
 			});
 		;
+	}
+
+	public selectChatRoom(): void {
+		this.chatRoomService.selectChatRoom(this.chatRoom);
 	}
 }
