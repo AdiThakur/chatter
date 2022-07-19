@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Chatter.Hubs;
 
 namespace Chatter
 {
@@ -18,6 +19,7 @@ namespace Chatter
             // Add services to the container.
 
             builder.Services.AddControllers();
+            builder.Services.AddSignalR();
             builder.Services.AddDbContext<ChatterContext>();
             builder.Services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -26,15 +28,17 @@ namespace Chatter
                     options.TokenValidationParameters = new TokenValidationParameters()
                     {
                         ValidateLifetime = true,
-
                         ValidateIssuer = true,
                         ValidIssuer = builder.Configuration["Jwt:Issuer"],
-
                         ValidateAudience = true,
                         ValidAudience = builder.Configuration["Jwt:Audience"],
-
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+                    };
+
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = OnMessageReceivedHook
                     };
                 });
 
@@ -68,18 +72,19 @@ namespace Chatter
             app.UseAuthorization();
 
             app.MapControllers();
+            app.MapHub<ChatHub>(builder.Configuration["SignalR:ChatHubEndpoint"]);
 
             app.Run();
         }
 
-        public static void RegisterRepos(IServiceCollection services)
+        private static void RegisterRepos(IServiceCollection services)
         {
             services.AddScoped<IChatRoomsRepo, ChatRoomRepo>();
             services.AddScoped<IUserRepo, UserRepo>();
             services.AddScoped<IMessageRepo, MessageRepo>();
         }
 
-        public static void RegisterServices(IServiceCollection services)
+        private static void RegisterServices(IServiceCollection services)
         {
             services.AddSingleton<IPasswordService, PasswordService>();
             services.AddSingleton<IAvatarService, AvatarService>();
@@ -87,10 +92,19 @@ namespace Chatter
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IChatRoomService, ChatRoomService>();
         }
+
+        private static Task OnMessageReceivedHook(MessageReceivedContext context)
+        {
+            var accessToken = context.Request.Query["access_token"];
+            var path = context.HttpContext.Request.Path;
+
+            if (!string.IsNullOrEmpty(accessToken) &&
+                path.StartsWithSegments("/chat"))
+            {
+                context.Token = accessToken;
+            }
+
+            return Task.CompletedTask;
+        }
     }
 }
-
-// TODO
-// - Add MessageController
-// - Add tests for MessageController
-// - Cleanup Program.cs

@@ -4,12 +4,17 @@ import { UserService } from "../services/user.service";
 import { Router } from "@angular/router";
 import { ToastService } from "../toast/toast.service";
 import { ChatRoomService } from "../services/chat-room.service";
+import { ChatService } from "../services/chat.service";
+import { HubConnectionBuilder } from "@microsoft/signalr";
 
 @Component({
 	selector: 'app-home',
 	templateUrl: './home.component.html',
 	styleUrls: ['./home.component.css'],
-	providers: [ChatRoomService]
+	providers: [
+		ChatRoomService,
+		ChatService
+	]
 })
 export class HomeComponent implements OnInit {
 
@@ -19,7 +24,8 @@ export class HomeComponent implements OnInit {
 		private router: Router,
 		private toastService: ToastService,
 		private authService: AuthService,
-		private userService: UserService
+		private userService: UserService,
+		private chatService: ChatService
 	) {}
 
 	ngOnInit(): void {

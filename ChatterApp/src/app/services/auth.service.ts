@@ -38,6 +38,14 @@ export class AuthService {
 		this.sessionStorageService.write("isLoggedIn", hasSeenLogin);
 	}
 
+	public getJwt(): string {
+		if (this.jwt == null) {
+			return "";
+		} else {
+			return this.jwt.raw;
+		}
+	}
+
 	public isJwtValid(): boolean {
 		if (this.jwt == null) {
 			return false;

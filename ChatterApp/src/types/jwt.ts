@@ -8,9 +8,10 @@ export class Jwt {
 	private readonly claims: null | { [key: string]: string };
 	private expiration: Date;
 
-	constructor(encodedJwt: string) {
-		let encodedPayload = encodedJwt.split(JWT_DELIMITER)[JWT_PAYLOAD_INDEX];
-		this.claims = JSON.parse(atob(encodedPayload));
+	constructor(
+		public readonly raw: string
+	) {
+		this.claims = this.parseClaims();
 		this.setExpiration();
 	}
 
@@ -25,6 +26,11 @@ export class Jwt {
 
 	public isValid(): boolean {
 		return this.expiration > new Date();
+	}
+
+	private parseClaims(): null | { [key: string]: string } {
+		let encodedPayload = this.raw.split(JWT_DELIMITER)[JWT_PAYLOAD_INDEX];
+		return JSON.parse(atob(encodedPayload));
 	}
 
 	private setExpiration(): void {
