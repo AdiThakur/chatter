@@ -1,4 +1,5 @@
 using Chatter.Data.Entities;
+using Chatter.Data.Models;
 using Chatter.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
@@ -19,6 +20,12 @@ public class ChatHub : Hub
     {
         var caller = await GetUserAsync();
         await AddUserToGroups(caller);
+    }
+
+    public async Task SendMessage(MessageModel message)
+    {
+        // TODO: Check if user is in message.ChatRoomId before sending the message
+        await Clients.Groups(message.ChatRoomId).SendAsync("ReceiveMessage", message);
     }
 
     private async Task<User> GetUserAsync()

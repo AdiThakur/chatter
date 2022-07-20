@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder, HubConnectionState } from "@microsoft/signalr";
 import { AuthService } from "./auth.service";
+import { MessageModel } from "../../types/message-model";
+import { Subject } from "rxjs";
 
 @Injectable()
 export class ChatService {
 
 	private readonly chatHubUrl = 'http://localhost:5001/chat';
 	private connection: HubConnection;
+
+	private messages = new Subject<MessageModel>();
+	public messages$ = this.messages.asObservable();
 
 	constructor(private authService: AuthService) {
 		this.buildConnection();
@@ -24,9 +29,8 @@ export class ChatService {
 	}
 
 	private registerCallBacks(): void {
-		// Temporary hub method; subject to change
-		this.connection.on("SendMessage", (message) => {
-			alert(message)
+		this.connection.on("ReceiveMessage", (message: MessageModel) => {
+			this.messages.next(message);
 		});
 	}
 
@@ -34,5 +38,9 @@ export class ChatService {
 		if (this.connection.state != HubConnectionState.Connected) {
 			this.connection.start();
 		}
+	}
+
+	public sendMessage(message: MessageModel): void {
+		this.connection.invoke("SendMessage", message);
 	}
 }

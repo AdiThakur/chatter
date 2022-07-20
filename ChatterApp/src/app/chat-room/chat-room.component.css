@@ -1,0 +1,38 @@
+.chat-room-container {
+	height: 100%;
+	width: 100%;
+	background-color: palevioletred;
+	box-sizing: border-box;
+}
+.chat-room-message-container {
+	height: 92%;
+	width: 100%;
+}
+
+.chat-room-action-bar-container {
+	height: 8%;
+	width: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+	background-color: white;
+}
+.chat-room-action-bar {
+	display: flex;
+	align-items: center;
+	height: 100%;
+	width: 100%;
+	box-sizing: border-box;
+	background-color: white;
+}
+.chat-room-message-input {
+	height: 100%;
+	width: 90%;
+	padding: 5px 10px;
+	margin: 0;
+	border: 1px solid lightgray;
+	box-sizing: border-box;
+}
+.chat-room-send-button {
+	height: 100%;
+	width: 10%;
+}

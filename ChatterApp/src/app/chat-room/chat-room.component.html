@@ -1,1 +1,21 @@
-<p>Hey guys, welcome to the {{ chatRoomId }} chatroom</p>
+<div class="chat-room-container">
+	<div class="chat-room-message-container">
+		<p>Hey guys, welcome to the {{ chatRoomId }} chatroom</p>
+	</div>
+	<div class="chat-room-action-bar-container">
+		<div class="chat-room-action-bar">
+			<input
+				matInput
+				class="chat-room-message-input"
+				placeholder="Type a message..."
+				[(ngModel)]="currentMessage"
+			/>
+			<button
+				class="chat-room-send-button"
+				(click)="sendMessage()"
+			>
+				Send
+			</button>
+		</div>
+	</div>
+</div>

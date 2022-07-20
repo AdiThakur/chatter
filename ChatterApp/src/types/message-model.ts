@@ -4,7 +4,6 @@
  */
 
 export class MessageModel {
-    id: number;
     timeStamp: Date;
     content: string;
     chatRoomId: string;
