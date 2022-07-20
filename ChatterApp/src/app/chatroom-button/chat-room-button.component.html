@@ -1,5 +1,6 @@
 <div
 	class="chatroom-button-container"
+	[style.background-color]="isSelected ? 'lightblue' : 'palegreen'"
 	(click)="openChatRoom()"
 >
 	<h1 class="chatroom-button-title">{{ chatRoom.id }}</h1>

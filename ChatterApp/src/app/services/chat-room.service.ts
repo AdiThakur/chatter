@@ -1,28 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from "./http.service";
-import { Observable, Subject } from "rxjs";
+import { Observable, ReplaySubject } from "rxjs";
 import { ChatRoomModel } from "../../types/chat-room-model";
 import { UserService } from "./user.service";
 import { MessageModel } from "../../types/message-model";
 import { map } from "rxjs/operators";
-import { Router } from "@angular/router";
-import { AbsolutePath } from "../routing/absolute-paths";
 
 @Injectable()
 export class ChatRoomService {
 
-	private selectedChatRoom = new Subject<ChatRoomModel>();
+	private selectedChatRoom = new ReplaySubject<string>(1);
 	public selectedChatRoom$ = this.selectedChatRoom.asObservable();
 
 	constructor(
-		private router: Router,
 		private httpService: HttpService,
 		private userService: UserService
 	) {}
 
-	public openChatRoom(chatRoom: ChatRoomModel): void {
-		this.router.navigate([AbsolutePath.ChatRoom, chatRoom.id]);
-		this.selectedChatRoom.next(chatRoom);
+	public selectChatRoom(chatRoomId: string): void {
+		this.selectedChatRoom.next(chatRoomId);
 	}
 
 	public getChatRooms(): Observable<ChatRoomModel[]> {

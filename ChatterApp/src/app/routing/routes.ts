@@ -27,4 +27,8 @@ export const Routes: Route[] = [
 			}
 		]
 	},
+	{
+		path: '**',
+		redirectTo: 'home'
+	},
 ];
