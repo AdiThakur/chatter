@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from "../services/auth.service";
+import { AbsolutePath } from "../routing/absolute-paths";
 
 export type StateExtras = undefined | {
 	requestedRoute: string;
@@ -24,7 +25,7 @@ export class AuthGuard implements CanActivate {
 		if (this.authService.hasUserSeenLogin) {
 			return true;
 		} else {
-			this.router.navigate(['/login'], { state: { requestedRoute: state.url }});
+			this.router.navigate([AbsolutePath.Login], { state: { requestedRoute: state.url }});
 			return false;
 		}
 	}

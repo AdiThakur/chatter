@@ -30,7 +30,7 @@ export class ChatRoomButtonComponent implements OnInit {
 		;
 	}
 
-	public selectChatRoom(): void {
-		this.chatRoomService.selectChatRoom(this.chatRoom);
+	public openChatRoom(): void {
+		this.chatRoomService.openChatRoom(this.chatRoom);
 	}
 }

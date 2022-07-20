@@ -6,6 +6,7 @@ import { UserService } from "./user.service";
 import { MessageModel } from "../../types/message-model";
 import { map } from "rxjs/operators";
 import { Router } from "@angular/router";
+import { AbsolutePath } from "../routing/absolute-paths";
 
 @Injectable()
 export class ChatRoomService {
@@ -19,8 +20,8 @@ export class ChatRoomService {
 		private userService: UserService
 	) {}
 
-	public selectChatRoom(chatRoom: ChatRoomModel): void {
-		this.router.navigate([`/chatroom`, chatRoom.id]);
+	public openChatRoom(chatRoom: ChatRoomModel): void {
+		this.router.navigate([AbsolutePath.ChatRoom, chatRoom.id]);
 		this.selectedChatRoom.next(chatRoom);
 	}
 

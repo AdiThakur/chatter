@@ -4,11 +4,11 @@ import { ChatRoomService } from "../services/chat-room.service";
 
 @Component({
 	selector: 'chatroom-list',
-	templateUrl: './chatroom-list.component.html',
-	styleUrls: ['./chatroom-list.component.css'],
+	templateUrl: './chat-room-list.component.html',
+	styleUrls: ['./chat-room-list.component.css'],
 	encapsulation: ViewEncapsulation.None
 })
-export class ChatroomListComponent implements OnInit {
+export class ChatRoomListComponent implements OnInit {
 
 	public chatRooms: ChatRoomModel[] = [];
 

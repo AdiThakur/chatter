@@ -6,6 +6,7 @@ import { ToastService } from "../toast/toast.service";
 import { ChatRoomService } from "../services/chat-room.service";
 import { ChatService } from "../services/chat.service";
 import { HubConnectionBuilder } from "@microsoft/signalr";
+import { AbsolutePath } from "../routing/absolute-paths";
 
 @Component({
 	selector: 'app-home',
@@ -40,7 +41,7 @@ export class HomeComponent implements OnInit {
 	}
 
 	private handleInvalidSession(): void {
-		this.router.navigate(['/login'])
+		this.router.navigate([AbsolutePath.Login])
 			.then(() => {
 				this.toastService.createToast({
 					title: "Session Expired",

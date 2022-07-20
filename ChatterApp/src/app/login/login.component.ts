@@ -3,6 +3,7 @@ import { AuthService } from "../services/auth.service";
 import { Router } from "@angular/router";
 import { ToastService } from "../toast/toast.service";
 import { StateExtras } from "../guards/auth.guard";
+import { AbsolutePath } from "../routing/absolute-paths";
 
 @Component({
 	selector: 'login',
@@ -44,7 +45,7 @@ export class LoginComponent implements OnInit {
 		this.authService.hasUserSeenLogin = true;
 
 		if (this.redirectUrl == undefined) {
-			this.router.navigate(["/"]);
+			this.router.navigate([AbsolutePath.Home]);
 		} else {
 			this.router.navigateByUrl(this.redirectUrl);
 		}

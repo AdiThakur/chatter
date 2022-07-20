@@ -17,7 +17,7 @@ import { ToastComponent } from './toast/toast.component';
 import { RoutingModule } from "./routing/routing.module";
 import { httpInterceptorProviders } from "./interceptors";
 import { HomeComponent } from './home/home.component';
-import { ChatroomListComponent } from './chatroom-list/chatroom-list.component';
+import { ChatRoomListComponent } from './chatroom-list/chat-room-list.component';
 import { ChatRoomButtonComponent } from './chatroom-button/chat-room-button.component';
 import { ChatRoomComponent } from './chat-room/chat-room.component';
 
@@ -28,7 +28,7 @@ import { ChatRoomComponent } from './chat-room/chat-room.component';
 		RegisterComponent,
 		ToastComponent,
 		HomeComponent,
-		ChatroomListComponent,
+		ChatRoomListComponent,
 		ChatRoomButtonComponent,
 		ChatRoomComponent
 	],
