@@ -20,6 +20,7 @@ import { HomeComponent } from './home/home.component';
 import { ChatRoomListComponent } from './chatroom-list/chat-room-list.component';
 import { ChatRoomButtonComponent } from './chatroom-button/chat-room-button.component';
 import { ChatRoomComponent } from './chat-room/chat-room.component';
+import { CommonModule } from "@angular/common";
 
 @NgModule({
 	declarations: [
@@ -33,6 +34,7 @@ import { ChatRoomComponent } from './chat-room/chat-room.component';
 		ChatRoomComponent
 	],
 	imports: [
+		CommonModule,
 		BrowserModule,
 		HttpClientModule,
 		BrowserAnimationsModule,

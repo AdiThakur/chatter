@@ -1,6 +1,19 @@
 <div class="chat-room-container">
 	<div class="chat-room-message-container">
-		<p>Hey guys, welcome to the {{ chatRoomId }} chatroom</p>
+		<div
+			class="chat-room-message"
+			*ngFor="let message of messages"
+		>
+			<img
+				class="chat-room-message-user-icon"
+				[src]="message.authorAvatarUri"
+				alt="{{ message.authorAvatarUri }}"
+			>
+			<div class="chat-room-message-details">
+				<p class="chat-room-message-sender"> {{ message.authorName }} </p>
+				<p class="chat-room-message-content"> {{ message.content }}</p>
+			</div>
+		</div>
 	</div>
 	<div class="chat-room-action-bar-container">
 		<div class="chat-room-action-bar">

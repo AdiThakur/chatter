@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { ChatRoomService } from "../services/chat-room.service";
 import { ChatService } from "../services/chat.service";
@@ -8,13 +8,13 @@ import { UserService } from "../services/user.service";
 @Component({
 	selector: 'app-chat-room',
 	templateUrl: './chat-room.component.html',
-	styleUrls: ['./chat-room.component.css'],
-	encapsulation: ViewEncapsulation.None
+	styleUrls: ['./chat-room.component.css']
 })
 export class ChatRoomComponent implements OnInit {
 
 	public chatRoomId: null | string = null;
 	public currentMessage: string = "";
+	public messages: MessageModel[] = [];
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
@@ -32,8 +32,9 @@ export class ChatRoomComponent implements OnInit {
 		});
 
 		this.chatService.messages$.subscribe(message => {
-			// TODO: Change so that is adds a UI element to display this message
-			console.log("Received message:", message);
+			if (message.chatRoomId == this.chatRoomId) {
+				this.messages.push(message);
+			}
 		});
 	}
 
@@ -51,5 +52,7 @@ export class ChatRoomComponent implements OnInit {
 		} as MessageModel;
 
 		this.chatService.sendMessage(messageModel);
+
+		this.currentMessage = '';
 	}
 }
