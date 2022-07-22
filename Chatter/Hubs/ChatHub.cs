@@ -24,8 +24,16 @@ public class ChatHub : Hub
 
     public async Task SendMessage(MessageModel message)
     {
-        // TODO: Check if user is in message.ChatRoomId before sending the message
-        await Clients.Groups(message.ChatRoomId).SendAsync("ReceiveMessage", message);
+        var caller = await GetUserAsync();
+
+        var isInChatRoom = caller.ChatRooms
+            .Select(chatRoom => chatRoom.Id)
+            .Contains(message.ChatRoomId);
+
+        if (isInChatRoom)
+        {
+            await Clients.Groups(message.ChatRoomId).SendAsync("ReceiveMessage", message);
+        }
     }
 
     private async Task<User> GetUserAsync()
