@@ -91,6 +91,7 @@ namespace Chatter
             // TODO: Want these to be Singletons, but they're lightweight and stateless, so Scoped shouldn't be too bad for now
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IChatRoomService, ChatRoomService>();
+            services.AddScoped<IMessageService, MessageService>();
         }
 
         private static Task OnMessageReceivedHook(MessageReceivedContext context)

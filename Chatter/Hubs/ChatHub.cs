@@ -10,10 +10,15 @@ namespace Chatter.Hubs;
 public class ChatHub : Hub
 {
     private readonly IUserService _userService;
+    private readonly IMessageService _messageService;
 
-    public ChatHub(IUserService userService)
+    public ChatHub(
+        IUserService userService,
+        IMessageService messageService
+    )
     {
         _userService = userService;
+        _messageService = messageService;
     }
 
     public override async Task OnConnectedAsync()
@@ -24,28 +29,34 @@ public class ChatHub : Hub
 
     public async Task SendMessage(MessageModel message)
     {
-        var caller = await GetUserAsync();
+        var addedMessage = await _messageService.AddMessageAsync(
+            GetUserId(), message
+        );
 
-        var isInChatRoom = caller.ChatRooms
-            .Select(chatRoom => chatRoom.Id)
-            .Contains(message.ChatRoomId);
-
-        if (isInChatRoom)
+        if (addedMessage != null)
         {
             await Clients.Groups(message.ChatRoomId).SendAsync("ReceiveMessage", message);
         }
     }
 
-    private async Task<User> GetUserAsync()
+    private long GetUserId()
     {
         var userId = Context.User?.Claims
             .FirstOrDefault(claim => claim.Type == "id")?.Value;
+
         if (userId == null)
         {
             throw new HubException("User not found");
         }
 
-        var user = await _userService.GetUserAsync(long.Parse(userId));
+        return long.Parse(userId);
+    }
+
+    private async Task<User> GetUserAsync()
+    {
+        var userId = GetUserId();
+        var user = await _userService.GetUserAsync(userId);
+
         if (user == null)
         {
             throw new HubException("User not found");
