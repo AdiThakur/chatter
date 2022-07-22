@@ -33,12 +33,13 @@ export class ChatRoomComponent implements OnInit {
 
 		this.chatService.messages$.subscribe(message => {
 			if (message.chatRoomId == this.chatRoomId) {
-				this.messages.push(message);
+				// TODO: Don't really wanna be adding to the front of the list
+				this.messages.unshift(message);
 			}
 		});
 
 		this.chatService.getLastTenMessages(this.chatRoomId).subscribe(lastTenMessages => {
-			this.messages.unshift(...(lastTenMessages.reverse()));
+			this.messages = [...lastTenMessages, ...this.messages];
 		});
 	}
 

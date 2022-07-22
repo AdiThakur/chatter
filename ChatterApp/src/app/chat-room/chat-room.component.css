@@ -4,9 +4,14 @@
 	box-sizing: border-box;
 }
 .chat-room-message-container {
+	display: flex;
+	flex-direction: column-reverse;
 	height: 92%;
 	width: 100%;
+	padding: 20px;
+
 	box-sizing: border-box;
+	overflow-y: scroll;
 }
 
 .chat-room-action-bar-container {
