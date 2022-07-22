@@ -12,7 +12,7 @@ import { UserService } from "../services/user.service";
 })
 export class ChatRoomComponent implements OnInit {
 
-	public chatRoomId: null | string = null;
+	public chatRoomId: string;
 	public currentMessage: string = "";
 	public messages: MessageModel[] = [];
 
@@ -35,6 +35,10 @@ export class ChatRoomComponent implements OnInit {
 			if (message.chatRoomId == this.chatRoomId) {
 				this.messages.push(message);
 			}
+		});
+
+		this.chatService.getLastTenMessages(this.chatRoomId).subscribe(lastTenMessages => {
+			this.messages.unshift(...(lastTenMessages.reverse()));
 		});
 	}
 
