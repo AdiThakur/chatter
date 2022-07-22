@@ -1,0 +1,39 @@
+.chat-room-message {
+	display: flex;
+	height: fit-content;
+	width: fit-content;
+	max-width: 75%;
+	padding-top: 10px;
+	padding-left: 10px;
+
+	border-radius: 10px;
+}
+.chat-room-message-user-icon {
+	height: 65px;
+	width: 65px;
+}
+.chat-room-message-details {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 20px;
+
+	margin-left: 5px;
+	background-color: lightblue;
+	font-weight: lighter;
+	color: gray;
+	border-radius: 15px;
+}
+.chat-room-message-sender,
+.chat-room-message-content {
+	padding: 0;
+	margin: 0;
+	font-size: 16px;
+}
+.chat-room-message-sender {
+	font-size: 18px;
+	font-weight: normal;
+}
+.chat-room-message-content {
+	text-align: justify;
+}

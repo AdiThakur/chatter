@@ -1,0 +1,13 @@
+<div
+	class="chat-room-message"
+>
+	<img
+		class="chat-room-message-user-icon"
+		[src]="message.authorAvatarUri"
+		alt="{{ message.authorAvatarUri }}"
+	>
+	<div class="chat-room-message-details">
+		<p class="chat-room-message-sender"> {{ message.authorName }} </p>
+		<p class="chat-room-message-content"> {{ message.content }}</p>
+	</div>
+</div>

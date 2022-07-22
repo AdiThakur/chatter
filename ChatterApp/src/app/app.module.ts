@@ -23,6 +23,7 @@ import { ChatRoomComponent } from './chat-room/chat-room.component';
 import { CommonModule } from "@angular/common";
 import { RouteReuseStrategy } from "@angular/router";
 import { AppRouteReuseStrategy } from "./routing/route-reuse-strategy";
+import { MessageComponent } from './message/message.component';
 
 @NgModule({
 	declarations: [
@@ -33,7 +34,8 @@ import { AppRouteReuseStrategy } from "./routing/route-reuse-strategy";
 		HomeComponent,
 		ChatRoomListComponent,
 		ChatRoomButtonComponent,
-		ChatRoomComponent
+		ChatRoomComponent,
+		MessageComponent
 	],
 	imports: [
 		CommonModule,
