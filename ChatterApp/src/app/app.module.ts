@@ -21,6 +21,8 @@ import { ChatRoomListComponent } from './chatroom-list/chat-room-list.component'
 import { ChatRoomButtonComponent } from './chatroom-button/chat-room-button.component';
 import { ChatRoomComponent } from './chat-room/chat-room.component';
 import { CommonModule } from "@angular/common";
+import { RouteReuseStrategy } from "@angular/router";
+import { AppRouteReuseStrategy } from "./routing/route-reuse-strategy";
 
 @NgModule({
 	declarations: [
@@ -50,7 +52,11 @@ import { CommonModule } from "@angular/common";
 		RoutingModule
 	],
 	providers: [
-		httpInterceptorProviders
+		httpInterceptorProviders,
+		{
+			provide: RouteReuseStrategy,
+			useClass: AppRouteReuseStrategy
+		}
 	],
 	bootstrap: [AppComponent]
 })
