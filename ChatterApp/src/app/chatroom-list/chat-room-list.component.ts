@@ -9,7 +9,9 @@ import { ChatRoomService } from "../services/chat-room.service";
 })
 export class ChatRoomListComponent implements OnInit {
 
+	public query = "";
 	public chatRooms: ChatRoomModel[] = [];
+	public filteredChatRooms: ChatRoomModel[] = [];
 
 	constructor(
 		private chatRoomService: ChatRoomService
@@ -20,6 +22,25 @@ export class ChatRoomListComponent implements OnInit {
 			.getChatRooms()
 			.subscribe((chatRooms) => {
 				this.chatRooms = chatRooms;
+				this.filteredChatRooms = chatRooms;
 			});
+	}
+
+	public filter(): void {
+		if (this.query == "") {
+			this.resetQuery();
+			return;
+		}
+
+		const lowerCaseQuery = this.query.toLowerCase();
+
+		this.filteredChatRooms = this.chatRooms.filter(chatRoom => {
+			return chatRoom.id.toLowerCase().includes(lowerCaseQuery);
+		})
+	}
+
+	public resetQuery(): void {
+		this.query = '';
+		this.filteredChatRooms = this.chatRooms;
 	}
 }

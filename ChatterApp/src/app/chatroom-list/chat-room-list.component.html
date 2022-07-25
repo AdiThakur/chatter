@@ -10,20 +10,23 @@
 		<input
 			matInput
 			placeholder="search your chatrooms.."
+			(keyup)="filter()"
+			[(ngModel)]="query"
 		/>
 		<button
 			mat-icon-button
 			matSuffix
+			(click)="resetQuery()"
 		>
 			<mat-icon>
-				search
+				clear
 			</mat-icon>
 		</button>
 	</mat-form-field>
 
 	<!-- Chatrooms List -->
 	<div
-		*ngFor="let chatRoom of chatRooms"
+		*ngFor="let chatRoom of filteredChatRooms"
 	>
 		<chatroom-button
 			[chatRoom]="chatRoom"
