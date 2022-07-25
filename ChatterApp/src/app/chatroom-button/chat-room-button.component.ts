@@ -4,6 +4,7 @@ import { MessageModel } from "../../types/message-model";
 import { ChatRoomService } from "../services/chat-room.service";
 import { Router } from "@angular/router";
 import { AbsolutePath } from "../routing/absolute-paths";
+import { ChatService } from "../services/chat.service";
 
 @Component({
 	selector: 'chatroom-button',
@@ -19,7 +20,8 @@ export class ChatRoomButtonComponent implements OnInit {
 
 	constructor(
 		private router: Router,
-		private chatRoomService: ChatRoomService
+		private chatRoomService: ChatRoomService,
+		private chatService: ChatService
 	) {}
 
 	ngOnInit(): void {
@@ -33,7 +35,13 @@ export class ChatRoomButtonComponent implements OnInit {
 			selectedChatRoomId => {
 				this.isSelected = selectedChatRoomId == this.chatRoom.id;
 			}
-		)
+		);
+
+		this.chatService.messages$.subscribe(message => {
+			if (message.chatRoomId == this.chatRoom.id) {
+				this.latestMessage = message;
+			}
+		});
 	}
 
 	public openChatRoom(): void {
