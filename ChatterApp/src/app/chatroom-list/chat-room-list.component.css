@@ -3,16 +3,10 @@
 	flex-direction: column;
 	height: 100%;
 	width: 300px;
+	padding: 10px;
 
 	box-sizing: border-box;
 	overflow: auto;
-}
-
-.chatroom-list-header {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	padding: 10px 10px 0 10px;
 }
 .chatroom-list-title {
 	margin: 0;
@@ -26,8 +20,4 @@
 }
 .chatroom-list-search {
 	margin-bottom: 15px;
-}
-.chatroom-list-chatroom-button-container {
-	padding-right: 18px;
-	overflow: auto;
 }

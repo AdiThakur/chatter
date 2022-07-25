@@ -1,38 +1,33 @@
 <div class="chatroom-list-container">
+	<h1 class="chatroom-list-title">chatrooms</h1>
 
-	<div class="chatroom-list-header">
-		<h1 class="chatroom-list-title">chatrooms</h1>
-
-		<!-- Chatroom Search Bar -->
-		<mat-form-field
-			appearance="outline"
-			class="chatroom-list-search"
-			style="margin-bottom: -10px"
+	<!-- Chatroom Search Bar -->
+	<mat-form-field
+		appearance="outline"
+		class="chatroom-list-search"
+		style="margin-bottom: -10px"
+	>
+		<input
+			matInput
+			placeholder="search your chatrooms.."
+		/>
+		<button
+			mat-icon-button
+			matSuffix
 		>
-			<input
-				matInput
-				placeholder="search your chatrooms.."
-			/>
-			<button
-				mat-icon-button
-				matSuffix
-			>
-				<mat-icon>
-					search
-				</mat-icon>
-			</button>
-		</mat-form-field>
-	</div>
+			<mat-icon>
+				search
+			</mat-icon>
+		</button>
+	</mat-form-field>
 
 	<!-- Chatrooms List -->
-	<div class="chatroom-list-chatroom-button-container">
-		<div
-			*ngFor="let chatRoom of chatRooms"
+	<div
+		*ngFor="let chatRoom of chatRooms"
+	>
+		<chatroom-button
+			[chatRoom]="chatRoom"
 		>
-			<chatroom-button
-				[chatRoom]="chatRoom"
-			>
-			</chatroom-button>
-		</div>
+		</chatroom-button>
 	</div>
 </div>

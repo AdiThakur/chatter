@@ -4,7 +4,7 @@
 	justify-content: space-between;
 	height: 200px;
 	width: calc(100%);
-	margin: 0 10px 10px 10px;
+	margin-bottom: 10px;
 	box-sizing: border-box;
 
 	border-radius: 5px;
@@ -43,6 +43,7 @@
 
 	box-sizing: border-box;
 	background-color: lightgrey;
+	border-radius: 0 0 5px 5px;
 }
 .chatroom-button-message-user-icon {
 	height: 55px;

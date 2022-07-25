@@ -7,6 +7,7 @@
 		>
 		</message>
 	</div>
+
 	<div class="chat-room-action-bar-container">
 		<div class="chat-room-action-bar">
 			<input
@@ -16,10 +17,14 @@
 				[(ngModel)]="currentMessage"
 			/>
 			<button
+				type="button"
 				class="chat-room-send-button"
+				[matTooltip]="'Send'"
 				(click)="sendMessage()"
 			>
-				Send
+				<mat-icon>
+					send
+				</mat-icon>
 			</button>
 		</div>
 	</div>

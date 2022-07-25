@@ -24,6 +24,7 @@ import { CommonModule } from "@angular/common";
 import { RouteReuseStrategy } from "@angular/router";
 import { AppRouteReuseStrategy } from "./routing/route-reuse-strategy";
 import { MessageComponent } from './message/message.component';
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 @NgModule({
 	declarations: [
@@ -51,7 +52,8 @@ import { MessageComponent } from './message/message.component';
 		MatStepperModule,
 		MatIconModule,
 		MatSnackBarModule,
-		RoutingModule
+		RoutingModule,
+		MatTooltipModule
 	],
 	providers: [
 		httpInterceptorProviders,
