@@ -6,7 +6,8 @@
 	padding: 10px;
 
 	box-sizing: border-box;
-	overflow: auto;
+	overflow-x: hidden;
+	overflow-y: scroll;
 }
 .chatroom-list-title {
 	margin: 0;
