@@ -13,10 +13,10 @@
 }
 .home-chatroom-list-container {
 	height: 100%;
-	width: 20%;
+	width: fit-content;
 }
 .home-content-container {
 	height: 100%;
-	width: 80%;
+	flex-grow: 1;
 	background-color: lightgray;
 }
