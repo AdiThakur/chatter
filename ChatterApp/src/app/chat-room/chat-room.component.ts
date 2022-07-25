@@ -5,6 +5,8 @@ import { ChatService } from "../services/chat.service";
 import { MessageModel } from "../../types/message-model";
 import { UserService } from "../services/user.service";
 
+type ViewMessage = MessageModel & { showProfilePic: boolean };
+
 @Component({
 	selector: 'app-chat-room',
 	templateUrl: './chat-room.component.html',
@@ -14,7 +16,7 @@ export class ChatRoomComponent implements OnInit {
 
 	public chatRoomId: string;
 	public currentMessage: string = "";
-	public messages: MessageModel[] = [];
+	public messages: ViewMessage[] = [];
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
@@ -33,13 +35,22 @@ export class ChatRoomComponent implements OnInit {
 
 		this.chatService.messages$.subscribe(message => {
 			if (message.chatRoomId == this.chatRoomId) {
-				// TODO: Don't really wanna be adding to the front of the list
-				this.messages.unshift(message);
+				let viewMessage = message as ViewMessage;
+				this.messages.unshift(viewMessage);
+				viewMessage.showProfilePic = this.shouldShowProfilePic(this.messages, 0);
 			}
 		});
 
 		this.chatService.getLastTenMessages(this.chatRoomId).subscribe(lastTenMessages => {
-			this.messages = [...lastTenMessages, ...this.messages];
+			let viewMessages: ViewMessage[] = [];
+
+			lastTenMessages.forEach((message, index) => {
+				let viewMessage = message as ViewMessage;
+				viewMessage.showProfilePic = this.shouldShowProfilePic(lastTenMessages, index);
+				viewMessages.push(viewMessage);
+			});
+
+			this.messages = [...viewMessages, ...this.messages];
 		});
 	}
 
@@ -59,5 +70,15 @@ export class ChatRoomComponent implements OnInit {
 		this.chatService.sendMessage(messageModel);
 
 		this.currentMessage = '';
+	}
+
+	private shouldShowProfilePic(messages: MessageModel[], index: number): boolean {
+		let nextIndex = index + 1;
+
+		if (nextIndex >= messages.length) {
+			return true;
+		} else {
+			return messages[index].authorName != messages[index + 1].authorName;
+		}
 	}
 }

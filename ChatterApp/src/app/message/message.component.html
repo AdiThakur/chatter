@@ -3,10 +3,15 @@
 	[style.flex-direction]="isSender ? 'row-reverse' : 'row'"
 >
 	<img
+		*ngIf="showProfilePic == true"
 		class="chat-room-message-user-icon"
 		alt="{{ message.authorAvatarUri }}"
 		[src]="message.authorAvatarUri"
 	>
+	<div
+		*ngIf="showProfilePic == false"
+		class="chat-room-message-user-icon"
+	></div>
 	<div
 		class="chat-room-message-details"
 		[style.background-color]="isSender ? 'lightgreen' : 'lightblue'"

@@ -12,7 +12,7 @@ export class MessageComponent implements OnInit {
 	@Input()
 	public message: MessageModel;
 	@Input()
-	public firstInGroup: boolean;
+	public showProfilePic: boolean;
 	public isSender = false;
 
 	constructor(
