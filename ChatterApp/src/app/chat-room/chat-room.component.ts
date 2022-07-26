@@ -15,7 +15,9 @@ type ViewMessage = MessageModel & { showProfilePic: boolean };
 export class ChatRoomComponent implements OnInit {
 
 	public chatRoomId: string;
-	public currentMessage: string = "";
+	public memberCount: number;
+
+	public messageToSend: string = "";
 	public messages: ViewMessage[] = [];
 
 	constructor(
@@ -52,10 +54,15 @@ export class ChatRoomComponent implements OnInit {
 
 			this.messages = [...viewMessages, ...this.messages];
 		});
+
+		this.chatRoomService.chatRooms$.subscribe(chatRooms => {
+			this.memberCount =
+				chatRooms.find(chatRoom => chatRoom.id == this.chatRoomId)?.users.length ?? 0;
+		});
 	}
 
 	public sendMessage(): void {
-		if (this.currentMessage == '') {
+		if (this.messageToSend == '') {
 			return;
 		}
 
@@ -64,12 +71,12 @@ export class ChatRoomComponent implements OnInit {
 			chatRoomId: this.chatRoomId,
 			authorName: this.userService.user.username,
 			authorAvatarUri: this.userService.user.avatarUri,
-			content: this.currentMessage
+			content: this.messageToSend
 		} as MessageModel;
 
 		this.chatService.sendMessage(messageModel);
 
-		this.currentMessage = '';
+		this.messageToSend = '';
 	}
 
 	private shouldShowProfilePic(messages: MessageModel[], index: number): boolean {

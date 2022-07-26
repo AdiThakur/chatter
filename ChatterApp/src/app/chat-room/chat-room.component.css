@@ -9,6 +9,8 @@
 
 .chat-room-header {
 	display: flex;
+	align-items: center;
+	justify-content: space-between;
 	padding: 25px 15px;
 	height: fit-content;
 
@@ -22,6 +24,23 @@
 	font-weight: lighter;
 	font-size: 45px;
 	text-align: center;
+}
+.chat-room-member-details {
+	display: flex;
+	align-items: center;
+}
+.chat-room-member-icon {
+	height: 2rem;
+	width: 2rem;
+	color: dimgray;
+	font-size: 2rem;
+}
+.chat-room-member-count {
+	margin: 0;
+	padding: 2px;
+	color: dimgray;
+	font-weight: lighter;
+	font-size: 1.3rem;
 }
 
 .chat-room-message-container {

@@ -57,6 +57,7 @@ namespace Chatter.Data.Repos
             return await context.Users
                 .Where(u => u.Id == userId)
                 .Include(u => u.ChatRooms)
+                .ThenInclude(c => c.Users)
                 .FirstOrDefaultAsync();
         }
     }

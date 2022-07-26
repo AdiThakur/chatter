@@ -9,8 +9,11 @@ import { map } from "rxjs/operators";
 @Injectable()
 export class ChatRoomService {
 
-	private selectedChatRoom = new ReplaySubject<string>(1);
-	public selectedChatRoom$ = this.selectedChatRoom.asObservable();
+	private selectedChatRoomSubject = new ReplaySubject<string>(1);
+	public selectedChatRoom$ = this.selectedChatRoomSubject.asObservable();
+
+	private chatRoomsSubject = new ReplaySubject<ChatRoomModel[]>(1);
+	public chatRooms$ = this.chatRoomsSubject.asObservable();
 
 	constructor(
 		private httpService: HttpService,
@@ -18,14 +21,19 @@ export class ChatRoomService {
 	) {}
 
 	public selectChatRoom(chatRoomId: string): void {
-		this.selectedChatRoom.next(chatRoomId);
+		this.selectedChatRoomSubject.next(chatRoomId);
 	}
 
 	public getChatRooms(): Observable<ChatRoomModel[]> {
-		return this.httpService
+		this.httpService
 			.get<ChatRoomModel[]>(
 				`api/User/${this.userService.user.id}/chatrooms`
-			);
+			)
+			.subscribe(chatRooms => {
+				this.chatRoomsSubject.next(chatRooms);
+			});
+
+		return this.chatRooms$;
 	}
 
 	public getLatestMessageForChatRoom(chatRoomId: string): Observable<null | MessageModel> {

@@ -1,6 +1,10 @@
 <div class="chat-room-container">
 	<div class="chat-room-header">
 		<h1 class="chat-room-title">{{ chatRoomId }}</h1>
+		<div class="chat-room-member-details">
+			<mat-icon class="chat-room-member-icon">person</mat-icon>
+			<p class="chat-room-member-count">{{ memberCount }}</p>
+		</div>
 	</div>
 
 	<div class="chat-room-message-container">
@@ -18,7 +22,7 @@
 				matInput
 				class="chat-room-message-input"
 				placeholder="Type a message..."
-				[(ngModel)]="currentMessage"
+				[(ngModel)]="messageToSend"
 			/>
 			<button
 				type="button"
