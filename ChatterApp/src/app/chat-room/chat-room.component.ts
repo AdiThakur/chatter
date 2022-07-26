@@ -15,7 +15,7 @@ type ViewMessage = MessageModel & { showProfilePic: boolean };
 export class ChatRoomComponent implements OnInit {
 
 	public chatRoomId: string;
-	public memberCount: number;
+	public memberCount = 0;
 
 	public messageToSend: string = "";
 	public messages: ViewMessage[] = [];
@@ -35,12 +35,9 @@ export class ChatRoomComponent implements OnInit {
 			}
 		});
 
-		this.chatService.messages$.subscribe(message => {
-			if (message.chatRoomId == this.chatRoomId) {
-				let viewMessage = message as ViewMessage;
-				this.messages.unshift(viewMessage);
-				viewMessage.showProfilePic = this.shouldShowProfilePic(this.messages, 0);
-			}
+		this.chatRoomService.chatRooms$.subscribe(chatRooms => {
+			this.memberCount =
+				chatRooms.find(chatRoom => chatRoom.id == this.chatRoomId)?.users.length ?? 0;
 		});
 
 		this.chatService.getLastTenMessages(this.chatRoomId).subscribe(lastTenMessages => {
@@ -55,9 +52,12 @@ export class ChatRoomComponent implements OnInit {
 			this.messages = [...viewMessages, ...this.messages];
 		});
 
-		this.chatRoomService.chatRooms$.subscribe(chatRooms => {
-			this.memberCount =
-				chatRooms.find(chatRoom => chatRoom.id == this.chatRoomId)?.users.length ?? 0;
+		this.chatService.messages$.subscribe(message => {
+			if (message.chatRoomId == this.chatRoomId) {
+				let viewMessage = message as ViewMessage;
+				this.messages.unshift(viewMessage);
+				viewMessage.showProfilePic = this.shouldShowProfilePic(this.messages, 0);
+			}
 		});
 	}
 

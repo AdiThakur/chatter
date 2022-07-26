@@ -11,8 +11,8 @@ export class ChatService {
 	private readonly chatHubUrl = 'http://localhost:5001/chat';
 	private connection: HubConnection;
 
-	private messages = new Subject<MessageModel>();
-	public messages$ = this.messages.asObservable();
+	private messagesSubject = new Subject<MessageModel>();
+	public messages$ = this.messagesSubject.asObservable();
 
 	constructor(
 		private httpService: HttpService,
@@ -34,7 +34,11 @@ export class ChatService {
 
 	private registerCallBacks(): void {
 		this.connection.on("ReceiveMessage", (message: MessageModel) => {
-			this.messages.next(message);
+			this.messagesSubject.next(message);
+		});
+		this.connection.on("UserConnected", (chatRoomId: string) => {
+		});
+		this.connection.on("UserDisconnected", (chatRoomId: string) => {
 		});
 	}
 

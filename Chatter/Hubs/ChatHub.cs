@@ -27,6 +27,12 @@ public class ChatHub : Hub
         await AddUserToGroups(caller);
     }
 
+    public override async Task OnDisconnectedAsync(Exception? exception)
+    {
+        var caller = await GetUserAsync();
+        await RemoveUserFromGroups(caller);
+    }
+
     public async Task SendMessage(MessageModel message)
     {
         var addedMessage = await _messageService.AddMessageAsync(
@@ -70,6 +76,16 @@ public class ChatHub : Hub
         foreach (var chatRoom in user.ChatRooms)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, chatRoom.Id);
+            await Clients.Groups(chatRoom.Id).SendAsync("UserConnected", chatRoom.Id);
+        }
+    }
+
+    private async Task RemoveUserFromGroups(User user)
+    {
+        foreach (var chatRoom in user.ChatRooms)
+        {
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, chatRoom.Id);
+            await Clients.Groups(chatRoom.Id).SendAsync("UserDisconnected", chatRoom.Id);
         }
     }
 }
