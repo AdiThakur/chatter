@@ -5,7 +5,6 @@ import { Router } from "@angular/router";
 import { ToastService } from "../toast/toast.service";
 import { ChatRoomService } from "../services/chat-room.service";
 import { ChatService } from "../services/chat.service";
-import { HubConnectionBuilder } from "@microsoft/signalr";
 import { AbsolutePath } from "../routing/absolute-paths";
 
 @Component({
@@ -19,24 +18,35 @@ import { AbsolutePath } from "../routing/absolute-paths";
 })
 export class HomeComponent implements OnInit {
 
-	public isLoading = true;
+	public hasLoaded = false;
 
 	constructor(
 		private router: Router,
 		private toastService: ToastService,
 		private authService: AuthService,
 		private userService: UserService,
-		private chatService: ChatService
+		private chatRoomService: ChatRoomService
 	) {}
 
 	ngOnInit(): void {
+		this.loadUserService();
+	}
+
+	private loadUserService(): void {
 		let userId = this.authService.userId;
-		// TODO: Move the user-loading process to a Guard
 		this.userService
 			.loadUser(userId)
 			.subscribe(
-				() => this.isLoading = false,
+				() => this.loadChatRoomService(),
 				() => this.handleInvalidSession()
+			);
+	}
+
+	private loadChatRoomService(): void {
+		this.chatRoomService
+			.load()
+			.subscribe(
+				() => this.hasLoaded = true
 			);
 	}
 

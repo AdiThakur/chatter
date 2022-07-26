@@ -1,10 +1,10 @@
 <div class="home-nav-bar"></div>
-<h1 *ngIf="isLoading == true">
+<h1 *ngIf="hasLoaded == false">
 	Loading...
 </h1>
 <div
 	class="home-body"
-	*ngIf="isLoading == false"
+	*ngIf="hasLoaded == true"
 >
 	<div class="home-chatroom-list-container">
 		<chatroom-list></chatroom-list>

@@ -35,10 +35,7 @@ export class ChatRoomComponent implements OnInit {
 			}
 		});
 
-		this.chatRoomService.chatRooms$.subscribe(chatRooms => {
-			this.memberCount =
-				chatRooms.find(chatRoom => chatRoom.id == this.chatRoomId)?.users.length ?? 0;
-		});
+		this.memberCount = this.chatRoomService.getMemberCountForChatRoom(this.chatRoomId);
 
 		this.chatService.getLastTenMessages(this.chatRoomId).subscribe(lastTenMessages => {
 			let viewMessages: ViewMessage[] = [];

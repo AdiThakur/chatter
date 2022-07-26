@@ -18,12 +18,8 @@ export class ChatRoomListComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-		this.chatRoomService
-			.getChatRooms()
-			.subscribe((chatRooms) => {
-				this.chatRooms = chatRooms;
-				this.filteredChatRooms = chatRooms;
-			});
+		this.chatRooms = this.chatRoomService.chatRooms;
+		this.filteredChatRooms = this.chatRooms;
 	}
 
 	public filter(): void {
