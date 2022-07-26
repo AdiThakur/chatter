@@ -1,4 +1,8 @@
 <div class="chat-room-container">
+	<div class="chat-room-header">
+		<h1 class="chat-room-title">{{ chatRoomId }}</h1>
+	</div>
+
 	<div class="chat-room-message-container">
 		<message
 			*ngFor="let message of messages"
