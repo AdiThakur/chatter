@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { ToastService } from "../toast/toast.service";
 import { UserModel } from "../../types/user-model";
 import { RegistrationModel } from "../../types/registration-model";
@@ -24,11 +24,11 @@ export class RegisterComponent implements OnInit {
 		"avatar6.png", "avatar7.png", "avatar8.png", "avatar9.png",
 	];
 
-	accountDetailsFormGroup!: FormGroup;
-	usernameFormControl!: FormControl;
-	passwordFormControl!: FormControl;
-	confirmPasswordFormControl!: FormControl;
-	chatRoomFormControl!: FormControl;
+	accountDetailsFormGroup!: UntypedFormGroup;
+	usernameFormControl!: UntypedFormControl;
+	passwordFormControl!: UntypedFormControl;
+	confirmPasswordFormControl!: UntypedFormControl;
+	chatRoomFormControl!: UntypedFormControl;
 
 	constructor(
 		private httpService: HttpService,
@@ -45,18 +45,18 @@ export class RegisterComponent implements OnInit {
 		this.setupPasswordForm();
 		this.setupConfirmPasswordForm();
 
-		this.accountDetailsFormGroup = new FormGroup({
+		this.accountDetailsFormGroup = new UntypedFormGroup({
 			username: this.usernameFormControl,
 			password: this.passwordFormControl,
 			confirmPassword: this.confirmPasswordFormControl
 		});
 
-		this.chatRoomFormControl = new FormControl('');
+		this.chatRoomFormControl = new UntypedFormControl('');
 	}
 
 	private setupUsernameForm()	{
 		this.usernameFormControl =
-			new FormControl('', [
+			new UntypedFormControl('', [
 					Validators.required,
 					Validators.minLength(5),
 					Validators.maxLength(20)
@@ -69,7 +69,7 @@ export class RegisterComponent implements OnInit {
 
 	private setupPasswordForm() {
 		this.passwordFormControl =
-			new FormControl('', [
+			new UntypedFormControl('', [
 					Validators.required,
 					Validators.minLength(15),
 					Validators.maxLength(30)
@@ -82,7 +82,7 @@ export class RegisterComponent implements OnInit {
 
 	private setupConfirmPasswordForm() {
 		this.confirmPasswordFormControl =
-			new FormControl('', Validators.required);
+			new UntypedFormControl('', Validators.required);
 		this.confirmPasswordFormControl.valueChanges.subscribe(
 			(value: string) => {
 				if (value != this.passwordFormControl.value) {
