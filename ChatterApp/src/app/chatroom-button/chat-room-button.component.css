@@ -2,33 +2,33 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	height: 190px;
+	height: 12rem;
 	width: calc(100%);
-	margin-bottom: 10px;
+	margin-bottom: 0.5rem;
 	box-sizing: border-box;
 
-	border-radius: 5px;
+	border-radius: 0.25rem;
 	background-color: palegreen;
 }
 
 .chatroom-button-chatroom-details {
 	display: flex;
 	flex-direction: column;
-	padding: 20px;
+	padding: 1rem;
 }
 .chatroom-button-title {
 	padding: 0;
-	margin: 0 0 10px;
+	margin: 0 0 0.5rem 0;
 
-	font-size: 50px;
+	font-size: 3rem;
 	font-weight: lighter;
 	color: gray;
 }
 .chatroom-button-desc {
 	padding: 0;
-	margin: 0 0 0 5px;
+	margin: 0 0 0 0.3rem;
 
-	font-size: 20px;
+	font-size: 1.25rem;
 	font-weight: lighter;
 	color: gray;
 }
@@ -37,24 +37,24 @@
 	display: flex;
 	justify-content: start;
 	align-items: center;
-	padding: 5px 15px;
 	width: calc(100%);
-
+	padding: 0.5rem 1rem;
 	box-sizing: border-box;
+
 	background-color: lightgrey;
-	border-radius: 0 0 5px 5px;
+	border-radius: 0 0 0.25rem 0.25rem;
 }
 .chatroom-button-message-user-icon {
-	height: 55px;
-	width: 55px;
+	height: 3.25rem;
+	width: 3.25rem;
 }
 .chatroom-button-message-details {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	margin-left: 10px;
-	overflow: hidden;
+	margin-left: 0.5rem;
 
+	overflow: hidden;
 	font-weight: lighter;
 	color: gray;
 }
@@ -62,12 +62,13 @@
 .chatroom-button-message-content {
 	padding: 0;
 	margin: 0;
-	font-size: 16px;
+
+	font-size: 1rem;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 .chatroom-button-message-sender {
-	font-size: 18px;
+	font-size: 1.1rem;
 	font-weight: normal;
 }
