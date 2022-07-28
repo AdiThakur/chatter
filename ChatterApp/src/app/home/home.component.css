@@ -1,22 +1,30 @@
+.home {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 100%;
+}
+
 .home-nav-bar {
 	display: flex;
 	height: 7%;
+	max-height: 4.5rem;
 	width: 100%;
 	background-color: #3f51b5;
 }
 
 .home-body {
+	flex-grow: 1;
+
 	display: flex;
-	flex-direction: row;
 	height: 93%;
 	width: 100%;
 }
 .home-chatroom-list-container {
-	height: 100%;
 	width: fit-content;
 }
 .home-content-container {
-	height: 100%;
 	flex-grow: 1;
+
 	background-color: lightgray;
 }

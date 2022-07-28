@@ -1,15 +1,17 @@
-<div class="home-nav-bar"></div>
-<h1 *ngIf="hasLoaded == false">
-	Loading...
-</h1>
-<div
-	class="home-body"
-	*ngIf="hasLoaded == true"
->
-	<div class="home-chatroom-list-container">
-		<chatroom-list></chatroom-list>
-	</div>
-	<div class="home-content-container">
-		<router-outlet></router-outlet>
+<div class="home">
+	<div class="home-nav-bar"></div>
+	<h1 *ngIf="hasLoaded == false">
+		Loading...
+	</h1>
+	<div
+		class="home-body"
+		*ngIf="hasLoaded == true"
+	>
+		<div class="home-chatroom-list-container">
+			<chatroom-list></chatroom-list>
+		</div>
+		<div class="home-content-container">
+			<router-outlet></router-outlet>
+		</div>
 	</div>
 </div>
