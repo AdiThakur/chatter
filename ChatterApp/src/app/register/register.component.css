@@ -1,25 +1,24 @@
 .register-background {
-	height: 100%;
-	width: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	height: 100%;
+	width: 100%;
 
 	background-color: #3f51b5;
 }
 
 .register-step-container {
-	height: 45rem;
-	width: 35rem;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	padding: 50px 15px 50px 15px;
+	height: 45rem;
+	width: 35rem;
+	padding: 3rem 1rem;
 
-	border-radius: 15px;
-	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5) ;
-
+	border-radius: 0.75rem;
+	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
 	background-color: #ffffff;
 }
 
@@ -32,20 +31,20 @@
 }
 
 .login-title {
-	padding: 30px;
-	margin-bottom: 25px;
+	padding: 2rem;
+	margin-bottom: 2rem;
 
 	text-align: center;
-	font-size: 65px;
+	font-size: 4rem;
 	font-weight: lighter;
 	color: gray;
 }
 .login-subtitle {
-	padding: 30px;
-	margin-bottom: 10px;
+	padding: 2rem;
+	margin-bottom: 0.75rem;
 
 	text-align: center;
-	font-size: 40px;
+	font-size: 2.5rem;
 	font-weight: lighter;
 	color: gray;
 }
@@ -55,29 +54,29 @@
 	margin: 0;
 
 	text-align: left;
-	font-size: 18px;
+	font-size: 1.1rem;
 	font-weight: lighter;
 	color: gray;
 }
 
 mat-form-field {
 	width: 100%;
-	margin-bottom: 10px;
+	margin-bottom: 0.75rem;
 }
 mat-form-field.mat-form-field {
-	font-size: 18px;
+	font-size: 1.1rem;
 }
 
 .register-stepper-control-tray {
 	display: inline-flex;
-	width: 100%;
-	height: fit-content;
 	align-items: center;
 	justify-content: center;
+	height: fit-content;
+	width: 100%;
 }
 .register-stepper-control {
-	margin-left: 5px;
-	margin-right: 5px;
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
 }
 
 .register-avatar-grid {
@@ -90,36 +89,37 @@ mat-form-field.mat-form-field {
 	align-items: center;
 	justify-content: center;
 }
-.register-avatar, .register-avatar-clicked {
-	box-sizing: border-box;
-	height: 110px;
-	width: 110px;
-	padding: 5px;
+.register-avatar,
+.register-avatar-clicked {
+	height: 6.8rem;
+	width: 6.8rem;
+	padding: 0.5rem;
 	margin: 0;
+	box-sizing: border-box;
 }
 .register-avatar-clicked {
-	border: 3px solid #ff4081;
-	border-radius: 15px;
+	border: 0.3rem solid #ff4081;
+	border-radius: 1rem;
 }
 
 .register-avatar-big {
-	height: 200px;
-	width: 200px;
-	padding: 0 30px 30px 30px;
+	height: 12.5rem;
+	width: 12.5rem;
+	padding: 0 2rem 2rem 2rem;
 	margin: 0;
 }
 .register-username {
-	margin: 10px;
+	margin: 0.75rem;
 
 	text-align: center;
-	font-size: 25px;
+	font-size: 1.5rem;
 	font-weight: lighter;
 	color: gray;
 }
 .register-submit-button {
-	width: 150px;
-	margin-top: 30px;
-	padding: 10px;
+	width: 9.5rem;
+	margin-top: 2rem;
+	padding: 0.75rem;
 
-	font-size: 16px;
+	font-size: 1rem;
 }
