@@ -11,8 +11,8 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 25px 15px;
 	height: fit-content;
+	padding: 1.35rem 1rem;
 
 	background-color: #c9c9c9;
 }
@@ -22,7 +22,7 @@
 	box-sizing: border-box;
 	color: gray;
 	font-weight: lighter;
-	font-size: 45px;
+	font-size: 3rem;
 	text-align: center;
 }
 .chat-room-member-details {
@@ -37,7 +37,6 @@
 }
 .chat-room-member-count {
 	margin: 0;
-	padding: 2px;
 	color: dimgray;
 	font-weight: lighter;
 	font-size: 1.3rem;
@@ -48,7 +47,7 @@
 	display: flex;
 	flex-direction: column-reverse;
 	width: 100%;
-	padding: 10px;
+	padding: 0.5rem;
 
 	box-sizing: border-box;
 	overflow-y: scroll;
@@ -58,7 +57,7 @@
 	height: 5rem;
 	min-height: 5rem;
 	width: 100%;
-	padding: 10px;
+	padding: 0.5rem;
 
 	box-sizing: border-box;
 	background-color: white;
@@ -77,25 +76,25 @@
 	flex: 1;
 
 	height: 100%;
-	padding: 5px 10px;
+	padding: 0.5rem 0.75rem;
 	margin: 0;
-
-	border: 1px solid lightgray;
-	border-radius: 5px;
 	box-sizing: border-box;
+
+	border: 0.1rem solid lightgray;
+	border-radius: 0.25rem;
 	color: gray;
-	font-size: 18px;
+	font-size: 1rem;
 	font-weight: lighter;
 }
 .chat-room-send-button {
 	height: 100%;
-	width: 100px;
-	margin-left: 10px;
+	width: fit-content;
+	padding: 1rem 2rem;
+	margin-left: 0.5rem;
 
 	background-color: #3f51b5;
-	border-radius: 5px;
+	border-radius: 0.25rem;
 	border: none;
 	color: white;
-	font-size: 20px;
 	font-weight: lighter;
 }
