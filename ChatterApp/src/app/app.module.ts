@@ -25,6 +25,7 @@ import { RouteReuseStrategy } from "@angular/router";
 import { AppRouteReuseStrategy } from "./routing/route-reuse-strategy";
 import { MessageComponent } from './message/message.component';
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 @NgModule({
 	declarations: [
@@ -53,7 +54,8 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 		MatIconModule,
 		MatSnackBarModule,
 		RoutingModule,
-		MatTooltipModule
+		MatTooltipModule,
+		FlexLayoutModule
 	],
 	providers: [
 		httpInterceptorProviders,
