@@ -8,9 +8,9 @@
 
 .toast-title {
 	font-weight: normal;
-	font-size: 18px;
+	font-size: 1.1rem;
 	font-style: oblique;
 }
 .toast-content {
-	font-size: 16px;
+	font-size: 1rem;
 }
