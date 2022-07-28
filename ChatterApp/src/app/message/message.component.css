@@ -2,36 +2,35 @@
 	display: flex;
 	height: fit-content;
 	width: 100%;
-	padding: 5px 0 5px 0;
-
+	padding: 0.25rem 0 0.25rem 0;
 	box-sizing: border-box;
-	border-radius: 10px;
 }
 .chat-room-message-user-icon {
-	height: 65px;
-	width: 65px;
+	height: 4rem;
+	width: 4rem;
 }
 .chat-room-message-details {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	max-width: 75%;
-	padding: 20px;
+	padding: 1.25rem;
+	margin: 0 0.25rem;
 
-	margin-left: 5px;
 	background-color: lightblue;
 	font-weight: lighter;
 	color: gray;
-	border-radius: 15px;
+	border-radius: 0.75rem;
 }
 .chat-room-message-sender,
 .chat-room-message-content {
 	padding: 0;
 	margin: 0;
-	font-size: 16px;
+
+	font-size: 1rem;
 }
 .chat-room-message-sender {
-	font-size: 18px;
+	font-size: 1.1rem;
 	font-weight: normal;
 }
 .chat-room-message-content {
