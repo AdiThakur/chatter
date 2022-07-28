@@ -20,6 +20,14 @@
 	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
 	background-color: #ffffff;
 }
+@media only screen and (max-width: 600px) {
+	.login-input-container {
+		justify-content: center;
+		height: 100%;
+		width: 100%;
+		padding: 1rem 2rem;
+	}
+}
 
 .login-title {
 	padding: 2rem;
