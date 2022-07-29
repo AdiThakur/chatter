@@ -4,14 +4,14 @@
 
 			<!-- STEP 1: Account Details-->
 			<mat-step
-				label="Account"
+				label="User"
 				[stepControl]="accountDetailsFormGroup"
 			>
 				<div class="register-step-content-container">
-					<h1 class="login-title">register</h1>
+					<h1 class="register-title">register</h1>
 
 					<!-- Username input group -->
-					<p class="login-label">Username</p>
+					<p class="register-label">Username</p>
 					<mat-form-field appearance="outline">
 						<input
 							matInput
@@ -36,7 +36,7 @@
 					</mat-form-field>
 
 					<!-- Password input group -->
-					<p class="login-label">Password</p>
+					<p class="register-label">Password</p>
 					<mat-form-field
 						appearance="outline"
 					>
@@ -61,7 +61,7 @@
 					</mat-form-field>
 
 					<!-- Confirm password input group -->
-					<p class="login-label">Confirm Password</p>
+					<p class="register-label">Confirm Password</p>
 					<mat-form-field
 						appearance="outline"
 					>
@@ -92,28 +92,30 @@
 							Passwords do not match
 						</mat-error>
 					</mat-form-field>
-				</div>
 
-				<!-- Stepper Controls -->
-				<div class="register-stepper-control-tray">
-					<button
-						class="register-stepper-control"
-						mat-fab
-						matStepperPrevious
-						color="primary"
-						[disabled]="true"
+					<!-- Stepper Controls -->
+					<div
+						class="register-stepper-control-tray"
 					>
-						<mat-icon>arrow_back</mat-icon>
-					</button>
-					<button
-						class="register-stepper-control"
-						mat-fab
-						matStepperNext
-						color="primary"
-						[disabled]="accountDetailsFormGroup.invalid"
-					>
-						<mat-icon>arrow_forward</mat-icon>
-					</button>
+						<button
+							class="register-stepper-control"
+							mat-fab
+							matStepperPrevious
+							color="primary"
+							[disabled]="true"
+						>
+							<mat-icon>arrow_back</mat-icon>
+						</button>
+						<button
+							class="register-stepper-control"
+							mat-fab
+							matStepperNext
+							color="primary"
+							[disabled]="accountDetailsFormGroup.invalid"
+						>
+							<mat-icon>arrow_forward</mat-icon>
+						</button>
+					</div>
 				</div>
 			</mat-step>
 
@@ -123,9 +125,9 @@
 				[completed]="isAvatarSelected"
 			>
 				<div class="register-step-content-container">
-					<h1 class="login-subtitle">pick an avatar</h1>
-
+					<h1 class="register-subtitle">pick an avatar</h1>
 					<!-- Avatar Grid-->
+
 					<div class="register-avatar-grid">
 						<div
 							class="register-avatar-container"
@@ -139,33 +141,37 @@
 							>
 						</div>
 					</div>
-				</div>
-
-				<!-- Stepper Controls -->
-				<div class="register-stepper-control-tray">
-					<button
-						class="register-stepper-control"
-						mat-fab
-						matStepperPrevious
-						color="primary"
+					<!-- Stepper Controls -->
+					<div
+						class="register-stepper-control-tray"
 					>
-						<mat-icon>arrow_back</mat-icon>
-					</button>
-					<button
-						class="register-stepper-control"
-						mat-fab
-						matStepperNext
-						color="primary"
-						[disabled]="!isAvatarSelected"
-					>
-						<mat-icon>arrow_forward</mat-icon>
-					</button>
+						<button
+							class="register-stepper-control"
+							mat-fab
+							matStepperPrevious
+							color="primary"
+						>
+							<mat-icon>arrow_back</mat-icon>
+						</button>
+						<button
+							class="register-stepper-control"
+							mat-fab
+							matStepperNext
+							color="primary"
+							[disabled]="!isAvatarSelected"
+						>
+							<mat-icon>arrow_forward</mat-icon>
+						</button>
+					</div>
 				</div>
 			</mat-step>
 
 			<!-- STEP 3: Finish -->
 			<mat-step label="Finish">
-				<div class="register-step-content-container" [style.justify-content]="'center'">
+				<div
+					class="register-step-content-container"
+					[style.align-items]="'center'"
+				>
 					<img
 						class="register-avatar-big"
 						[src]="'assets/' + selectedAvatar"
@@ -184,31 +190,30 @@
 						Create Account
 					</button>
 
-
-				</div>
-
-				<!-- Stepper Controls -->
-				<div class="register-stepper-control-tray">
-					<button
-						class="register-stepper-control"
-						mat-fab
-						matStepperPrevious
-						color="primary"
+					<!-- Stepper Controls -->
+					<div
+						class="register-stepper-control-tray"
 					>
-						<mat-icon>arrow_back</mat-icon>
-					</button>
-					<button
-						class="register-stepper-control"
-						mat-fab
-						matStepperNext
-						color="primary"
-						[disabled]="true"
-					>
-						<mat-icon>arrow_forward</mat-icon>
-					</button>
+						<button
+							class="register-stepper-control"
+							mat-fab
+							matStepperPrevious
+							color="primary"
+						>
+							<mat-icon>arrow_back</mat-icon>
+						</button>
+						<button
+							class="register-stepper-control"
+							mat-fab
+							matStepperNext
+							color="primary"
+							[disabled]="true"
+						>
+							<mat-icon>arrow_forward</mat-icon>
+						</button>
+					</div>
 				</div>
 			</mat-step>
-
 		</mat-stepper>
 	</div>
 </div>

@@ -1,55 +1,66 @@
 .register-background {
 	display: flex;
-	align-items: center;
 	justify-content: center;
+	align-items: center;
 	height: 100%;
 	width: 100%;
 
+	box-sizing: border-box;
 	background-color: #3f51b5;
 }
 
+@media only screen and (max-width: 600px) {
+	.register-background {
+		justify-content: normal;
+		align-items: normal;
+	}
+}
+
 .register-step-container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
 	height: 45rem;
 	width: 35rem;
-	padding: 3rem 1rem;
+	padding: 2rem;
+	box-sizing: border-box;
 
 	border-radius: 0.75rem;
 	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
 	background-color: #ffffff;
 }
+@media only screen and (max-width: 600px) {
+	.register-step-container  {
+		height: 100%;
+		width: 100%;
+		padding: 0.75rem;
+
+		border-radius: 0;
+		box-shadow: none;
+	}
+}
 
 .register-step-content-container {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	justify-content: space-between;
 	height: 35rem;
-	width: 100%;
 }
 
-.login-title {
-	padding: 2rem;
-	margin-bottom: 2rem;
+.register-title,
+.register-subtitle {
+	padding: 1.5rem;
 
 	text-align: center;
-	font-size: 4rem;
+	font-size: 3.5rem;
 	font-weight: lighter;
 	color: gray;
 }
-.login-subtitle {
-	padding: 2rem;
-	margin-bottom: 0.75rem;
+.register-subtitle {
+	padding: 1rem;
+	margin: 0;
 
-	text-align: center;
 	font-size: 2.5rem;
-	font-weight: lighter;
-	color: gray;
 }
 
-.login-label {
+.register-label {
 	width: 100%;
 	margin: 0;
 
@@ -61,28 +72,27 @@
 
 mat-form-field {
 	width: 100%;
-	margin-bottom: 0.75rem;
+	margin-bottom: 0.25rem;
 }
+
 mat-form-field.mat-form-field {
-	font-size: 1.1rem;
+	font-size: 1rem;
 }
 
 .register-stepper-control-tray {
-	display: inline-flex;
-	align-items: center;
+	display: flex;
 	justify-content: center;
-	height: fit-content;
-	width: 100%;
+	padding: 0.5rem;
+	margin-top: 1rem;
 }
 .register-stepper-control {
-	margin-left: 0.5rem;
-	margin-right: 0.5rem;
+	margin: 0 0.5rem;
 }
 
 .register-avatar-grid {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
-	grid-gap: 2rem;
+	padding: 0;
 }
 .register-avatar-container {
 	display: flex;
@@ -91,8 +101,8 @@ mat-form-field.mat-form-field {
 }
 .register-avatar,
 .register-avatar-clicked {
-	height: 6.8rem;
-	width: 6.8rem;
+	height: 6rem;
+	width: 6rem;
 	padding: 0.5rem;
 	margin: 0;
 	box-sizing: border-box;
@@ -102,10 +112,15 @@ mat-form-field.mat-form-field {
 	border-radius: 1rem;
 }
 
+.register-summary {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
 .register-avatar-big {
 	height: 12.5rem;
 	width: 12.5rem;
-	padding: 0 2rem 2rem 2rem;
 	margin: 0;
 }
 .register-username {
@@ -118,7 +133,6 @@ mat-form-field.mat-form-field {
 }
 .register-submit-button {
 	width: 9.5rem;
-	margin-top: 2rem;
 	padding: 0.75rem;
 
 	font-size: 1rem;
