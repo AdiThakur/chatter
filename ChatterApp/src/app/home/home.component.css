@@ -7,10 +7,20 @@
 
 .home-nav-bar {
 	display: flex;
-	height: 7%;
-	max-height: 4.5rem;
+	align-items: center;
+	height: 4.5rem;
 	width: 100%;
+	padding: 0 1rem;
+	box-sizing: border-box;
+
 	background-color: #3f51b5;
+}
+.home-menu {
+	height: 2rem;
+	width: 2rem;
+
+	font-size: 2rem;
+	color: white;
 }
 
 .home-body {

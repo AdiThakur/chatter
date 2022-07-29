@@ -1,17 +1,37 @@
 <div class="home">
-	<div class="home-nav-bar"></div>
-	<h1 *ngIf="hasLoaded == false">
+	<div class="home-nav-bar">
+		<mat-icon
+			class="home-menu"
+			*ngIf="sidenavService.canBeToggled"
+			(click)="sidenavService.toggle()"
+		>
+			menu
+		</mat-icon>
+	</div>
+
+	<h1
+		*ngIf="hasLoaded == false"
+	>
 		Loading...
 	</h1>
-	<div
+
+	<mat-sidenav-container
 		class="home-body"
 		*ngIf="hasLoaded == true"
+		(backdropClick)="sidenavService.close()"
 	>
-		<div class="home-chatroom-list-container">
+		<mat-sidenav
+			class="home-chatroom-list-container"
+			[mode]="sidenavService.mode"
+			[disableClose]="!sidenavService.canBeToggled"
+			[opened]="sidenavService.isOpen"
+		>
 			<chatroom-list></chatroom-list>
-		</div>
-		<div class="home-content-container">
+		</mat-sidenav>
+		<mat-sidenav-content
+			class="home-content-container"
+		>
 			<router-outlet></router-outlet>
-		</div>
-	</div>
+		</mat-sidenav-content>
+	</mat-sidenav-container>
 </div>

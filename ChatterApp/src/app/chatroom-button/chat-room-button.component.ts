@@ -5,6 +5,7 @@ import { ChatRoomService } from "../services/chat-room.service";
 import { Router } from "@angular/router";
 import { AbsolutePath } from "../routing/absolute-paths";
 import { ChatService } from "../services/chat.service";
+import { SidenavService } from "../services/sidenav.service";
 
 @Component({
 	selector: 'chatroom-button',
@@ -20,6 +21,7 @@ export class ChatRoomButtonComponent implements OnInit {
 
 	constructor(
 		private router: Router,
+		private sidenavService: SidenavService,
 		private chatRoomService: ChatRoomService,
 		private chatService: ChatService
 	) {}
@@ -41,6 +43,7 @@ export class ChatRoomButtonComponent implements OnInit {
 	}
 
 	public openChatRoom(): void {
+		this.sidenavService.close();
 		this.chatRoomService.selectChatRoom(this.chatRoom.id);
 		this.router.navigate([AbsolutePath.ChatRoom, this.chatRoom.id]);
 	}

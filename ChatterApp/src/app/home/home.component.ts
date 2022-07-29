@@ -6,6 +6,7 @@ import { ToastService } from "../toast/toast.service";
 import { ChatRoomService } from "../services/chat-room.service";
 import { ChatService } from "../services/chat.service";
 import { AbsolutePath } from "../routing/absolute-paths";
+import { SidenavService } from "../services/sidenav.service";
 
 @Component({
 	selector: 'app-home',
@@ -23,6 +24,7 @@ export class HomeComponent implements OnInit {
 	constructor(
 		private router: Router,
 		private toastService: ToastService,
+		public sidenavService: SidenavService,
 		private authService: AuthService,
 		private userService: UserService,
 		private chatRoomService: ChatRoomService
@@ -51,7 +53,8 @@ export class HomeComponent implements OnInit {
 	}
 
 	private handleInvalidSession(): void {
-		this.router.navigate([AbsolutePath.Login])
+		this.router
+			.navigate([AbsolutePath.Login])
 			.then(() => {
 				this.toastService.createToast({
 					title: "Session Expired",
