@@ -58,11 +58,11 @@ export class ChatRoomService {
 	private getLatestMessages(): void {
 		this.loader.startLoad(this._chatRooms.length);
 		this._chatRooms.forEach(chatRoom => {
-			this.getLatestMessage(chatRoom.id);
+			this.fetchLatestMessage(chatRoom.id);
 		});
 	}
 
-	private getLatestMessage(chatRoomId: string): void {
+	private fetchLatestMessage(chatRoomId: string): void {
 		this.httpService
 			.get<MessageModel[]>(
 				`api/ChatRoom/${chatRoomId}/messages?count=1`
@@ -90,12 +90,19 @@ export class ChatRoomService {
 		}
 	}
 
-	public getLatestMessageForChatRoom(chatRoomId: string): null | MessageModel {
+	public getLatestMessage(chatRoomId: string): null | MessageModel {
 		let chatRoom = this.chatRoomsMap[chatRoomId];
 		if (chatRoom) {
 			return chatRoom.latestMessage;
 		} else {
 			return null;
 		}
+	}
+
+	public fetchLastTenMessages(chatRoomId: string): Observable<MessageModel[]> {
+		return this.httpService
+			.get<MessageModel[]>(
+				`api/ChatRoom/${chatRoomId}/messages?count=10`
+			);
 	}
 }

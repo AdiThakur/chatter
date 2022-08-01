@@ -37,7 +37,7 @@ export class ChatRoomComponent implements OnInit {
 
 		this.memberCount = this.chatRoomService.getMemberCountForChatRoom(this.chatRoomId);
 
-		this.chatService.getLastTenMessages(this.chatRoomId).subscribe(lastTenMessages => {
+		this.chatRoomService.fetchLastTenMessages(this.chatRoomId).subscribe(lastTenMessages => {
 			let viewMessages: ViewMessage[] = [];
 
 			lastTenMessages.forEach((message, index) => {

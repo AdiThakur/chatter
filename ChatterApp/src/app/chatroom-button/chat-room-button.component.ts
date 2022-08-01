@@ -27,7 +27,7 @@ export class ChatRoomButtonComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-		this.latestMessage = this.chatRoomService.getLatestMessageForChatRoom(this.chatRoom.id);
+		this.latestMessage = this.chatRoomService.getLatestMessage(this.chatRoom.id);
 
 		this.chatRoomService.selectedChatRoom$.subscribe(
 			selectedChatRoomId => {

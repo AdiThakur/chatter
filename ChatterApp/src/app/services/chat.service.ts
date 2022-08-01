@@ -21,6 +21,7 @@ export class ChatService {
 		this.buildConnection();
 		this.registerCallBacks();
 		this.startConnection();
+		this.authService.logout$.subscribe(() => this.stopConnection());
 	}
 
 	private buildConnection(): void {
@@ -48,14 +49,14 @@ export class ChatService {
 		}
 	}
 
-	public sendMessage(message: MessageModel): void {
-		this.connection.invoke("SendMessage", message);
+	private stopConnection(): void {
+		if (this.connection.state != HubConnectionState.Disconnected &&
+			this.connection.state != HubConnectionState.Disconnecting) {
+			this.connection.stop();
+		}
 	}
 
-	public getLastTenMessages(chatRoomId: string): Observable<MessageModel[]> {
-		return this.httpService
-			.get<MessageModel[]>(
-				`api/ChatRoom/${chatRoomId}/messages?count=10`
-			);
+	public sendMessage(message: MessageModel): void {
+		this.connection.invoke("SendMessage", message);
 	}
 }
