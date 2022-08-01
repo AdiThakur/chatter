@@ -1,25 +1,21 @@
-<div class="home">
-	<div class="home-nav-bar">
-		<mat-icon
-			class="home-menu"
-			*ngIf="sidenavService.canBeToggled"
-			(click)="sidenavService.toggle()"
-		>
-			menu
-		</mat-icon>
-	</div>
+<h1
+	*ngIf="hasLoaded == false"
+>
+	Loading...
+</h1>
 
-	<h1
-		*ngIf="hasLoaded == false"
-	>
-		Loading...
-	</h1>
+<div
+	class="home"
+	*ngIf="hasLoaded == true"
+>
+	<navbar></navbar>
 
+	<!-- Home page body -->
 	<mat-sidenav-container
 		class="home-body"
-		*ngIf="hasLoaded == true"
 		(backdropClick)="sidenavService.close()"
 	>
+		<!-- Sidenav content -->
 		<mat-sidenav
 			class="home-chatroom-list-container"
 			[mode]="sidenavService.mode"
@@ -28,6 +24,8 @@
 		>
 			<chatroom-list></chatroom-list>
 		</mat-sidenav>
+
+		<!-- Main content -->
 		<mat-sidenav-content
 			class="home-content-container"
 		>

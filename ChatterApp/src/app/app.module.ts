@@ -27,6 +27,7 @@ import { MessageComponent } from './message/message.component';
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatSidenavModule } from "@angular/material/sidenav";
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
 	declarations: [
@@ -38,7 +39,8 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 		ChatRoomListComponent,
 		ChatRoomButtonComponent,
 		ChatRoomComponent,
-		MessageComponent
+		MessageComponent,
+		NavbarComponent
 	],
 	imports: [
 		CommonModule,

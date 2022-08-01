@@ -1,0 +1,9 @@
+<div class="navbar-container">
+	<mat-icon
+		class="navbar-sidenav-icon"
+		*ngIf="sidenavService.canBeToggled"
+		(click)="sidenavService.toggle()"
+	>
+		menu
+	</mat-icon>
+</div>
