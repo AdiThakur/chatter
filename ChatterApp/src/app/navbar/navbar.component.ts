@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SidenavService } from "../services/sidenav.service";
+import { UserService } from "../services/user.service";
 
 @Component({
 	selector: 'navbar',
@@ -9,7 +10,8 @@ import { SidenavService } from "../services/sidenav.service";
 export class NavbarComponent implements OnInit {
 
 	constructor(
-		public sidenavService: SidenavService
+		public sidenavService: SidenavService,
+		public userService: UserService
 	) {}
 
 	ngOnInit(): void {

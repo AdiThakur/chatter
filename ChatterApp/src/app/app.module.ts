@@ -28,6 +28,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { NavbarComponent } from './navbar/navbar.component';
+import { MatMenuModule } from "@angular/material/menu";
 
 @NgModule({
 	declarations: [
@@ -59,7 +60,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 		RoutingModule,
 		MatTooltipModule,
 		FlexLayoutModule,
-		MatSidenavModule
+		MatSidenavModule,
+		MatMenuModule
 	],
 	providers: [
 		httpInterceptorProviders,
