@@ -1,14 +1,30 @@
 <div class="navbar-container">
 
 	<!-- Sidenav trigger -->
-	<mat-icon
-		class="navbar-sidenav-icon"
-		*ngIf="sidenavService.canBeToggled"
-		(click)="sidenavService.toggle()"
-	>
-		menu
-	</mat-icon>
+	<div class="navbar-sidenav-icon-container">
+		<mat-icon
+			class="navbar-sidenav-icon"
+			*ngIf="sidenavService.canBeToggled"
+			(click)="sidenavService.toggle()"
+		>
+			menu
+		</mat-icon>
+	</div>
 
+	<div class="navbar-search-container">
+		<div class="navbar-input-container">
+			<input
+				matInput
+				placeholder="search for new chatrooms"
+				[(ngModel)]="query"
+			/>
+			<mat-icon>
+				search
+			</mat-icon>
+		</div>
+	</div>
+
+	<!-- Profile dropdown button -->
 	<div
 		class="navbar-profile-container"
 		[matMenuTriggerFor]="menu"
@@ -18,7 +34,10 @@
 			alt="{{ userService.user.avatarUri }}"
 			[src]="userService.user.avatarUri"
 		>
-		<p class="navbar-username">
+		<p
+			class="navbar-username"
+			*ngIf="!sidenavService.canBeToggled"
+		>
 			{{ userService.user.username }}
 		</p>
 		<mat-icon class="navbar-dropdown-button">
@@ -26,6 +45,7 @@
 		</mat-icon>
 	</div>
 
+	<!-- Dropdown menu-->
 	<mat-menu
 		#menu="matMenu"
 		xPosition="before"

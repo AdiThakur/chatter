@@ -10,6 +10,8 @@ import { AuthService } from "../services/auth.service";
 })
 export class NavbarComponent implements OnInit {
 
+	public query = "";
+
 	constructor(
 		public sidenavService: SidenavService,
 		private authService: AuthService,

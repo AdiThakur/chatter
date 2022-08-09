@@ -1,12 +1,27 @@
 .navbar-container {
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
 	height: 4.5rem;
 	width: 100%;
-	padding: 0 0.75rem 0 1rem;
+	padding: 0;
 	box-sizing: border-box;
 
 	background-color: #3f51b5;
+}
+
+.navbar-sidenav-icon-container {
+	flex: 1;
+	display: flex;
+	justify-content: start;
+	height: 2rem;
+	width: 2rem;
+	padding: 0 0.75rem;
+}
+@media only screen and (max-width: 960px) {
+	.navbar-sidenav-icon-container  {
+		flex: none;
+	}
 }
 
 .navbar-sidenav-icon {
@@ -17,11 +32,47 @@
 	color: white;
 }
 
+.navbar-search-container {
+	flex: 4;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.navbar-input-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 3rem;
+	width: 75%;
+	max-width: 45rem;
+	padding: 0.5rem 0.75rem;
+	margin: 0;
+	box-sizing: border-box;
+
+	border: 0.1rem solid lightgray;
+	border-radius: 0.25rem;
+	color: gray;
+	font-size: 1rem;
+	font-weight: lighter;
+	background-color: white;
+}
+@media only screen and (max-width: 960px) {
+	.navbar-input-container  {
+		width: 100%;
+	}
+}
+
 .navbar-profile-container {
+	flex: 1;
 	display: flex;
 	align-items: center;
-	justify-content: center;
-	margin-left: auto;
+	justify-content: end;
+	padding: 0 0.75rem;
+}
+@media only screen and (max-width: 960px) {
+	.navbar-profile-container  {
+		flex: none;
+	}
 }
 .navbar-user-icon {
 	height: 2rem;
