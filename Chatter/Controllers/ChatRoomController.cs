@@ -39,9 +39,9 @@ namespace Chatter.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<List<ChatRoomModel>>> GetChatRooms()
+        public async Task<ActionResult<List<ChatRoomModel>>> GetChatRooms([FromRoute] string? name)
         {
-            var chatRooms = await _chatRoomService.GetChatRoomsAsync();
+            var chatRooms = await _chatRoomService.GetChatRoomsAsync(name);
 
             return Ok(chatRooms.ToModels());
         }

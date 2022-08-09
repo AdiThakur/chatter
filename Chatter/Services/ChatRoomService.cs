@@ -8,7 +8,7 @@ namespace Chatter.Services
         Task AddUserToChatRoomAsync(string? chatRoomId, long? userId);
         Task CreateChatRoomAsync(string chatRoomId, string chatRoomDesc);
         Task<ChatRoom?> GetChatRoomAsync(string? chatRoomId);
-        Task<List<ChatRoom>> GetChatRoomsAsync();
+        Task<List<ChatRoom>> GetChatRoomsAsync(string? nameToMatch);
         Task<List<Message>> GetLatestMessagesForChatRoomAsync(string chatRoomId, int count);
     }
 
@@ -78,14 +78,23 @@ namespace Chatter.Services
             await _chatRoomsRepo.AddUserToChatRoom(chatRoom, user);
         }
 
-        public async Task<List<ChatRoom>> GetChatRoomsAsync()
-        {
-            return await _chatRoomsRepo.GetChatRoomsAsync();
-        }
-
         public async Task<ChatRoom?> GetChatRoomAsync(string? chatRoomId)
         {
             return await _chatRoomsRepo.GetChatRoomAsync(chatRoomId);
+        }
+
+        public async Task<List<ChatRoom>> GetChatRoomsAsync(string? nameToMatch)
+        {
+            var allChatRooms = await _chatRoomsRepo.GetChatRoomsAsync();
+
+            if (string.IsNullOrEmpty(nameToMatch))
+            {
+                return allChatRooms;
+            }
+
+            return allChatRooms
+                .Where(chatRoom => chatRoom.Id.Contains(nameToMatch))
+                .ToList();
         }
 
         public async Task<List<Message>> GetLatestMessagesForChatRoomAsync(string chatRoomId, int count)
