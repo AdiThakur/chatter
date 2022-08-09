@@ -92,8 +92,10 @@ namespace Chatter.Services
                 return allChatRooms;
             }
 
+            nameToMatch = nameToMatch.ToLower();
+
             return allChatRooms
-                .Where(chatRoom => chatRoom.Id.Contains(nameToMatch))
+                .Where(chatRoom => chatRoom.Id.ToLower().Contains(nameToMatch))
                 .ToList();
         }
 

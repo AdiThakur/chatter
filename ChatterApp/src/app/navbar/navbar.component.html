@@ -18,7 +18,9 @@
 				placeholder="search for new chatrooms"
 				[(ngModel)]="query"
 			/>
-			<mat-icon>
+			<mat-icon
+				(click)="search()"
+			>
 				search
 			</mat-icon>
 		</div>

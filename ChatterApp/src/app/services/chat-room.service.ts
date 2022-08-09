@@ -105,4 +105,11 @@ export class ChatRoomService {
 				`api/ChatRoom/${chatRoomId}/messages?count=10`
 			);
 	}
+
+	public fetchMatchingChatRooms(nameToMatch: string): Observable<ChatRoomModel[]> {
+		return this.httpService
+			.get<ChatRoomModel[]>(
+				`api/ChatRoom?name=${nameToMatch}`
+			);
+	}
 }
