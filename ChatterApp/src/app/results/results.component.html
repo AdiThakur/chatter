@@ -1,13 +1,34 @@
-<div class="results-header">
-	<h1 class="results-title">
-		Showing results for {{ query }}
-	</h1>
-</div>
-<div class="results-chatrooms-container">
-	<div
-		class="results-chatroom-container"
-		*ngFor="let chatRoom of chatRooms"
-	>
-		{{ chatRoom.id }}
+<div class="results-body">
+	<div class="results-header">
+		<h1 class="results-title">
+			Results for {{ query }}
+		</h1>
+	</div>
+
+	<div class="results-chatrooms-container">
+		<div
+			class="results-chatroom-container"
+			*ngFor="let chatRoom of chatRooms"
+		>
+			<div class="results-chatroom-title">
+				{{ chatRoom.id }}
+			</div>
+
+			<div class="results-chatroom-body">
+				<p class="results-chatroom-desc">{{ chatRoom.description }}</p>
+
+				<span class="results-chatroom-users">
+					<mat-icon class="results-chatroom-person">person</mat-icon>
+					{{ chatRoom.users.length }}
+				</span>
+
+				<button
+					class="results-chatroom-join"
+					mat-stroked-button
+				>
+					JOIN
+				</button>
+			</div>
+		</div>
 	</div>
 </div>
