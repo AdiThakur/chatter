@@ -1,0 +1,13 @@
+<div class="results-header">
+	<h1 class="results-title">
+		Showing results for {{ query }}
+	</h1>
+</div>
+<div class="results-chatrooms-container">
+	<div
+		class="results-chatroom-container"
+		*ngFor="let chatRoom of chatRooms"
+	>
+		{{ chatRoom.id }}
+	</div>
+</div>

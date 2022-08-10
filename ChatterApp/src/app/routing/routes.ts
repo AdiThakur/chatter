@@ -5,6 +5,7 @@ import { UnAuthGuard } from "../guards/un-auth.guard";
 import { HomeComponent } from "../home/home.component";
 import { AuthGuard } from "../guards/auth.guard";
 import { ChatRoomComponent } from "../chat-room/chat-room.component";
+import { ResultsComponent } from "../results/results.component";
 
 export const Routes: Route[] = [
 	{
@@ -24,6 +25,10 @@ export const Routes: Route[] = [
 			{
 				path: 'chatroom/:chatRoomId',
 				component: ChatRoomComponent
+			},
+			{
+				path: 'results',
+				component: ResultsComponent
 			}
 		]
 	},

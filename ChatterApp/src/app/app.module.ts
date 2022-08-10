@@ -29,6 +29,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { NavbarComponent } from './navbar/navbar.component';
 import { MatMenuModule } from "@angular/material/menu";
+import { ResultsComponent } from './results/results.component';
 
 @NgModule({
 	declarations: [
@@ -41,7 +42,8 @@ import { MatMenuModule } from "@angular/material/menu";
 		ChatRoomButtonComponent,
 		ChatRoomComponent,
 		MessageComponent,
-		NavbarComponent
+		NavbarComponent,
+		ResultsComponent
 	],
 	imports: [
 		CommonModule,

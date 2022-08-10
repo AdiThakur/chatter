@@ -1,0 +1,22 @@
+.results-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: fit-content;
+	padding: 1rem;
+
+	background-color: #c9c9c9;
+}
+.results-title {
+	padding: 0.35rem 0;
+	margin: 0;
+
+	box-sizing: border-box;
+	color: gray;
+	font-weight: lighter;
+	font-size: 2rem;
+	text-align: center;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}

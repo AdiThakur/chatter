@@ -3,6 +3,8 @@ import { SidenavService } from "../services/sidenav.service";
 import { UserService } from "../services/user.service";
 import { AuthService } from "../services/auth.service";
 import { ChatRoomService } from "../services/chat-room.service";
+import { Router } from "@angular/router";
+import { AbsolutePath } from "../routing/absolute-paths";
 
 @Component({
 	selector: 'navbar',
@@ -14,6 +16,7 @@ export class NavbarComponent implements OnInit {
 	public query = "";
 
 	constructor(
+		private router: Router,
 		public sidenavService: SidenavService,
 		private authService: AuthService,
 		public userService: UserService,
@@ -27,9 +30,10 @@ export class NavbarComponent implements OnInit {
 			return;
 		}
 
-		this.chatRoomService
-			.fetchMatchingChatRooms(this.query)
-			.subscribe(chatRoomModels => console.log(chatRoomModels));
+		this.router.navigate(
+			[AbsolutePath.Results],
+			{ queryParams: { query: this.query } }
+		);
 	}
 
 	public logout(): void {
