@@ -12,11 +12,13 @@
 	align-items: center;
 	justify-content: space-between;
 	height: fit-content;
-	padding: 1rem;
+	padding: 1.35rem 1rem;
 
 	background-color: #c9c9c9;
 }
 .results-title {
+	display: flex;
+	align-items: center;
 	padding: 0.35rem;
 	margin: 0;
 
@@ -29,6 +31,10 @@
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
+.results-query {
+	margin: 0 0 0 0.3rem;
+	font-style: italic;
+}
 
 .results-chatrooms-container {
 	flex: 1;
@@ -40,15 +46,25 @@
 	grid-column-gap: 1.5rem;
 	padding: 1rem;
 }
-
 .results-chatroom-container {
 	display: flex;
 	flex-direction: column;
+	height: 18rem;
 
 	border-radius: 0.25rem;
 	background-color: lightblue;
 	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
 }
+@media only screen and (max-width: 600px) {
+	.results-chatrooms-container {
+		grid-template-rows: repeat(auto-fill, 16rem);
+		grid-template-columns: repeat(auto-fill, 100%);
+	}
+	.results-chatroom-container {
+		height: 16rem;
+	}
+}
+
 .results-chatroom-title {
 	display: flex;
 	justify-content: center;
