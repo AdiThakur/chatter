@@ -26,6 +26,7 @@
 					class="results-chatroom-join"
 					mat-stroked-button
 					[disabled]="chatRoomsMap[chatRoom.id].alreadyJoined"
+					(click)="joinChatRoom(chatRoom.id)"
 				>
 					{{ chatRoomsMap[chatRoom.id].alreadyJoined ? "JOINED" : "JOIN" }}
 				</button>

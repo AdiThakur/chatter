@@ -33,4 +33,15 @@ export class UserService {
 	public getChatRoomIds(): string[] {
 		return this.user.chatRooms;
 	}
+
+	public joinChatRoom(chatRoomId: string): void {
+		this.user.chatRooms.push(chatRoomId);
+	}
+
+	public leaveChatRoom(chatRoomId: string): void {
+		let index = this.user.chatRooms.findIndex(id => id === chatRoomId);
+		if (index >= 0) {
+			this.user.chatRooms.splice(index, 1);
+		}
+	}
 }

@@ -5,6 +5,7 @@ import { ChatRoomModel } from "../../types/chat-room-model";
 import { UserService } from "./user.service";
 import { MessageModel } from "../../types/message-model";
 import { Loader } from "../helpers/loader";
+import { tap } from "rxjs/operators";
 
 type ChatRoomViewModel = ChatRoomModel & {
 	latestMessage: null | MessageModel
@@ -110,6 +111,20 @@ export class ChatRoomService {
 		return this.httpService
 			.get<ChatRoomModel[]>(
 				`api/ChatRoom?name=${nameToMatch}`
+			);
+	}
+
+	public joinChatRoom(chatRoomId: string): Observable<void> {
+		return this.httpService
+			.post<void>(
+				`api/ChatRoom/${chatRoomId}/user`,
+				this.userService.user
+			)
+			.pipe(
+				tap(() => {
+					this.getChatRoom(chatRoomId);
+					this.userService.joinChatRoom(chatRoomId);
+				})
 			);
 	}
 }

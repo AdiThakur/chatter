@@ -3,6 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { ChatRoomService } from "../services/chat-room.service";
 import { ChatRoomModel } from "../../types/chat-room-model";
 import { UserService } from "../services/user.service";
+import { ToastService } from "../toast/toast.service";
 
 type ChatRoomViewModel = ChatRoomModel & { alreadyJoined: boolean };
 
@@ -19,6 +20,7 @@ export class ResultsComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
+		private toastService: ToastService,
 		private userService: UserService,
 		private chatRoomService: ChatRoomService
 	) {}
@@ -47,4 +49,27 @@ export class ResultsComponent implements OnInit {
 			this.chatRoomsMap[viewChatRoom.id] = viewChatRoom;
 		});
 	}
+
+	public joinChatRoom(chatRoomId: string): void {
+		this.chatRoomService
+			.joinChatRoom(chatRoomId)
+			.subscribe(
+				() => {
+					this.chatRoomsMap[chatRoomId].alreadyJoined = true;
+					this.toastService.createToast({
+						type: "success",
+						title: `Joined ${chatRoomId}!`,
+						duration: 5000
+					});
+				},
+				() => {
+					this.toastService.createToast({
+						type: "error",
+						title: `Could not join ${chatRoomId}!`,
+						duration: 5000
+					});
+				}
+			);
+	}
+
 }
