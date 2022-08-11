@@ -6,7 +6,7 @@ import { UserService } from "./user.service";
 import { MessageModel } from "../../types/message-model";
 import { Loader } from "../helpers/loader";
 
-type ViewChatRoom = ChatRoomModel & {
+type ChatRoomViewModel = ChatRoomModel & {
 	latestMessage: null | MessageModel
 };
 
@@ -16,9 +16,9 @@ export class ChatRoomService {
 	private selectedChatRoomSubject = new ReplaySubject<string>(1);
 	public selectedChatRoom$ = this.selectedChatRoomSubject.asObservable();
 
-	private chatRoomsMap: { [key: string]: ViewChatRoom } = {};
+	private _chatRooms = new Array<ChatRoomModel>();
+	private chatRoomsMap = new Map<string, ChatRoomViewModel>();
 
-	private _chatRooms: ChatRoomModel[];
 	public get chatRooms(): ChatRoomModel[] {
 		return this._chatRooms;
 	}
@@ -38,41 +38,41 @@ export class ChatRoomService {
 	}
 
 	private getChatRooms(): void {
-		this.httpService
-			.get<ChatRoomModel[]>(
-				`api/User/${this.userService.user.id}/chatrooms`
-			)
-			.subscribe(chatRooms => {
-				this._chatRooms = chatRooms;
-				this.initChatRoomsMap();
-				this.getLatestMessages();
+		this.userService
+			.getChatRoomIds()
+			.forEach(id => {
+				this.getChatRoom(id);
 			});
 	}
 
-	private initChatRoomsMap(): void {
-		this._chatRooms.forEach(chatRoom => {
-			this.chatRoomsMap[chatRoom.id] = chatRoom as ViewChatRoom;
-		});
-	}
-
-	private getLatestMessages(): void {
-		this.loader.startLoad(this._chatRooms.length);
-		this._chatRooms.forEach(chatRoom => {
-			this.fetchLatestMessage(chatRoom.id);
-		});
+	private getChatRoom(chatRoomId: string): void {
+		this.httpService
+			.get<ChatRoomModel>(
+				`api/ChatRoom/${chatRoomId}`
+			)
+			.subscribe(chatRoom => {
+				this._chatRooms.push(chatRoom);
+				this.chatRoomsMap.set(chatRoomId, chatRoom as ChatRoomViewModel);
+				this.fetchLatestMessage(chatRoomId);
+			});
 	}
 
 	private fetchLatestMessage(chatRoomId: string): void {
+		this.loader.startLoad();
+
 		this.httpService
 			.get<MessageModel[]>(
 				`api/ChatRoom/${chatRoomId}/messages?count=1`
 			)
 			.subscribe(messages => {
 				this.loader.finishLoad();
-				if (messages.length == 1) {
-					this.chatRoomsMap[chatRoomId].latestMessage = messages[0];
-				} else {
-					this.chatRoomsMap[chatRoomId].latestMessage = null;
+				let chatRoom = this.chatRoomsMap.get(chatRoomId);
+				if (chatRoom) {
+					if (messages.length == 1) {
+						chatRoom.latestMessage = messages[0];
+					} else {
+						chatRoom.latestMessage = null;
+					}
 				}
 			});
 	}
@@ -82,7 +82,7 @@ export class ChatRoomService {
 	}
 
 	public getMemberCountForChatRoom(chatRoomId: string): number {
-		let chatRoom = this.chatRoomsMap[chatRoomId];
+		let chatRoom = this.chatRoomsMap.get(chatRoomId);
 		if (chatRoom) {
 			return chatRoom.users.length;
 		} else {
@@ -91,7 +91,7 @@ export class ChatRoomService {
 	}
 
 	public getLatestMessage(chatRoomId: string): null | MessageModel {
-		let chatRoom = this.chatRoomsMap[chatRoomId];
+		let chatRoom = this.chatRoomsMap.get(chatRoomId);
 		if (chatRoom) {
 			return chatRoom.latestMessage;
 		} else {

@@ -29,4 +29,8 @@ export class UserService {
 				})
 			);
 	}
+
+	public getChatRoomIds(): string[] {
+		return this.user.chatRooms;
+	}
 }
