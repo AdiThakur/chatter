@@ -4,7 +4,7 @@ import { Observable, ReplaySubject } from "rxjs";
 import { ChatRoomModel } from "../../types/chat-room-model";
 import { UserService } from "./user.service";
 import { MessageModel } from "../../types/message-model";
-import { Loader } from "../helpers/loader";
+import { FiniteLoader } from "../helpers/loader";
 import { tap } from "rxjs/operators";
 
 type ChatRoomViewModel = ChatRoomModel & {
@@ -24,13 +24,13 @@ export class ChatRoomService {
 		return this._chatRooms;
 	}
 
-	private loader: Loader;
+	private loader: FiniteLoader;
 
 	constructor(
 		private httpService: HttpService,
 		private userService: UserService
 	) {
-		this.loader = new Loader();
+		this.loader = new FiniteLoader();
 	}
 
 	public load(): Observable<void> {

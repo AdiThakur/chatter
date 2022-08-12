@@ -1,10 +1,8 @@
 import { Subject } from "rxjs";
 
-export class Loader {
+abstract class Loader {
 
-	private itemsLoading = 0;
-	private doneLoading = new Subject<void>();
-	public doneLoading$ = this.doneLoading.asObservable();
+	protected itemsLoading = 0;
 
 	public startLoad(itemsToLoad?: number): void {
 		if (itemsToLoad != undefined) {
@@ -14,6 +12,14 @@ export class Loader {
 		}
 	}
 
+	public abstract finishLoad(): void;
+}
+
+export class FiniteLoader extends Loader {
+
+	private doneLoading = new Subject<void>();
+	public doneLoading$ = this.doneLoading.asObservable();
+
 	public finishLoad(): void {
 		if (this.itemsLoading > 0) {
 			this.itemsLoading--;
@@ -21,5 +27,17 @@ export class Loader {
 		if (this.itemsLoading == 0) {
 			this.doneLoading.next();
 		}
+	}
+}
+
+export class InfiniteLoader extends Loader {
+	public finishLoad(): void {
+		if (this.itemsLoading > 0) {
+			this.itemsLoading--;
+		}
+	}
+
+	public isLoading(): boolean {
+		return this.itemsLoading > 0;
 	}
 }

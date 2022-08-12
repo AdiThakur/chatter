@@ -4,6 +4,7 @@ import { ChatRoomService } from "../services/chat-room.service";
 import { ChatService } from "../services/chat.service";
 import { MessageModel } from "../../types/message-model";
 import { UserService } from "../services/user.service";
+import { InfiniteLoader } from "../helpers/loader";
 
 type ViewMessage = MessageModel & { showProfilePic: boolean };
 
@@ -19,16 +20,19 @@ export class ChatRoomComponent implements OnInit {
 
 	public messageToSend: string = "";
 	public messages: ViewMessage[] = [];
-
 	private messageOffset = 0;
 	private readonly messageCount = 10;
+
+	public loader: InfiniteLoader;
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
 		private userService: UserService,
 		private chatRoomService: ChatRoomService,
 		private chatService: ChatService
-	) {}
+	) {
+		this.loader = new InfiniteLoader();
+	}
 
 	ngOnInit(): void {
 		this.activatedRoute.params.subscribe(params => {
@@ -51,11 +55,13 @@ export class ChatRoomComponent implements OnInit {
 	}
 
 	private fetchMessages(): void {
+		this.loader.startLoad();
 		this.chatRoomService
 			.fetchMessages(this.chatRoomId, this.messageOffset, this.messageCount)
 			.subscribe(messages => {
 				this.messageOffset += this.messageCount;
 				this.setMessages(messages);
+				this.loader.finishLoad();
 			});
 	}
 
