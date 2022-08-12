@@ -63,7 +63,7 @@ export class ChatRoomService {
 
 		this.httpService
 			.get<MessageModel[]>(
-				`api/ChatRoom/${chatRoomId}/messages?count=1`
+				`api/ChatRoom/${chatRoomId}/message?count=1`
 			)
 			.subscribe(messages => {
 				this.loader.finishLoad();
@@ -103,7 +103,7 @@ export class ChatRoomService {
 	public fetchLastTenMessages(chatRoomId: string): Observable<MessageModel[]> {
 		return this.httpService
 			.get<MessageModel[]>(
-				`api/ChatRoom/${chatRoomId}/messages?count=10`
+				`api/ChatRoom/${chatRoomId}/message?count=10`
 			);
 	}
 

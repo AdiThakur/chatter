@@ -9,7 +9,7 @@ namespace Chatter.Services
         Task CreateChatRoomAsync(string chatRoomId, string chatRoomDesc);
         Task<ChatRoom?> GetChatRoomAsync(string? chatRoomId);
         Task<List<ChatRoom>> GetChatRoomsAsync(string? nameToMatch);
-        Task<List<Message>> GetLatestMessagesForChatRoomAsync(string chatRoomId, int count);
+        Task<List<Message>> GetLatestMessagesForChatRoomAsync(string chatRoomId, int offset, int count);
     }
 
     public class ChatRoomService : IChatRoomService
@@ -99,9 +99,9 @@ namespace Chatter.Services
                 .ToList();
         }
 
-        public async Task<List<Message>> GetLatestMessagesForChatRoomAsync(string chatRoomId, int count)
+        public async Task<List<Message>> GetLatestMessagesForChatRoomAsync(string chatRoomId, int offset, int count)
         {
-            return await _messagesRepo.GetLatestMessagesForChatRoomAsync(chatRoomId, count);
+            return await _messagesRepo.GetLatestMessagesForChatRoomAsync(chatRoomId, offset, count);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Chatter.Data.Repos
     {
         Task AddMessageAsync(Message message);
         Task<Message?> GetMessageAsync(long messageId);
-        Task<List<Message>> GetLatestMessagesForChatRoomAsync(string chatRoomId, int count);
+        Task<List<Message>> GetLatestMessagesForChatRoomAsync(string chatRoomId, int offset, int count);
     }
 
     public class MessageRepo : BaseRepo, IMessageRepo
@@ -29,13 +29,14 @@ namespace Chatter.Data.Repos
                 .FirstAsync();
         }
 
-        public async Task<List<Message>> GetLatestMessagesForChatRoomAsync(string chatRoomId, int count)
+        public async Task<List<Message>> GetLatestMessagesForChatRoomAsync(string chatRoomId, int offset, int count)
         {
             return await context.Messages
                 .OrderByDescending(message => message.TimeStamp)
                 .Where(message => message.ChatRoom.Id == chatRoomId)
                 .Include(message => message.Author)
                 .Include(message => message.ChatRoom)
+                .Skip(offset)
                 .Take(count)
                 .ToListAsync();
         }
