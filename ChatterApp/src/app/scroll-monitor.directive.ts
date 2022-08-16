@@ -14,7 +14,7 @@ export class ScrollMonitorDirective implements OnInit, OnDestroy {
 	public scrollThreshold = 10;
 
 	@Input()
-	public throttleInMs = 100;
+	public throttleInMs = 250;
 
 	@Output()
 	public onScrollThresholdReached = new EventEmitter<void>();
@@ -43,7 +43,6 @@ export class ScrollMonitorDirective implements OnInit, OnDestroy {
 		let percent = Math.abs((currentScroll / Math.max(maxScroll, 1)));
 		percent = Math.max( percent, 0 );
 		percent = Math.min( percent, 1 );
-		console.log(100 - Math.round(percent * 100))
 
 		return 100 - Math.round(percent * 100);
 	}

@@ -104,6 +104,6 @@ export class ChatRoomComponent implements OnInit {
 	}
 
 	public scrollThresholdReached(): void {
-		console.log("Scrolled (near) to top");
+		this.fetchMessages();
 	}
 }
