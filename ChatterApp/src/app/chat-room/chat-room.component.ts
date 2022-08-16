@@ -20,6 +20,9 @@ export class ChatRoomComponent implements OnInit {
 	public messageToSend: string = "";
 	public messages: ViewMessage[] = [];
 
+	private messageOffset = 0;
+	private readonly messageCount = 10;
+
 	constructor(
 		private activatedRoute: ActivatedRoute,
 		private userService: UserService,
@@ -36,18 +39,7 @@ export class ChatRoomComponent implements OnInit {
 		});
 
 		this.memberCount = this.chatRoomService.getMemberCountForChatRoom(this.chatRoomId);
-
-		this.chatRoomService.fetchLastTenMessages(this.chatRoomId).subscribe(lastTenMessages => {
-			let viewMessages: ViewMessage[] = [];
-
-			lastTenMessages.forEach((message, index) => {
-				let viewMessage = message as ViewMessage;
-				viewMessage.showProfilePic = this.shouldShowProfilePic(lastTenMessages, index);
-				viewMessages.push(viewMessage);
-			});
-
-			this.messages = [...viewMessages, ...this.messages];
-		});
+		this.fetchMessages();
 
 		this.chatService.messages$.subscribe(message => {
 			if (message.chatRoomId == this.chatRoomId) {
@@ -56,6 +48,25 @@ export class ChatRoomComponent implements OnInit {
 				viewMessage.showProfilePic = this.shouldShowProfilePic(this.messages, 0);
 			}
 		});
+	}
+
+	private fetchMessages(): void {
+		this.chatRoomService
+			.fetchMessages(this.chatRoomId, this.messageOffset, this.messageCount)
+			.subscribe(messages => {
+				this.messageOffset += this.messageCount;
+				this.setMessages(messages);
+			});
+	}
+
+	private setMessages(messages: MessageModel[]): void {
+		let viewMessages = messages.map((message, index) => {
+			let viewMessage = message as ViewMessage;
+			viewMessage.showProfilePic = this.shouldShowProfilePic(messages, index);
+			return viewMessage;
+		});
+
+		this.messages.push(...viewMessages);
 	}
 
 	public sendMessage(): void {

@@ -100,10 +100,10 @@ export class ChatRoomService {
 		}
 	}
 
-	public fetchLastTenMessages(chatRoomId: string): Observable<MessageModel[]> {
+	public fetchMessages(chatRoomId: string, offset: number, count: number): Observable<MessageModel[]> {
 		return this.httpService
 			.get<MessageModel[]>(
-				`api/ChatRoom/${chatRoomId}/message?count=10`
+				`api/ChatRoom/${chatRoomId}/message?offset=${offset}&count=${count}`
 			);
 	}
 
