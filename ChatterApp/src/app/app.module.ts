@@ -30,6 +30,7 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { NavbarComponent } from './navbar/navbar.component';
 import { MatMenuModule } from "@angular/material/menu";
 import { ResultsComponent } from './results/results.component';
+import { ScrollMonitorDirective } from './scroll-monitor.directive';
 
 @NgModule({
 	declarations: [
@@ -43,7 +44,8 @@ import { ResultsComponent } from './results/results.component';
 		ChatRoomComponent,
 		MessageComponent,
 		NavbarComponent,
-		ResultsComponent
+		ResultsComponent,
+		ScrollMonitorDirective
 	],
 	imports: [
 		CommonModule,

@@ -7,7 +7,11 @@
 		</div>
 	</div>
 
-	<div class="chat-room-message-container">
+	<div
+		class="chat-room-message-container"
+		scroll-monitor
+		(onScrollThresholdReached)="scrollThresholdReached()"
+	>
 		<message
 			*ngFor="let message of messages"
 			[message]="message"

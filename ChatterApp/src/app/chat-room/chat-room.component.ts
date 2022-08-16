@@ -102,4 +102,8 @@ export class ChatRoomComponent implements OnInit {
 			return messages[index].authorName != messages[index + 1].authorName;
 		}
 	}
+
+	public scrollThresholdReached(): void {
+		console.log("Scrolled (near) to top");
+	}
 }
