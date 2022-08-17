@@ -31,7 +31,10 @@ export class ChatRoomListComponent implements OnInit {
 		const lowerCaseQuery = this.query.toLowerCase();
 
 		this.filteredChatRooms = this.chatRooms.filter(chatRoom => {
-			return chatRoom.id.toLowerCase().includes(lowerCaseQuery);
+			return (
+				chatRoom.id.toLowerCase().includes(lowerCaseQuery) ||
+				chatRoom.description.toLowerCase().includes(lowerCaseQuery)
+			);
 		})
 	}
 
