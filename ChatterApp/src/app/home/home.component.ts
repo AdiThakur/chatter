@@ -5,7 +5,6 @@ import { Router } from "@angular/router";
 import { ToastService } from "../toast/toast.service";
 import { ChatRoomService } from "../services/chat-room.service";
 import { ChatService } from "../services/chat.service";
-import { AbsolutePath } from "../routing/absolute-paths";
 import { SidenavService } from "../services/sidenav.service";
 
 @Component({
@@ -39,8 +38,7 @@ export class HomeComponent implements OnInit {
 		this.userService
 			.loadUser(userId)
 			.subscribe(
-				() => this.loadChatRoomService(),
-				() => this.handleInvalidSession()
+				() => this.loadChatRoomService()
 			);
 	}
 
@@ -50,18 +48,5 @@ export class HomeComponent implements OnInit {
 			.subscribe(
 				() => this.hasLoaded = true
 			);
-	}
-
-	private handleInvalidSession(): void {
-		this.router
-			.navigate([AbsolutePath.Login])
-			.then(() => {
-				this.toastService.createToast({
-					title: "Session Expired",
-					description: "Please sign in again",
-					type: "error",
-					duration: 2000
-				});
-			});
 	}
 }
