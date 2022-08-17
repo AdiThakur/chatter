@@ -1,12 +1,20 @@
 <div class="chat-room-container">
+	<!-- Chatroom Header -->
 	<div class="chat-room-header">
 		<h1 class="chat-room-title">{{ chatRoomId }}</h1>
+		<mat-spinner
+			class="chat-room-spinner"
+			diameter="30"
+			mode="indeterminate"
+			*ngIf="loader.isLoading()"
+		></mat-spinner>
 		<div class="chat-room-member-details">
 			<mat-icon class="chat-room-member-icon">person</mat-icon>
 			<p class="chat-room-member-count">{{ memberCount }}</p>
 		</div>
 	</div>
 
+	<!-- List of messages -->
 	<div
 		class="chat-room-message-container"
 		scroll-monitor
@@ -20,6 +28,7 @@
 		</message>
 	</div>
 
+	<!-- Message input tray -->
 	<div class="chat-room-action-bar-container">
 		<div class="chat-room-action-bar">
 			<input

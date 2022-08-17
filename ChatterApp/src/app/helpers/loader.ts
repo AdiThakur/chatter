@@ -1,4 +1,5 @@
-import { Subject } from "rxjs";
+import { of, Subject } from "rxjs";
+import { delay } from "rxjs/operators";
 
 abstract class Loader {
 
@@ -31,7 +32,24 @@ export class FiniteLoader extends Loader {
 }
 
 export class InfiniteLoader extends Loader {
+
+	constructor(private minLoadingDelayInMs?: number) {
+		super();
+	}
+
 	public finishLoad(): void {
+		if (!this.minLoadingDelayInMs) {
+			this.decrementItemsLoading();
+		} else {
+			of(true)
+				.pipe(delay(this.minLoadingDelayInMs))
+				.subscribe(() => {
+					this.decrementItemsLoading();
+				});
+		}
+	}
+
+	private decrementItemsLoading(): void {
 		if (this.itemsLoading > 0) {
 			this.itemsLoading--;
 		}

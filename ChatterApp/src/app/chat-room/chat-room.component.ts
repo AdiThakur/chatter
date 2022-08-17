@@ -31,7 +31,7 @@ export class ChatRoomComponent implements OnInit {
 		private chatRoomService: ChatRoomService,
 		private chatService: ChatService
 	) {
-		this.loader = new InfiniteLoader();
+		this.loader = new InfiniteLoader(1000);
 	}
 
 	ngOnInit(): void {
@@ -66,6 +66,10 @@ export class ChatRoomComponent implements OnInit {
 	}
 
 	private setMessages(messages: MessageModel[]): void {
+		if (messages.length == 0) {
+			return;
+		}
+
 		let viewMessages = messages.map((message, index) => {
 			let viewMessage = message as ViewMessage;
 			viewMessage.showProfilePic = this.shouldShowProfilePic(messages, index);

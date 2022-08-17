@@ -31,6 +31,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { MatMenuModule } from "@angular/material/menu";
 import { ResultsComponent } from './results/results.component';
 import { ScrollMonitorDirective } from './scroll-monitor.directive';
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 @NgModule({
 	declarations: [
@@ -65,7 +66,8 @@ import { ScrollMonitorDirective } from './scroll-monitor.directive';
 		MatTooltipModule,
 		FlexLayoutModule,
 		MatSidenavModule,
-		MatMenuModule
+		MatMenuModule,
+		MatProgressSpinnerModule
 	],
 	providers: [
 		httpInterceptorProviders,
@@ -76,5 +78,4 @@ import { ScrollMonitorDirective } from './scroll-monitor.directive';
 	],
 	bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}

@@ -1,6 +1,5 @@
 .chat-room-container {
 	display: flex;
-	justify-content: space-between;
 	flex-direction: column;
 	height: 100%;
 	width: 100%;
@@ -23,7 +22,10 @@
 	color: gray;
 	font-weight: lighter;
 	font-size: 3rem;
-	text-align: center;
+}
+.chat-room-spinner {
+	margin-left: 0.5rem;
+	margin-right: auto;
 }
 .chat-room-member-details {
 	display: flex;
