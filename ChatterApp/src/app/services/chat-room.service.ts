@@ -148,16 +148,16 @@ export class ChatRoomService {
 			);
 	}
 
-	public joinChatRoom(chatRoomId: string): Observable<void> {
+	public joinChatRoom(chatRoomId: string): Observable<MessageModel[]> {
 		return this.httpService
 			.post<void>(
 				`api/ChatRoom/${chatRoomId}/user`,
 				this.userService.user
 			)
 			.pipe(
-				tap(() => {
-					this.getChatRoom(chatRoomId);
+				switchMap(() => {
 					this.userService.joinChatRoom(chatRoomId);
+					return this.getChatRoom(chatRoomId);
 				})
 			);
 	}
