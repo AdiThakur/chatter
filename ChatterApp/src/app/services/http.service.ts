@@ -52,4 +52,14 @@ export class HttpService {
 				})
 			);
 	}
+
+	public delete<T>(url: string): Observable<T> {
+		return this.httpClient
+			.delete<T>(url)
+			.pipe(
+				catchError((error, _) => {
+					return this.handleError<T>(error, _);
+				})
+			);
+	}
 }

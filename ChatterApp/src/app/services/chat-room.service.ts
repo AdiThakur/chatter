@@ -6,6 +6,7 @@ import { UserService } from "./user.service";
 import { MessageModel } from "../../types/message-model";
 import { FiniteLoader } from "../helpers/loader";
 import { switchMap, tap } from "rxjs/operators";
+import { ToastService } from "../toast/toast.service";
 
 type ChatRoomViewModel = ChatRoomModel & {
 	latestMessage: null | MessageModel
@@ -28,6 +29,7 @@ export class ChatRoomService {
 
 	constructor(
 		private httpService: HttpService,
+		private toastService: ToastService,
 		private userService: UserService
 	) {
 		this.loader = new FiniteLoader();
@@ -158,5 +160,31 @@ export class ChatRoomService {
 					this.userService.joinChatRoom(chatRoomId);
 				})
 			);
+	}
+
+	public leaveChatRoom(chatRoomId: string): void {
+		this.httpService
+			.delete<void>(
+				`api/ChatRoom/${chatRoomId}/user/${this.userService.user.id}`
+			)
+			.subscribe(() => {
+				this.userService.leaveChatRoom(chatRoomId);
+				this.removeChatRoom(chatRoomId);
+				this.toastService.createToast({
+					title: "Success",
+					description: `Left chatroom ${chatRoomId}`,
+					type: "success",
+					duration: 5000
+				});
+			});
+	}
+
+	private removeChatRoom(chatRoomId: string): void {
+		let chatRoomIndex =
+			this.chatRooms.findIndex(chatRoom => chatRoom.id === chatRoomId);
+		if (chatRoomIndex >= 0) {
+			this.chatRooms.splice(chatRoomIndex, 1);
+			this.chatRoomsMap.delete(chatRoomId);
+		}
 	}
 }
