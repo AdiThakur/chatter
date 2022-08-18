@@ -4,7 +4,11 @@
 	(click)="openChatRoom()"
 >
 	<div class="chatroom-button-chatroom-details">
-		<h1 class="chatroom-button-title">{{ chatRoom.id }}</h1>
+		<div class="chatroom-button-title-container">
+			<h1 class="chatroom-button-title">{{ chatRoom.id }}</h1>
+			<mat-icon class="chatroom-button-more">more_vert</mat-icon>
+		</div>
+		<mat-divider></mat-divider>
 		<p class="chatroom-button-desc">{{ chatRoom.description }}</p>
 	</div>
 
