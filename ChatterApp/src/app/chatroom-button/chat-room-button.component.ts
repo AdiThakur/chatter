@@ -47,4 +47,8 @@ export class ChatRoomButtonComponent implements OnInit {
 		this.chatRoomService.selectChatRoom(this.chatRoom.id);
 		this.router.navigate([AbsolutePath.ChatRoom, this.chatRoom.id]);
 	}
+
+	public leaveChatRoom(): void {
+		console.log(`Leaving chatroom: ${this.chatRoom.id}`)
+	}
 }

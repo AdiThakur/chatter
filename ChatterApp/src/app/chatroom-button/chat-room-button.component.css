@@ -48,6 +48,14 @@ mat-divider {
 	color: gray;
 }
 
+.chatroom-button-menu-item {
+	padding: 0;
+	margin: 0;
+	font-size: 1rem;
+	font-weight: lighter;
+	color: gray;
+}
+
 .chatroom-button-message-container {
 	display: flex;
 	justify-content: flex-start;
