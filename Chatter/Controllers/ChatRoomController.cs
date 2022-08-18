@@ -37,6 +37,14 @@ namespace Chatter.Controllers
             return Ok();
         }
 
+        [HttpDelete("{chatRoomId}/user/{userId}")]
+        public async Task<ActionResult> RemoveUserFromChatRoomAsync([FromRoute] string chatRoomId, [FromRoute] long userId)
+        {
+            await _chatRoomService.RemoveUserFromChatRoomAsync(chatRoomId, userId);
+
+            return Ok();
+        }
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<List<ChatRoomModel>>> GetChatRooms([FromQuery] string? name)

@@ -6,6 +6,7 @@ namespace Chatter.Services
     public interface IChatRoomService
     {
         Task AddUserToChatRoomAsync(string? chatRoomId, long? userId);
+        Task RemoveUserFromChatRoomAsync(string chatRoomId, long userId);
         Task CreateChatRoomAsync(string chatRoomId, string chatRoomDesc);
         Task<ChatRoom?> GetChatRoomAsync(string? chatRoomId);
         Task<List<ChatRoom>> GetChatRoomsAsync(string? nameToMatch);
@@ -50,7 +51,32 @@ namespace Chatter.Services
 
         public async Task AddUserToChatRoomAsync(string? chatRoomId, long? userId)
         {
-            // Validate ChatRoom
+            var user = await ValidateUserAsync(userId);
+            var chatRoom = await ValidateChatRoomAsync(chatRoomId);
+
+            if (chatRoom.Users.Any(userInChatRoom => userInChatRoom.Id == user.Id))
+            {
+                throw new UserException("User is already in ChatRoom");
+            }
+
+            await _chatRoomsRepo.AddUserToChatRoom(chatRoom, user);
+        }
+
+        public async Task RemoveUserFromChatRoomAsync(string chatRoomId, long userId)
+        {
+            var user = await ValidateUserAsync(userId);
+            var chatRoom = await ValidateChatRoomAsync(chatRoomId);
+
+            if (chatRoom.Users.All(userInChatRoom => userInChatRoom.Id != user.Id))
+            {
+                throw new UserException("User is not in ChatRoom");
+            }
+
+            await _chatRoomsRepo.RemoveUserFromChatRoom(chatRoom, user);
+        }
+
+        private async Task<ChatRoom> ValidateChatRoomAsync(string? chatRoomId)
+        {
             var chatRoom = await _chatRoomsRepo.GetChatRoomAsync(chatRoomId);
             if (chatRoom == null)
             {
@@ -60,22 +86,21 @@ namespace Chatter.Services
                 );
             }
 
-            // Validate User
+            return chatRoom;
+        }
+
+        private async Task<User> ValidateUserAsync(long? userId)
+        {
             var user = await _userRepo.GetUserAsync(userId);
             if (user == null)
             {
                 throw new UserException(
-                     "Invalid Username",
-                     "User does not exist"
-                 );
+                    "Invalid Username",
+                    "User does not exist"
+                );
             }
 
-            if (chatRoom.Users.Any(userInChatRoom => userInChatRoom.Id == user.Id))
-            {
-                throw new UserException("User is already in ChatRoom");
-            }
-
-            await _chatRoomsRepo.AddUserToChatRoom(chatRoom, user);
+            return user;
         }
 
         public async Task<ChatRoom?> GetChatRoomAsync(string? chatRoomId)

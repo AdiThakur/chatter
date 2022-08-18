@@ -7,6 +7,7 @@ namespace Chatter.Data.Repos
     {
         Task AddChatRoomAsync(ChatRoom chatRoom);
         Task AddUserToChatRoom(ChatRoom chatRoom, User user);
+        Task RemoveUserFromChatRoom(ChatRoom chatRoom, User user);
         Task<List<ChatRoom>> GetChatRoomsAsync();
         Task<ChatRoom?> GetChatRoomAsync(string? chatRoomId);
     }
@@ -32,6 +33,12 @@ namespace Chatter.Data.Repos
         public async Task AddUserToChatRoom(ChatRoom chatRoom, User user)
         {
             chatRoom.Users.Add(user);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task RemoveUserFromChatRoom(ChatRoom chatRoom, User user)
+        {
+            chatRoom.Users.Remove(user);
             await context.SaveChangesAsync();
         }
 
