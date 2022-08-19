@@ -59,4 +59,12 @@ export class ChatService {
 	public sendMessage(message: MessageModel): void {
 		this.connection.invoke("SendMessage", message);
 	}
+
+	public joinChatRoom(chatRoomId: string): void {
+		this.connection.invoke("JoinChatRoom", chatRoomId);
+	}
+
+	public leaveChatRoom(chatRoomId: string): void {
+		this.connection.invoke("LeaveChatRoom", chatRoomId);
+	}
 }

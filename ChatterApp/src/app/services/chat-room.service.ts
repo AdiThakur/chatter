@@ -7,6 +7,7 @@ import { MessageModel } from "../../types/message-model";
 import { FiniteLoader } from "../helpers/loader";
 import { switchMap, tap } from "rxjs/operators";
 import { ToastService } from "../toast/toast.service";
+import { ChatService } from "./chat.service";
 
 type ChatRoomViewModel = ChatRoomModel & {
 	latestMessage: null | MessageModel
@@ -30,7 +31,8 @@ export class ChatRoomService {
 	constructor(
 		private httpService: HttpService,
 		private toastService: ToastService,
-		private userService: UserService
+		private userService: UserService,
+		private chatService: ChatService
 	) {
 		this.loader = new FiniteLoader();
 	}
@@ -156,6 +158,7 @@ export class ChatRoomService {
 			)
 			.pipe(
 				switchMap(() => {
+					this.chatService.joinChatRoom(chatRoomId);
 					this.userService.joinChatRoom(chatRoomId);
 					return this.getChatRoom(chatRoomId);
 				})
@@ -168,6 +171,7 @@ export class ChatRoomService {
 				`api/ChatRoom/${chatRoomId}/user/${this.userService.user.id}`
 			)
 			.subscribe(() => {
+				this.chatService.leaveChatRoom(chatRoomId);
 				this.userService.leaveChatRoom(chatRoomId);
 				this.removeChatRoom(chatRoomId);
 				this.toastService.createToast({

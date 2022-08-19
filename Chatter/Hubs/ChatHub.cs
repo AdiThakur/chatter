@@ -45,6 +45,20 @@ public class ChatHub : Hub
         }
     }
 
+    public async Task JoinChatRoom(string chatRoomId)
+    {
+        var caller = await GetUserAsync();
+        if (caller.ChatRooms.Any(chatRoom => chatRoom.Id == chatRoomId))
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, chatRoomId);
+        }
+    }
+
+    public async Task LeaveChatRoom(string chatRoomId)
+    {
+        await Groups.RemoveFromGroupAsync(Context.ConnectionId, chatRoomId);
+    }
+
     private long GetUserId()
     {
         var userId = Context.User?.Claims
