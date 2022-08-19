@@ -5,6 +5,7 @@ import { AuthService } from "../services/auth.service";
 import { ChatRoomService } from "../services/chat-room.service";
 import { Router } from "@angular/router";
 import { AbsolutePath } from "../routing/absolute-paths";
+import { KeyPressHandler } from "../helpers/key-press-handler";
 
 @Component({
 	selector: 'navbar',
@@ -14,14 +15,19 @@ import { AbsolutePath } from "../routing/absolute-paths";
 export class NavbarComponent implements OnInit {
 
 	public query = "";
+	public keyHandler: KeyPressHandler;
 
 	constructor(
 		private router: Router,
 		public sidenavService: SidenavService,
 		private authService: AuthService,
-		public userService: UserService,
-		private chatRoomService: ChatRoomService
-	) {}
+		public userService: UserService
+	) {
+		this.keyHandler = new KeyPressHandler([{
+			key: "enter",
+			handler: () => this.search()
+		}])
+	}
 
 	ngOnInit(): void {}
 

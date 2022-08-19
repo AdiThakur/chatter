@@ -16,6 +16,7 @@
 			<input
 				matInput
 				placeholder="search for new chatrooms"
+				(keydown)="keyHandler.handleKeyPress($event)"
 				[(ngModel)]="query"
 			/>
 			<mat-icon

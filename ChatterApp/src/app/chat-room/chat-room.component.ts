@@ -5,6 +5,7 @@ import { ChatService } from "../services/chat.service";
 import { MessageModel } from "../../types/message-model";
 import { UserService } from "../services/user.service";
 import { InfiniteLoader } from "../helpers/loader";
+import { KeyPressHandler } from "../helpers/key-press-handler";
 
 type ViewMessage = MessageModel & { showProfilePic: boolean };
 
@@ -24,6 +25,7 @@ export class ChatRoomComponent implements OnInit {
 	private readonly messageCount = 10;
 
 	public loader: InfiniteLoader;
+	public keyHandler: KeyPressHandler;
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
@@ -32,6 +34,10 @@ export class ChatRoomComponent implements OnInit {
 		private chatService: ChatService
 	) {
 		this.loader = new InfiniteLoader(1000);
+		this.keyHandler = new KeyPressHandler([{
+			key: "enter",
+			handler: () => this.sendMessage()
+		}]);
 	}
 
 	ngOnInit(): void {

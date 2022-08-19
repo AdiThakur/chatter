@@ -35,6 +35,7 @@
 				matInput
 				class="chat-room-message-input"
 				placeholder="Type a message..."
+				(keydown)="keyHandler.handleKeyPress($event)"
 				[(ngModel)]="messageToSend"
 			/>
 			<button
