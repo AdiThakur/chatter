@@ -9,6 +9,24 @@ export class ToastService {
 
 	constructor(private snackbar: MatSnackBar) {}
 
+	public createSuccessToast(description: string): void {
+		this.createToast({
+			title: "Success",
+			description: description,
+			duration: 5000,
+			type: "success"
+		});
+	}
+
+	public createErrorToast(description: string): void {
+		this.createToast({
+			title: "Error",
+			description: description,
+			duration: 5000,
+			type: "error"
+		});
+	}
+
 	public createToast(options: ToastOptions): void {
 
 		let snackbarConfig = new MatSnackBarConfig<ToastData>();

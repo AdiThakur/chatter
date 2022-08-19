@@ -56,18 +56,10 @@ export class ResultsComponent implements OnInit {
 			.subscribe(
 				() => {
 					this.chatRoomsMap[chatRoomId].alreadyJoined = true;
-					this.toastService.createToast({
-						type: "success",
-						title: `Joined ${chatRoomId}!`,
-						duration: 5000
-					});
+					this.toastService.createSuccessToast(`Joined ${chatRoomId}`);
 				},
 				() => {
-					this.toastService.createToast({
-						type: "error",
-						title: `Could not join ${chatRoomId}!`,
-						duration: 5000
-					});
+					this.toastService.createErrorToast(`Could not join ${chatRoomId}`);
 				}
 			);
 	}

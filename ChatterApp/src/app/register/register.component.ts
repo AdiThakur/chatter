@@ -111,11 +111,7 @@ export class RegisterComponent implements OnInit {
 			'api/User', registrationModel
 		).subscribe(
 			(userModel) => {
-				this.toastService.createToast({
-					title: "User created successfully",
-					type: "success",
-					duration: 5000
-				});
+				this.toastService.createSuccessToast("User created successfully");
 			}
 		);
 	}

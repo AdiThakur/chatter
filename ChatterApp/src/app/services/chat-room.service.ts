@@ -174,12 +174,7 @@ export class ChatRoomService {
 				this.chatService.leaveChatRoom(chatRoomId);
 				this.userService.leaveChatRoom(chatRoomId);
 				this.removeChatRoom(chatRoomId);
-				this.toastService.createToast({
-					title: "Success",
-					description: `Left chatroom ${chatRoomId}`,
-					type: "success",
-					duration: 5000
-				});
+				this.toastService.createSuccessToast(`Left chatroom ${chatRoomId}`);
 			});
 	}
 
