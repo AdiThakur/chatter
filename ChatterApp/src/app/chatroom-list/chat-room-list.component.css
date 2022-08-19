@@ -3,11 +3,15 @@
 	flex-direction: column;
 	height: 100%;
 	width: 18.5rem;
-	padding: 0.5rem 0.5rem 0 0.5rem;
+	padding: 0;
 
 	box-sizing: border-box;
-	overflow-x: hidden;
-	overflow-y: scroll;
+	overflow: hidden;
+}
+.chatroom-list-header {
+	display: flex;
+	flex-direction: column;
+	padding: 0.5rem 0.5rem 0 0.5rem;
 }
 .chatroom-list-title {
 	margin: 0;
@@ -20,7 +24,13 @@
 	text-align: center;
 }
 .chatroom-list-search {
-	margin-bottom: 1rem;
+	margin-bottom: 0.5rem;
 
 	font-size: 0.9rem;
+}
+
+.chatroom-list-chatrooms {
+	flex: 1;
+	overflow-x: hidden;
+	overflow-y: auto;
 }
