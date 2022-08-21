@@ -4,6 +4,10 @@ import { ToastService } from "../toast/toast.service";
 import { UserModel } from "../../types/user-model";
 import { RegistrationModel } from "../../types/registration-model";
 import { HttpService } from "../services/http.service";
+import { InfiniteLoader } from "../helpers/loader";
+import { finalize } from "rxjs/operators";
+import { Router } from "@angular/router";
+import { AbsolutePath } from "../routing/absolute-paths";
 
 @Component({
 	selector: 'register',
@@ -12,28 +16,33 @@ import { HttpService } from "../services/http.service";
 })
 export class RegisterComponent implements OnInit {
 
-	username = "";
-	password = "";
-	isPasswordShown = false;
+	public loader: InfiniteLoader;
 
-	isAvatarSelected = false;
-	selectedAvatar: string = "";
+	public username = "";
+	public password = "";
+	public isPasswordShown = false;
+
+	public isAvatarSelected = false;
+	public selectedAvatar: string = "";
 	// TODO: Make dynamic
-	avatars = [
+	public avatars = [
 		"avatar1.png", "avatar2.png", "avatar3.png", "avatar4.png", "avatar5.png",
 		"avatar6.png", "avatar7.png", "avatar8.png", "avatar9.png",
 	];
 
-	accountDetailsFormGroup!: UntypedFormGroup;
-	usernameFormControl!: UntypedFormControl;
-	passwordFormControl!: UntypedFormControl;
-	confirmPasswordFormControl!: UntypedFormControl;
-	chatRoomFormControl!: UntypedFormControl;
+	public accountDetailsFormGroup!: UntypedFormGroup;
+	public usernameFormControl!: UntypedFormControl;
+	public passwordFormControl!: UntypedFormControl;
+	public confirmPasswordFormControl!: UntypedFormControl;
+	public chatRoomFormControl!: UntypedFormControl;
 
 	constructor(
+		private router: Router,
 		private httpService: HttpService,
 		private toastService: ToastService
-	) {}
+	) {
+		this.loader = new InfiniteLoader();
+	}
 
 	ngOnInit(): void {
 		this.setupForms();
@@ -100,19 +109,23 @@ export class RegisterComponent implements OnInit {
 	}
 
 	public register(): void {
-
 		let registrationModel: RegistrationModel = {
 			username: this.username,
 			password: this.password,
 			avatarId: this.selectedAvatar
 		};
 
-		this.httpService.post<UserModel>(
-			'api/User', registrationModel
-		).subscribe(
-			(userModel) => {
-				this.toastService.createSuccessToast("User created successfully");
-			}
-		);
+		this.loader.startLoad();
+
+		this.httpService
+			.post<UserModel>('api/User', registrationModel)
+			.pipe(finalize(() => this.loader.finishLoad()))
+			.subscribe((userModel) => {
+				this.router
+					.navigate([AbsolutePath.Login])
+					.then(() => {
+						this.toastService.createSuccessToast("User created successfully");
+					});
+			});
 	}
 }

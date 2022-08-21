@@ -185,6 +185,7 @@
 						class="register-submit-button"
 						mat-raised-button
 						color="accent"
+						[disabled]="loader.isLoading()"
 						(click)="register()"
 					>
 						Create Account
