@@ -7,6 +7,7 @@
 			<input
 				matInput
 				placeholder="Username"
+				[disabled]="loader.isLoading()"
 				[(ngModel)]="username"
 			/>
 		</mat-form-field>
@@ -20,6 +21,7 @@
 				placeholder="Password"
 				spellcheck="false"
 				[type]="isPasswordShown ? 'text' : 'password'"
+				[disabled]="loader.isLoading()"
 				[(ngModel)]="password"
 			/>
 			<button
@@ -37,6 +39,7 @@
 			mat-raised-button
 			color="accent"
 			class="login-button"
+			[disabled]="loader.isLoading()"
 			(click)="login()"
 		>
 			Login

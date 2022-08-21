@@ -4,6 +4,8 @@ import { Router } from "@angular/router";
 import { ToastService } from "../toast/toast.service";
 import { StateExtras } from "../guards/auth.guard";
 import { AbsolutePath } from "../routing/absolute-paths";
+import { InfiniteLoader } from "../helpers/loader";
+import { finalize } from "rxjs/operators";
 
 @Component({
 	selector: 'login',
@@ -12,10 +14,10 @@ import { AbsolutePath } from "../routing/absolute-paths";
 })
 export class LoginComponent implements OnInit {
 
-	username = "";
-	password = "";
-	isPasswordShown = false;
-
+	public username = "";
+	public password = "";
+	public isPasswordShown = false;
+	public loader: InfiniteLoader;
 	private readonly redirectUrl: undefined | string;
 
 	constructor(
@@ -23,6 +25,7 @@ export class LoginComponent implements OnInit {
 		private toastService: ToastService,
 		private authService: AuthService
 	) {
+		this.loader = new InfiniteLoader();
 		let routeState = this.router.getCurrentNavigation()?.extras?.state as StateExtras;
 		this.redirectUrl = routeState?.requestedRoute;
 	}
@@ -34,8 +37,10 @@ export class LoginComponent implements OnInit {
 	}
 
 	public login(): void {
+		this.loader.startLoad();
 		this.authService
 			.login(this.username, this.password)
+			.pipe(finalize(() => this.loader.finishLoad()))
 			.subscribe(() => {
 				this.allowNavigation();
 			});
