@@ -2,13 +2,17 @@
 
 	<!-- Sidenav trigger -->
 	<div class="navbar-sidenav-icon-container">
-		<mat-icon
-			class="navbar-sidenav-icon"
-			*ngIf="sidenavService.canBeToggled"
+		<button
+			mat-icon-button
+			class="navbar-sidenav-button"
 			(click)="sidenavService.toggle()"
 		>
-			menu
-		</mat-icon>
+			<mat-icon
+				class="navbar-sidenav-icon"
+			>
+				menu
+			</mat-icon>
+		</button>
 	</div>
 
 	<div class="navbar-search-container">
@@ -38,8 +42,8 @@
 			[src]="userService.user.avatarUri"
 		>
 		<p
+			fxShow.xs="false"
 			class="navbar-username"
-			*ngIf="!sidenavService.canBeToggled"
 		>
 			{{ userService.user.username }}
 		</p>

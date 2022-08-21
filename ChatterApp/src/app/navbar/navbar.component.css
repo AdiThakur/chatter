@@ -16,12 +16,16 @@
 	justify-content: flex-end;
 	height: 2rem;
 	width: 2rem;
-	padding: 0 0.75rem;
+	padding-left: 0.5rem;
 }
 
+.navbar-sidenav-button {
+	margin-right: auto;
+}
 .navbar-sidenav-icon {
 	height: 2rem;
 	width: 2rem;
+	margin-right: auto;
 
 	font-size: 2rem;
 	color: white;

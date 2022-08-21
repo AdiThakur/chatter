@@ -7,19 +7,17 @@ import { MatDrawerMode } from "@angular/material/sidenav";
 })
 export class SidenavService {
 
-	private _isScreenSmall = false;
-
+	private isScreenSmall = false;
+	private isDismissible = false;
 	private _isOpen = true;
 	public get isOpen(): boolean {
 		return this._isOpen;
 	}
 
-	public get canBeToggled(): boolean {
-		return this._isScreenSmall;
-	}
+	private lastState = this._isOpen;
 
 	public get mode(): MatDrawerMode {
-		if (this._isScreenSmall) {
+		if (this.isScreenSmall) {
 			return 'over';
 		} else {
 			return 'side';
@@ -44,28 +42,32 @@ export class SidenavService {
 					state.breakpoints[Breakpoints.Small];
 				if (isSmall == undefined) {
 					return;
-				} else {
-					this._isScreenSmall = isSmall;
-					this._isOpen = !this._isScreenSmall;
 				}
-			});
+
+				this.isScreenSmall = isSmall;
+
+				if (this.isScreenSmall) {
+					this._isOpen = false;
+					this.isDismissible = true;
+				} else {
+					this._isOpen = this.lastState
+					this.isDismissible = false;
+				}
+			})
 	}
 
 	public open(): void {
-		if (this.canBeToggled) {
-			this._isOpen = true;
-		}
+		this._isOpen = true;
 	}
 
 	public close(): void {
-		if (this.canBeToggled) {
+		if (this.isScreenSmall) {
 			this._isOpen = false;
 		}
 	}
 
 	public toggle(): void {
-		if (this.canBeToggled) {
-			this._isOpen = !this._isOpen;
-		}
+		this._isOpen = !this._isOpen;
+		this.lastState = this._isOpen;
 	}
 }
