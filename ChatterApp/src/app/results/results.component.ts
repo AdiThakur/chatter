@@ -4,6 +4,8 @@ import { ChatRoomService } from "../services/chat-room.service";
 import { ChatRoomModel } from "../../types/chat-room-model";
 import { UserService } from "../services/user.service";
 import { ToastService } from "../toast/toast.service";
+import { InfiniteLoader } from "../helpers/loader";
+import { finalize } from "rxjs/operators";
 
 type ChatRoomViewModel = ChatRoomModel & { alreadyJoined: boolean };
 
@@ -14,6 +16,7 @@ type ChatRoomViewModel = ChatRoomModel & { alreadyJoined: boolean };
 })
 export class ResultsComponent implements OnInit {
 
+	public loader: InfiniteLoader;
 	public query: string;
 	public chatRooms: ChatRoomModel[] = [];
 	public chatRoomsMap: { [key: string]: ChatRoomViewModel }= {};
@@ -23,7 +26,9 @@ export class ResultsComponent implements OnInit {
 		private toastService: ToastService,
 		private userService: UserService,
 		private chatRoomService: ChatRoomService
-	) {}
+	) {
+		this.loader = new InfiniteLoader(250);
+	}
 
 	ngOnInit(): void {
 		this.route.queryParams.subscribe(params => {
@@ -33,8 +38,10 @@ export class ResultsComponent implements OnInit {
 	}
 
 	private fetchMatchingChatRooms(): void {
+		this.loader.startLoad();
 		this.chatRoomService
 			.fetchMatchingChatRooms(this.query)
+			.pipe(finalize(() => this.loader.finishLoad()))
 			.subscribe(chatRooms => {
 				this.chatRooms = chatRooms;
 				this.initChatRoomsMap();

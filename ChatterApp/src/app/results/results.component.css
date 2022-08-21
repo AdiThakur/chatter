@@ -5,12 +5,14 @@
 	width: 100%;
 
 	box-sizing: border-box;
+	overflow-y: auto;
 }
 
 .results-header {
 	display: flex;
-	align-items: center;
-	justify-content: space-between;
+	flex-direction: column;
+}
+.results-header-details {
 	height: fit-content;
 	padding: 1.35rem 1rem;
 
@@ -34,6 +36,12 @@
 .results-query {
 	margin: 0 0 0 0.3rem;
 	font-style: italic;
+}
+
+mat-progress-bar {
+	height: 0.3rem;
+	width: 100%;
+	margin: 0;
 }
 
 .results-chatrooms-container {

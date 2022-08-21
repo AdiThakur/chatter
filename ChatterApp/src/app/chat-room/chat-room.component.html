@@ -1,17 +1,18 @@
 <div class="chat-room-container">
 	<!-- Chatroom Header -->
-	<div class="chat-room-header">
-		<h1 class="chat-room-title">{{ chatRoomId }}</h1>
-		<mat-spinner
-			class="chat-room-spinner"
-			diameter="30"
-			mode="indeterminate"
-			*ngIf="loader.isLoading()"
-		></mat-spinner>
-		<div class="chat-room-member-details">
-			<mat-icon class="chat-room-member-icon">person</mat-icon>
-			<p class="chat-room-member-count">{{ memberCount }}</p>
+	<div  class="chat-room-header">
+		<div class="chat-room-header-details">
+			<h1 class="chat-room-title">{{ chatRoomId }}</h1>
+			<div class="chat-room-member-details">
+				<mat-icon class="chat-room-member-icon">person</mat-icon>
+				<p class="chat-room-member-count">{{ memberCount }}</p>
+			</div>
 		</div>
+
+		<mat-progress-bar
+			mode="indeterminate"
+			[style.visibility]="loader.isLoading() ? 'visible' : 'hidden'"
+		></mat-progress-bar>
 	</div>
 
 	<!-- List of messages -->

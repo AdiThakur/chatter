@@ -7,6 +7,9 @@
 }
 
 .chat-room-header {
+	background-color: #c9c9c9;
+}
+.chat-room-header-details {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -42,6 +45,12 @@
 	color: dimgray;
 	font-weight: lighter;
 	font-size: 1.3rem;
+}
+
+mat-progress-bar {
+	height: 0.25rem;
+	width: 100%;
+	margin: 0;
 }
 
 .chat-room-message-container {

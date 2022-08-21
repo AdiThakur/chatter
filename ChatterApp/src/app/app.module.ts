@@ -33,6 +33,7 @@ import { ResultsComponent } from './results/results.component';
 import { ScrollMonitorDirective } from './scroll-monitor.directive';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatDividerModule } from "@angular/material/divider";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 
 @NgModule({
 	declarations: [
@@ -69,7 +70,8 @@ import { MatDividerModule } from "@angular/material/divider";
 		MatSidenavModule,
 		MatMenuModule,
 		MatProgressSpinnerModule,
-		MatDividerModule
+		MatDividerModule,
+		MatProgressBarModule
 	],
 	providers: [
 		httpInterceptorProviders,

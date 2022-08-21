@@ -1,8 +1,15 @@
 <div class="results-body">
 	<div class="results-header">
+		<div class="results-header-details">
 		<span class="results-title">
 			Results for <p class="results-query">{{ query }}</p>
 		</span>
+
+		</div>
+		<mat-progress-bar
+			mode="indeterminate"
+			[style.visibility]="loader.isLoading() ? 'visible' : 'hidden'"
+		></mat-progress-bar>
 	</div>
 
 	<div class="results-chatrooms-container">
