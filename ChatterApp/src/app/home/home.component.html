@@ -1,8 +1,13 @@
-<h1
+<div
 	*ngIf="hasLoaded == false"
+	class="home-loading-screen"
 >
-	Loading...
-</h1>
+	<h1>loading</h1>
+	<mat-spinner
+		color="accent"
+		diameter="45"
+	></mat-spinner>
+</div>
 
 <div
 	class="home"

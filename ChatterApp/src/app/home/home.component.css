@@ -5,6 +5,24 @@
 	width: 100%;
 }
 
+.home-loading-screen {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	width: 100%;
+
+	background: #3f51b5;
+}
+.home-loading-screen > h1 {
+	padding: 0;
+	margin: 0 1rem 0 0;
+	color: white;
+	font-size: 2.75rem;
+	font-weight: lighter;
+	font-style: italic;
+}
+
 .home-body {
 	flex-grow: 1;
 
