@@ -18,8 +18,7 @@ export class ResultsComponent implements OnInit {
 
 	public loader: InfiniteLoader;
 	public query: string;
-	public chatRooms: ChatRoomModel[] = [];
-	public chatRoomsMap: { [key: string]: ChatRoomViewModel }= {};
+	public chatRooms: ChatRoomViewModel[] = [];
 
 	constructor(
 		private route: ActivatedRoute,
@@ -43,17 +42,29 @@ export class ResultsComponent implements OnInit {
 			.fetchMatchingChatRooms(this.query)
 			.pipe(finalize(() => this.loader.finishLoad()))
 			.subscribe(chatRooms => {
-				this.chatRooms = chatRooms;
-				this.initChatRoomsMap();
+				this.setChatRooms(chatRooms);
 			});
 	};
 
-	private initChatRoomsMap(): void {
-		this.chatRooms.forEach(chatRoom => {
+	private setChatRooms(chatRooms: ChatRoomModel[]): void {
+		this.chatRooms = chatRooms.map(chatRoom => {
 			let viewChatRoom = chatRoom as ChatRoomViewModel;
-			viewChatRoom.alreadyJoined =
-				this.userService.user.chatRooms.some(chatRoomId => chatRoomId === chatRoom.id);
-			this.chatRoomsMap[viewChatRoom.id] = viewChatRoom;
+			viewChatRoom.alreadyJoined = this.userService.isUserInChatRoom(viewChatRoom.id);
+			return viewChatRoom;
+		});
+		this.chatRooms.sort((room1, room2) => {
+			if (!room1.alreadyJoined && room2.alreadyJoined) {
+				return -1;
+			} else if (room1.alreadyJoined && !room2.alreadyJoined) {
+				return 1;
+			} else if (room1.alreadyJoined == room2.alreadyJoined) {
+				if (room1.id >= room2.id) {
+					return 1;
+				} else {
+					return -1;
+				}
+			}
+			return 0;
 		});
 	}
 
@@ -62,7 +73,8 @@ export class ResultsComponent implements OnInit {
 			.joinChatRoom(chatRoomId)
 			.subscribe(
 				() => {
-					this.chatRoomsMap[chatRoomId].alreadyJoined = true;
+					let chatRoom = this.chatRooms.find(chatRoom => chatRoom.id == chatRoomId)!;
+					chatRoom.alreadyJoined = true;
 					this.toastService.createSuccessToast(`Joined ${chatRoomId}`);
 				},
 				() => {

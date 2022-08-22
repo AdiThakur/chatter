@@ -34,6 +34,10 @@ export class UserService {
 		return this.user.chatRooms;
 	}
 
+	public isUserInChatRoom(chatRoomId: string): boolean {
+		return this.user.chatRooms.some(id => id === chatRoomId);
+	}
+
 	public joinChatRoom(chatRoomId: string): void {
 		this.user.chatRooms.push(chatRoomId);
 	}

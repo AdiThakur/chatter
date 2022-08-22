@@ -32,10 +32,10 @@
 				<button
 					class="results-chatroom-join"
 					mat-stroked-button
-					[disabled]="chatRoomsMap[chatRoom.id].alreadyJoined"
+					[disabled]="chatRoom.alreadyJoined"
 					(click)="joinChatRoom(chatRoom.id)"
 				>
-					{{ chatRoomsMap[chatRoom.id].alreadyJoined ? "JOINED" : "JOIN" }}
+					{{ chatRoom.alreadyJoined? "JOINED" : "JOIN" }}
 				</button>
 			</div>
 		</div>
