@@ -55,6 +55,9 @@
 	font-weight: lighter;
 	background-color: white;
 }
+.navbar-search-icon:hover {
+	cursor: pointer;
+}
 
 .navbar-profile-container {
 	flex: 1;
@@ -63,6 +66,9 @@
 	justify-content: flex-end;
 	padding: 0;
 	margin-right: 0.75rem;
+}
+.navbar-profile-container:hover {
+	cursor: pointer;
 }
 .navbar-user-icon {
 	height: 2rem;
