@@ -54,6 +54,7 @@ mat-progress-bar {
 	grid-column-gap: 1.5rem;
 	padding: 1rem;
 }
+
 .results-chatroom-container {
 	display: flex;
 	flex-direction: column;
@@ -62,6 +63,9 @@ mat-progress-bar {
 	border-radius: 0.25rem;
 	background-color: lightblue;
 	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+.results-chatroom-container:hover {
+	transform: scale(105%);
 }
 @media only screen and (max-width: 600px) {
 	.results-chatrooms-container {
