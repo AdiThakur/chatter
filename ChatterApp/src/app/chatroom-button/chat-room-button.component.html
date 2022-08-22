@@ -1,6 +1,6 @@
 <div
 	class="chatroom-button-container"
-	[style.background-color]="isSelected ? 'lightblue' : 'palegreen'"
+	[ngClass]="{ 'chatroom-button-selected-container': isSelected }"
 	(click)="openChatRoom()"
 >
 	<div class="chatroom-button-chatroom-details">
@@ -9,6 +9,7 @@
 			<mat-icon
 				class="chatroom-button-more"
 				[matMenuTriggerFor]="menu"
+				(click)="$event.stopPropagation()"
 			>
 				more_vert
 			</mat-icon>
