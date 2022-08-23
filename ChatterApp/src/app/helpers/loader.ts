@@ -1,4 +1,4 @@
-import { of, Subject } from "rxjs";
+import { of, ReplaySubject } from "rxjs";
 import { delay } from "rxjs/operators";
 
 abstract class Loader {
@@ -18,7 +18,7 @@ abstract class Loader {
 
 export class FiniteLoader extends Loader {
 
-	private doneLoading = new Subject<void>();
+	private doneLoading = new ReplaySubject<void>(1);
 	public doneLoading$ = this.doneLoading.asObservable();
 
 	public finishLoad(): void {

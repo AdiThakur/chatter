@@ -5,7 +5,7 @@ import { ChatRoomModel } from "../../types/chat-room-model";
 import { UserService } from "./user.service";
 import { MessageModel } from "../../types/message-model";
 import { FiniteLoader } from "../helpers/loader";
-import { switchMap, tap } from "rxjs/operators";
+import { defaultIfEmpty, switchMap, tap } from "rxjs/operators";
 import { ToastService } from "../toast/toast.service";
 import { ChatService } from "./chat.service";
 
@@ -49,6 +49,7 @@ export class ChatRoomService {
 				.getChatRoomIds()
 				.map(id => this.getChatRoom(id))
 		)
+		.pipe(defaultIfEmpty(new Array<MessageModel[]>()))
 		.subscribe(() => {
 			this.sortChatRooms();
 			this.loader.finishLoad();
