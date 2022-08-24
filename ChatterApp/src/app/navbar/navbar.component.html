@@ -20,7 +20,7 @@
 			<input
 				matInput
 				placeholder="search for new chatrooms"
-				(keydown)="keyHandler.handleKeyPress($event)"
+				(keydown)="keyPressHandler.handleKeyPress($event)"
 				[(ngModel)]="query"
 			/>
 			<mat-icon
@@ -63,8 +63,12 @@
 			mat-menu-item
 			(click)="logout()"
 		>
-			<mat-icon>logout</mat-icon>
-			<span class="navbar-dropdown-item">logout</span>
+			<mat-icon>
+				logout
+			</mat-icon>
+			<span class="navbar-dropdown-item">
+				logout
+			</span>
 		</button>
 	</mat-menu>
 </div>

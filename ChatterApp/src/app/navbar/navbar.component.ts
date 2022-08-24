@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { SidenavService } from "../services/sidenav.service";
 import { UserService } from "../services/user.service";
 import { AuthService } from "../services/auth.service";
-import { ChatRoomService } from "../services/chat-room.service";
 import { Router } from "@angular/router";
 import { AbsolutePath } from "../routing/absolute-paths";
 import { KeyPressHandler } from "../helpers/key-press-handler";
@@ -15,7 +14,7 @@ import { KeyPressHandler } from "../helpers/key-press-handler";
 export class NavbarComponent implements OnInit {
 
 	public query = "";
-	public keyHandler: KeyPressHandler;
+	public keyPressHandler: KeyPressHandler;
 
 	constructor(
 		private router: Router,
@@ -23,7 +22,7 @@ export class NavbarComponent implements OnInit {
 		private authService: AuthService,
 		public userService: UserService
 	) {
-		this.keyHandler = new KeyPressHandler([{
+		this.keyPressHandler = new KeyPressHandler([{
 			key: "enter",
 			handler: () => this.search()
 		}])
