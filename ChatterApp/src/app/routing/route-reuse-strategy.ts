@@ -7,7 +7,9 @@ export class AppRouteReuseStrategy extends BaseRouteReuseStrategy {
 		AbsolutePath.ChatRoom
 	]
 
-	public shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
+	public shouldReuseRoute(
+		future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot
+	): boolean {
 		let shouldRecreate = this.routesToRecreate.some(routeToRecreate => {
 			return this.getResolvedUrl(future).includes(routeToRecreate);
 		});
