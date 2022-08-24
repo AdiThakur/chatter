@@ -37,7 +37,7 @@ export class ChatRoomService {
 		this.loader = new FiniteLoader();
 	}
 
-	public load(): Observable<void> {
+	public loadChatRooms(): Observable<void> {
 		this.loader.startLoad();
 		this.getChatRooms();
 		return this.loader.doneLoading$;

@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
 
 	private loadChatRoomService(): void {
 		this.chatRoomService
-			.load()
+			.loadChatRooms()
 			.subscribe(
 				() => this.hasLoaded = true
 			);
