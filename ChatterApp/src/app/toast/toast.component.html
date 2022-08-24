@@ -1,9 +1,15 @@
 <div class="toast-container">
-	<span class="toast-title">{{ title }}</span>
+	<span
+		class="toast-title"
+		[matTooltip]="title"
+	>
+		{{ truncatedTitle }}
+	</span>
 	<span
 		class="toast-content"
+		[matTooltip]="description"
 		*ngIf="description != undefined"
 	>
-		{{ description }}
+		{{ truncatedDescription }}
 	</span>
 </div>

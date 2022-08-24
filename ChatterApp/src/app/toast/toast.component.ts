@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from "@angular/material/snack-bar";
+import { MAT_SNACK_BAR_DATA } from "@angular/material/snack-bar";
 import { ToastData } from "./toast.service";
 
 @Component({
@@ -9,15 +9,20 @@ import { ToastData } from "./toast.service";
 })
 export class ToastComponent {
 
+	private readonly MAX_TITLE_LENGTH = 25;
+	private readonly MAX_DESCRIPTION_LENGTH = 100;
+
 	public title: string;
+	public truncatedTitle: string;
 	public description?: string;
+	public truncatedDescription?: string;
 
 	constructor(
-		private matSnackbarRef: MatSnackBarRef<ToastComponent>,
 		@Inject(MAT_SNACK_BAR_DATA) private data: ToastData
 	) {
-		// TODO: The title and desc should be truncated if too long
 		this.title = data.title;
+		this.truncatedTitle = this.title.substring(0, this.MAX_TITLE_LENGTH);
 		this.description = data.description;
+		this.truncatedDescription = this.description?.substring(0, this.MAX_DESCRIPTION_LENGTH);
 	}
 }

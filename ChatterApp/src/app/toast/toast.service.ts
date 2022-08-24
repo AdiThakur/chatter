@@ -28,7 +28,6 @@ export class ToastService {
 	}
 
 	public createToast(options: ToastOptions): void {
-
 		let snackbarConfig = new MatSnackBarConfig<ToastData>();
 		snackbarConfig.verticalPosition = "top";
 		snackbarConfig.horizontalPosition = "right";
