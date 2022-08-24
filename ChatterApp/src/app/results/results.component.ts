@@ -47,11 +47,19 @@ export class ResultsComponent implements OnInit {
 	};
 
 	private setChatRooms(chatRooms: ChatRoomModel[]): void {
+		this.transformToViewModel(chatRooms);
+		this.sortChatRooms();
+	}
+
+	private transformToViewModel(chatRooms: ChatRoomModel[]): void {
 		this.chatRooms = chatRooms.map(chatRoom => {
 			let viewChatRoom = chatRoom as ChatRoomViewModel;
 			viewChatRoom.alreadyJoined = this.userService.isUserInChatRoom(viewChatRoom.id);
 			return viewChatRoom;
 		});
+	}
+
+	private sortChatRooms(): void {
 		this.chatRooms.sort((room1, room2) => {
 			if (!room1.alreadyJoined && room2.alreadyJoined) {
 				return -1;
@@ -71,16 +79,10 @@ export class ResultsComponent implements OnInit {
 	public joinChatRoom(chatRoomId: string): void {
 		this.chatRoomService
 			.joinChatRoom(chatRoomId)
-			.subscribe(
-				() => {
-					let chatRoom = this.chatRooms.find(chatRoom => chatRoom.id == chatRoomId)!;
-					chatRoom.alreadyJoined = true;
-					this.toastService.createSuccessToast(`Joined ${chatRoomId}`);
-				},
-				() => {
-					this.toastService.createErrorToast(`Could not join ${chatRoomId}`);
-				}
-			);
+			.subscribe(() => {
+				let chatRoom = this.chatRooms.find(chatRoom => chatRoom.id == chatRoomId)!;
+				chatRoom.alreadyJoined = true;
+				this.toastService.createSuccessToast(`Joined ${chatRoomId}`);
+			});
 	}
-
 }
