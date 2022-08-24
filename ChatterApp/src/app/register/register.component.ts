@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ToastService } from "../toast/toast.service";
-import { UserModel } from "../../types/user-model";
-import { RegistrationModel } from "../../types/registration-model";
 import { HttpService } from "../services/http.service";
 import { InfiniteLoader } from "../helpers/loader";
 import { finalize } from "rxjs/operators";
 import { Router } from "@angular/router";
 import { AbsolutePath } from "../routing/absolute-paths";
+import { UserService } from "../services/user.service";
 
 @Component({
 	selector: 'register',
@@ -30,77 +29,75 @@ export class RegisterComponent implements OnInit {
 		"avatar6.png", "avatar7.png", "avatar8.png", "avatar9.png",
 	];
 
-	public accountDetailsFormGroup!: UntypedFormGroup;
-	public usernameFormControl!: UntypedFormControl;
-	public passwordFormControl!: UntypedFormControl;
-	public confirmPasswordFormControl!: UntypedFormControl;
-	public chatRoomFormControl!: UntypedFormControl;
+	public accountDetailsFormGroup: FormGroup;
+	public usernameFormControl: FormControl;
+	public passwordFormControl: FormControl;
+	public confirmPasswordFormControl: FormControl;
 
 	constructor(
 		private router: Router,
 		private httpService: HttpService,
-		private toastService: ToastService
+		private toastService: ToastService,
+		private userService: UserService
 	) {
 		this.loader = new InfiniteLoader();
 	}
 
 	ngOnInit(): void {
-		this.setupForms();
-	}
-
-	private setupForms()
-	{
 		this.setupUsernameForm();
 		this.setupPasswordForm();
 		this.setupConfirmPasswordForm();
-
-		this.accountDetailsFormGroup = new UntypedFormGroup({
-			username: this.usernameFormControl,
-			password: this.passwordFormControl,
-			confirmPassword: this.confirmPasswordFormControl
-		});
-
-		this.chatRoomFormControl = new UntypedFormControl('');
+		this.setupFormGroup();
 	}
 
-	private setupUsernameForm()	{
-		this.usernameFormControl =
-			new UntypedFormControl('', [
-					Validators.required,
-					Validators.minLength(5),
-					Validators.maxLength(20)
-				]
+	private setupUsernameForm(): void {
+		let validators = [
+			Validators.required,
+			Validators.minLength(5),
+			Validators.maxLength(20)
+		];
+		this.usernameFormControl = new FormControl('', validators);
+		this.usernameFormControl
+			.valueChanges
+			.subscribe(
+				value => this.username = value
 			);
-		this.usernameFormControl.valueChanges.subscribe(
-			value => this.username = value
-		);
 	}
 
-	private setupPasswordForm() {
-		this.passwordFormControl =
-			new UntypedFormControl('', [
-					Validators.required,
-					Validators.minLength(15),
-					Validators.maxLength(30)
-				]
+	private setupPasswordForm(): void {
+		let validators = [
+			Validators.required,
+			Validators.minLength(15),
+			Validators.maxLength(30)
+		];
+		this.passwordFormControl = new FormControl('', validators);
+		this.passwordFormControl
+			.valueChanges
+			.subscribe(
+				value => this.password = value
 			);
-		this.passwordFormControl.valueChanges.subscribe(
-			value => this.password = value
-		);
 	}
 
-	private setupConfirmPasswordForm() {
+	private setupConfirmPasswordForm(): void {
 		this.confirmPasswordFormControl =
-			new UntypedFormControl('', Validators.required);
-		this.confirmPasswordFormControl.valueChanges.subscribe(
-			(value: string) => {
+			new FormControl('', Validators.required);
+		this.confirmPasswordFormControl
+			.valueChanges
+			.subscribe((value) => {
 				if (value != this.passwordFormControl.value) {
 					this.confirmPasswordFormControl.setErrors(
 						{ misMatch: true }
 					);
 				}
-			}
-		);
+			});
+	}
+
+	private setupFormGroup(): void {
+		this.accountDetailsFormGroup = new FormGroup({
+			username: this.usernameFormControl,
+			password: this.passwordFormControl,
+			confirmPassword: this.confirmPasswordFormControl
+		});
 	}
 
 	public selectAvatar(avatarId: string): void {
@@ -109,18 +106,15 @@ export class RegisterComponent implements OnInit {
 	}
 
 	public register(): void {
-		let registrationModel: RegistrationModel = {
-			username: this.username,
-			password: this.password,
-			avatarId: this.selectedAvatar
-		};
-
 		this.loader.startLoad();
-
-		this.httpService
-			.post<UserModel>('api/User', registrationModel)
+		this.userService
+			.registerUser({
+				username: this.username,
+				password: this.password,
+				avatarId: this.selectedAvatar
+			})
 			.pipe(finalize(() => this.loader.finishLoad()))
-			.subscribe((userModel) => {
+			.subscribe(() => {
 				this.router
 					.navigate([AbsolutePath.Login])
 					.then(() => {

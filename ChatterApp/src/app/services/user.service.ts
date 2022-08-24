@@ -3,6 +3,7 @@ import { HttpService } from "./http.service";
 import { UserModel } from "../../types/user-model";
 import { tap } from "rxjs/operators";
 import { Observable, throwError } from "rxjs";
+import { RegistrationModel } from "../../types/registration-model";
 
 @Injectable({
 	providedIn: 'root'
@@ -16,7 +17,6 @@ export class UserService {
 	) {}
 
 	public loadUser(userId: null | number): Observable<UserModel> {
-
 		if (userId == null) {
 			return throwError(new Error());
 		}
@@ -47,5 +47,9 @@ export class UserService {
 		if (index >= 0) {
 			this.user.chatRooms.splice(index, 1);
 		}
+	}
+
+	public registerUser(registeringUser: RegistrationModel): Observable<UserModel> {
+		return this.httpService.post<UserModel>('api/User', registeringUser);
 	}
 }
