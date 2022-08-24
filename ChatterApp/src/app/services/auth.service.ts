@@ -40,7 +40,7 @@ export class AuthService {
 		return isLoggedIn;
 	}
 
-	public set hasUserSeenLogin(hasSeenLogin: boolean) {
+	private set hasUserSeenLogin(hasSeenLogin: boolean) {
 		this.sessionStorageService.write("isLoggedIn", hasSeenLogin);
 	}
 
@@ -69,6 +69,7 @@ export class AuthService {
 				tap(authModel => {
 					this.storeJwt(authModel.jwt);
 					this.loadJwt();
+					this.hasUserSeenLogin = true;
 				})
 			);
 	}

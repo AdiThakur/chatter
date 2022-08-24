@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
 
 	ngOnInit(): void {
 		if (this.authService.isJwtValid()) {
-			this.allowNavigation();
+			this.continueNavigation();
 		}
 	}
 
@@ -42,13 +42,11 @@ export class LoginComponent implements OnInit {
 			.login(this.username, this.password)
 			.pipe(finalize(() => this.loader.finishLoad()))
 			.subscribe(() => {
-				this.allowNavigation();
+				this.continueNavigation();
 			});
 	}
 
-	private allowNavigation(): void {
-		this.authService.hasUserSeenLogin = true;
-
+	private continueNavigation(): void {
 		if (this.redirectUrl == undefined) {
 			this.router.navigate([AbsolutePath.Home]);
 		} else {
