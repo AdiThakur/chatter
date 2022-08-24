@@ -22,20 +22,22 @@ export class AuthInterceptor implements HttpInterceptor {
 		private authService: AuthService
 	) {}
 
-	private addAuthorizationHeader(jwt: string | null, request: HttpRequest<unknown>): HttpRequest<unknown> {
+	private addAuthorizationHeader(
+		jwt: string | null, request: HttpRequest<unknown>
+	): HttpRequest<unknown> {
 		if (jwt == null) {
 			return request;
-		} else {
-			return request.clone({
-				headers: request.headers.set(
-					this.AUTHORIZATION_HEADER_KEY,
-					`Bearer ${jwt}`
-				)
-			});
 		}
+
+		return request.clone({
+			headers: request.headers.set(
+				this.AUTHORIZATION_HEADER_KEY,
+				`Bearer ${jwt}`
+			)
+		});
 	}
 
-	private handleHttpError(error: HttpErrorResponse): Observable<HttpEvent<unknown>> {
+	private handleUnauthorizedError(error: HttpErrorResponse): Observable<HttpEvent<unknown>> {
 		if (error.status == HttpStatusCode.Unauthorized) {
 			this.authService.logout();
 			this.toastService.createToast({
@@ -54,7 +56,7 @@ export class AuthInterceptor implements HttpInterceptor {
 		return nextHttpHandler
 			.handle(this.addAuthorizationHeader(jwt, request))
 			.pipe(
-				catchError(error => this.handleHttpError(error))
+				catchError(error => this.handleUnauthorizedError(error))
 			);
 	}
 }
