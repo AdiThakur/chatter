@@ -28,13 +28,19 @@ export class ChatRoomButtonComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.latestMessage = this.chatRoomService.getLatestMessage(this.chatRoom.id);
+		this.observeSelectedChatRoom();
+		this.observeMessages();
+	}
 
+	private observeSelectedChatRoom(): void {
 		this.chatRoomService.selectedChatRoom$.subscribe(
 			selectedChatRoomId => {
 				this.isSelected = selectedChatRoomId == this.chatRoom.id;
 			}
 		);
+	}
 
+	private observeMessages(): void {
 		this.chatService.messages$.subscribe(message => {
 			if (message.chatRoomId == this.chatRoom.id) {
 				this.latestMessage = message;
@@ -49,14 +55,14 @@ export class ChatRoomButtonComponent implements OnInit {
 	}
 
 	public leaveChatRoom(): void {
-		if (this.isSelected) {
-			this.router
-				.navigate([AbsolutePath.Home])
-				.then(() => {
-					this.chatRoomService.leaveChatRoom(this.chatRoom.id);
-				});
-		} else {
+		if (!this.isSelected) {
 			this.chatRoomService.leaveChatRoom(this.chatRoom.id);
+			return;
 		}
+		this.router
+			.navigate([AbsolutePath.Home])
+			.then(() => {
+				this.chatRoomService.leaveChatRoom(this.chatRoom.id);
+			});
 	}
 }

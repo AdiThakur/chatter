@@ -5,7 +5,9 @@
 >
 	<div class="chatroom-button-chatroom-details">
 		<div class="chatroom-button-title-container">
-			<h1 class="chatroom-button-title">{{ chatRoom.id }}</h1>
+			<h1 class="chatroom-button-title">
+				{{ chatRoom.id }}
+			</h1>
 			<mat-icon
 				class="chatroom-button-more"
 				[matMenuTriggerFor]="menu"
@@ -15,7 +17,9 @@
 			</mat-icon>
 		</div>
 		<mat-divider></mat-divider>
-		<p class="chatroom-button-desc">{{ chatRoom.description }}</p>
+		<p class="chatroom-button-desc">
+			{{ chatRoom.description }}
+		</p>
 	</div>
 
 	<mat-menu
@@ -27,8 +31,12 @@
 			mat-menu-item
 			(click)="leaveChatRoom()"
 		>
-			<mat-icon>logout</mat-icon>
-			<span class="chatroom-button-menu-item">leave chatroom</span>
+			<mat-icon>
+				logout
+			</mat-icon>
+			<span class="chatroom-button-menu-item">
+				leave chatroom
+			</span>
 		</button>
 	</mat-menu>
 
@@ -38,7 +46,9 @@
 		*ngIf="latestMessage == null"
 	>
 		<div class="chatroom-button-message-details">
-			<p class="chatroom-button-message-content">No messages to show...</p>
+			<p class="chatroom-button-message-content">
+				no messages to show...
+			</p>
 		</div>
 	</div>
 
@@ -53,8 +63,12 @@
 			alt="{{ latestMessage.authorAvatarUri }}"
 		>
 		<div class="chatroom-button-message-details">
-			<p class="chatroom-button-message-sender"> {{ latestMessage.authorName }} </p>
-			<p class="chatroom-button-message-content"> {{ latestMessage.content }}</p>
+			<p class="chatroom-button-message-sender">
+				{{ latestMessage.authorName }}
+			</p>
+			<p class="chatroom-button-message-content">
+				{{ latestMessage.content }}
+			</p>
 		</div>
 	</div>
 </div>
