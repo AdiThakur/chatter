@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../services/auth.service";
 import { Router } from "@angular/router";
 import { ToastService } from "../toast/toast.service";
-import { StateExtras } from "../guards/auth.guard";
+import { NavigationStateExtras } from "../guards/auth.guard";
 import { AbsolutePath } from "../routing/absolute-paths";
 import { InfiniteLoader } from "../helpers/loader";
 import { finalize } from "rxjs/operators";
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
 		private authService: AuthService
 	) {
 		this.loader = new InfiniteLoader();
-		let routeState = this.router.getCurrentNavigation()?.extras?.state as StateExtras;
+		let routeState = this.router.getCurrentNavigation()?.extras?.state as NavigationStateExtras;
 		this.redirectUrl = routeState?.requestedRoute;
 	}
 

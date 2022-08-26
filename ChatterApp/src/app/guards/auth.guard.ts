@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from "../services/auth.service";
 import { AbsolutePath } from "../routing/absolute-paths";
 
-export type StateExtras = undefined | {
+export type NavigationStateExtras = undefined | {
 	requestedRoute: string;
 }
 
