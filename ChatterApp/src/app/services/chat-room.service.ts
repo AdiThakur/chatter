@@ -119,7 +119,7 @@ export class ChatRoomService {
 		this.selectedChatRoomSubject.next(chatRoomId);
 	}
 
-	public getMemberCountForChatRoom(chatRoomId: string): number {
+	public getMemberCount(chatRoomId: string): number {
 		let chatRoom = this.chatRoomsMap.get(chatRoomId);
 		if (chatRoom) {
 			return chatRoom.users.length;

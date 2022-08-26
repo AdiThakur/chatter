@@ -6,6 +6,7 @@ import { MessageModel } from "../../types/message-model";
 import { UserService } from "../services/user.service";
 import { InfiniteLoader } from "../helpers/loader";
 import { KeyPressHandler } from "../helpers/key-press-handler";
+import { finalize } from "rxjs/operators";
 
 type ViewMessage = MessageModel & { showProfilePic: boolean };
 
@@ -41,16 +42,22 @@ export class ChatRoomComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		this.memberCount = this.chatRoomService.getMemberCount(this.chatRoomId);
+		this.observeRouteParams();
+		this.observeMessages();
+		this.fetchMessages();
+	}
+
+	private observeRouteParams(): void {
 		this.activatedRoute.params.subscribe(params => {
 			this.chatRoomId = params['chatRoomId'];
 			if (this.chatRoomId != null && this.chatRoomId != '') {
 				this.chatRoomService.selectChatRoom(this.chatRoomId);
 			}
 		});
+	}
 
-		this.memberCount = this.chatRoomService.getMemberCountForChatRoom(this.chatRoomId);
-		this.fetchMessages();
-
+	private observeMessages(): void {
 		this.chatService.messages$.subscribe(message => {
 			if (message.chatRoomId == this.chatRoomId) {
 				let viewMessage = message as ViewMessage;
@@ -64,10 +71,10 @@ export class ChatRoomComponent implements OnInit {
 		this.loader.startLoad();
 		this.chatRoomService
 			.fetchMessages(this.chatRoomId, this.messageOffset, this.messageCount)
+			.pipe(finalize(() => this.loader.finishLoad()))
 			.subscribe(messages => {
 				this.messageOffset += this.messageCount;
 				this.setMessages(messages);
-				this.loader.finishLoad();
 			});
 	}
 
@@ -90,15 +97,13 @@ export class ChatRoomComponent implements OnInit {
 			return;
 		}
 
-		let messageModel = {
+		this.chatService.sendMessage({
 			timeStamp: new Date(),
 			chatRoomId: this.chatRoomId,
 			authorName: this.userService.user.username,
 			authorAvatarUri: this.userService.user.avatarUri,
 			content: this.messageToSend
-		} as MessageModel;
-
-		this.chatService.sendMessage(messageModel);
+		});
 
 		this.messageToSend = '';
 	}
