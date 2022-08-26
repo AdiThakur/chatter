@@ -11,13 +11,13 @@
 			<input
 				matInput
 				placeholder="search your chatrooms.."
-				(keyup)="filter()"
+				(keyup)="onFilter()"
 				[(ngModel)]="query"
 			/>
 			<button
 				mat-icon-button
 				matSuffix
-				(click)="resetQuery()"
+				(click)="removeFilter()"
 			>
 				<mat-icon>
 					clear

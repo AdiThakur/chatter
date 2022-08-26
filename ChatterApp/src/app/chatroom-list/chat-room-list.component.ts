@@ -22,24 +22,26 @@ export class ChatRoomListComponent implements OnInit {
 		this.filteredChatRooms = this.chatRooms;
 	}
 
-	public filter(): void {
+	public onFilter(): void {
 		if (this.query == "") {
-			this.resetQuery();
-			return;
+			this.removeFilter();
+		} else {
+			this.applyFilter();
 		}
+	}
 
+	public removeFilter(): void {
+		this.query = '';
+		this.filteredChatRooms = this.chatRooms;
+	}
+
+	private applyFilter(): void {
 		const lowerCaseQuery = this.query.toLowerCase();
-
 		this.filteredChatRooms = this.chatRooms.filter(chatRoom => {
 			return (
 				chatRoom.id.toLowerCase().includes(lowerCaseQuery) ||
 				chatRoom.description.toLowerCase().includes(lowerCaseQuery)
 			);
 		})
-	}
-
-	public resetQuery(): void {
-		this.query = '';
-		this.filteredChatRooms = this.chatRooms;
 	}
 }
