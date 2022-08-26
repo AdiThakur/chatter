@@ -60,11 +60,24 @@ export class ChatRoomComponent implements OnInit {
 	private observeMessages(): void {
 		this.chatService.messages$.subscribe(message => {
 			if (message.chatRoomId == this.chatRoomId) {
-				let viewMessage = message as ViewMessage;
-				this.messages.unshift(viewMessage);
-				viewMessage.showProfilePic = this.shouldShowProfilePic(this.messages, 0);
+				this.renderLatestMessage(message);
+				this.updatePreviousMessage();
 			}
 		});
+	}
+
+	private renderLatestMessage(message: MessageModel): void {
+		let viewMessage = message as ViewMessage;
+		viewMessage.showProfilePic = true;
+		this.messages.unshift(viewMessage);
+	}
+
+	private updatePreviousMessage(): void {
+		let previousMessage = this.messages[1];
+		if (previousMessage &&
+			previousMessage.authorName == this.messages[0].authorName) {
+			previousMessage.showProfilePic = false;
+		}
 	}
 
 	private fetchMessages(): void {
@@ -74,22 +87,35 @@ export class ChatRoomComponent implements OnInit {
 			.pipe(finalize(() => this.loader.finishLoad()))
 			.subscribe(messages => {
 				this.messageOffset += this.messageCount;
-				this.setMessages(messages);
+				this.renderMessages(messages);
 			});
 	}
 
-	private setMessages(messages: MessageModel[]): void {
+	private renderMessages(messages: MessageModel[]): void {
 		if (messages.length == 0) {
 			return;
 		}
 
-		let viewMessages = messages.map((message, index) => {
-			let viewMessage = message as ViewMessage;
-			viewMessage.showProfilePic = this.shouldShowProfilePic(messages, index);
-			return viewMessage;
-		});
-
+		let viewMessages = messages.map(message => message as ViewMessage);
+		let oldestRenderedMessageIndex = Math.max(this.messages.length, 0);
 		this.messages.push(...viewMessages);
+
+		viewMessages.forEach((viewMessage, index) => {
+			viewMessage.showProfilePic =
+				this.shouldShowProfilePic(oldestRenderedMessageIndex + index)
+		});
+	}
+
+	private shouldShowProfilePic(currentMessageIndex: number): boolean {
+		let indexOfPreviousMessageInList = currentMessageIndex - 1;
+		if (indexOfPreviousMessageInList < 0) {
+			return true;
+		}
+
+		let currentMessageAuthor = this.messages[currentMessageIndex].authorName;
+		let prevMessageAuthor = this.messages[indexOfPreviousMessageInList].authorName;
+
+		return prevMessageAuthor != currentMessageAuthor;
 	}
 
 	public sendMessage(): void {
@@ -106,16 +132,6 @@ export class ChatRoomComponent implements OnInit {
 		});
 
 		this.messageToSend = '';
-	}
-
-	private shouldShowProfilePic(messages: MessageModel[], index: number): boolean {
-		let nextIndex = index + 1;
-
-		if (nextIndex >= messages.length) {
-			return true;
-		} else {
-			return messages[index].authorName != messages[index + 1].authorName;
-		}
 	}
 
 	public scrollThresholdReached(): void {
