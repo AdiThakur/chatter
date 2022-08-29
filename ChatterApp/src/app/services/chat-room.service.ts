@@ -8,6 +8,7 @@ import { FiniteLoader } from "../helpers/loader";
 import { defaultIfEmpty, switchMap, tap } from "rxjs/operators";
 import { ToastService } from "../toast/toast.service";
 import { ChatService } from "./chat.service";
+import { PageDetails } from "../helpers/Paginator";
 
 type ChatRoomViewModel = ChatRoomModel & {
 	latestMessage: null | MessageModel
@@ -137,10 +138,10 @@ export class ChatRoomService {
 		}
 	}
 
-	public fetchMessages(chatRoomId: string, offset: number, count: number): Observable<MessageModel[]> {
+	public fetchMessages(chatRoomId: string, page: PageDetails): Observable<MessageModel[]> {
 		return this.httpService
 			.get<MessageModel[]>(
-				`api/ChatRoom/${chatRoomId}/message?offset=${offset}&count=${count}`
+				`api/ChatRoom/${chatRoomId}/message?offset=${page.offset}&count=${page.count}`
 			);
 	}
 

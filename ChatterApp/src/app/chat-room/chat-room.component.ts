@@ -8,6 +8,7 @@ import { InfiniteLoader } from "../helpers/loader";
 import { KeyPressHandler } from "../helpers/key-press-handler";
 import { finalize } from "rxjs/operators";
 import { MessageManager } from "./MessageManager";
+import { Paginator } from "../helpers/Paginator";
 
 type ViewMessage = MessageModel & { showProfilePic: boolean };
 
@@ -20,12 +21,9 @@ export class ChatRoomComponent implements OnInit {
 
 	public chatRoomId: string;
 	public memberCount = 0;
-
 	public messageToSend: string = "";
-	public messages: ViewMessage[] = [];
-	private messageOffset = 0;
-	private readonly messageCount = 10;
 
+	private paginator: Paginator;
 	public loader: InfiniteLoader;
 	public messageManager: MessageManager;
 	public keyHandler: KeyPressHandler;
@@ -36,6 +34,7 @@ export class ChatRoomComponent implements OnInit {
 		private chatRoomService: ChatRoomService,
 		private chatService: ChatService
 	) {
+		this.paginator = new Paginator(10);
 		this.loader = new InfiniteLoader(1000);
 		this.messageManager = new MessageManager();
 		this.keyHandler = new KeyPressHandler([{
@@ -71,11 +70,13 @@ export class ChatRoomComponent implements OnInit {
 	private fetchMessages(): void {
 		this.loader.startLoad();
 		this.chatRoomService
-			.fetchMessages(this.chatRoomId, this.messageOffset, this.messageCount)
+			.fetchMessages(
+				this.chatRoomId,
+				this.paginator.getNextPage()
+			)
 			.pipe(finalize(() => this.loader.finishLoad()))
 			.subscribe(messages => {
-				this.messageOffset += this.messageCount;
-				this.renderMessages(messages);
+				this.renderMessages(messages)
 			});
 	}
 
