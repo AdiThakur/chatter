@@ -63,6 +63,10 @@ mat-progress-bar {
 	box-sizing: border-box;
 	overflow-y: scroll;
 }
+.chat-room-message-group {
+	display: flex;
+	flex-direction: column-reverse;
+}
 
 .chat-room-action-bar-container {
 	height: 5rem;

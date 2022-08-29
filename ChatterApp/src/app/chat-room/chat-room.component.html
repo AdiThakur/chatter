@@ -21,12 +21,17 @@
 		scroll-monitor
 		(onScrollThresholdReached)="scrollThresholdReached()"
 	>
-		<message
-			*ngFor="let message of messages"
-			[message]="message"
-			[showProfilePic]="message.showProfilePic"
+		<div
+			class="chat-room-message-group"
+			*ngFor="let group of messageManager.groups"
 		>
-		</message>
+			<message
+				*ngFor="let message of group.messages"
+				[message]="message"
+				[showProfilePic]="message.isLatest"
+			>
+			</message>
+		</div>
 	</div>
 
 	<!-- Message input tray -->

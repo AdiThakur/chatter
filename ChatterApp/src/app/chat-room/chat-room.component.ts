@@ -7,6 +7,7 @@ import { UserService } from "../services/user.service";
 import { InfiniteLoader } from "../helpers/loader";
 import { KeyPressHandler } from "../helpers/key-press-handler";
 import { finalize } from "rxjs/operators";
+import { MessageManager } from "./MessageManager";
 
 type ViewMessage = MessageModel & { showProfilePic: boolean };
 
@@ -26,6 +27,7 @@ export class ChatRoomComponent implements OnInit {
 	private readonly messageCount = 10;
 
 	public loader: InfiniteLoader;
+	public messageManager: MessageManager;
 	public keyHandler: KeyPressHandler;
 
 	constructor(
@@ -35,6 +37,7 @@ export class ChatRoomComponent implements OnInit {
 		private chatService: ChatService
 	) {
 		this.loader = new InfiniteLoader(1000);
+		this.messageManager = new MessageManager();
 		this.keyHandler = new KeyPressHandler([{
 			key: "enter",
 			handler: () => this.sendMessage()
@@ -60,24 +63,9 @@ export class ChatRoomComponent implements OnInit {
 	private observeMessages(): void {
 		this.chatService.messages$.subscribe(message => {
 			if (message.chatRoomId == this.chatRoomId) {
-				this.renderLatestMessage(message);
-				this.updatePreviousMessage();
+				this.messageManager.addNewMessage(message);
 			}
 		});
-	}
-
-	private renderLatestMessage(message: MessageModel): void {
-		let viewMessage = message as ViewMessage;
-		viewMessage.showProfilePic = true;
-		this.messages.unshift(viewMessage);
-	}
-
-	private updatePreviousMessage(): void {
-		let previousMessage = this.messages[1];
-		if (previousMessage &&
-			previousMessage.authorName == this.messages[0].authorName) {
-			previousMessage.showProfilePic = false;
-		}
 	}
 
 	private fetchMessages(): void {
@@ -92,30 +80,9 @@ export class ChatRoomComponent implements OnInit {
 	}
 
 	private renderMessages(messages: MessageModel[]): void {
-		if (messages.length == 0) {
-			return;
-		}
-
-		let viewMessages = messages.map(message => message as ViewMessage);
-		let oldestRenderedMessageIndex = Math.max(this.messages.length, 0);
-		this.messages.push(...viewMessages);
-
-		viewMessages.forEach((viewMessage, index) => {
-			viewMessage.showProfilePic =
-				this.shouldShowProfilePic(oldestRenderedMessageIndex + index)
+		messages.forEach(message => {
+			this.messageManager.addOldMessage(message);
 		});
-	}
-
-	private shouldShowProfilePic(currentMessageIndex: number): boolean {
-		let indexOfPreviousMessageInList = currentMessageIndex - 1;
-		if (indexOfPreviousMessageInList < 0) {
-			return true;
-		}
-
-		let currentMessageAuthor = this.messages[currentMessageIndex].authorName;
-		let prevMessageAuthor = this.messages[indexOfPreviousMessageInList].authorName;
-
-		return prevMessageAuthor != currentMessageAuthor;
 	}
 
 	public sendMessage(): void {
