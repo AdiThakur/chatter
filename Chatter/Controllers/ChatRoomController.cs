@@ -32,7 +32,7 @@ namespace Chatter.Controllers
         [HttpPost("{chatRoomId}/user")]
         public async Task<ActionResult> AddUserToChatRoomAsync([FromRoute] string chatRoomId, UserModel userToAdd)
         {
-            await _chatRoomService.AddUserToChatRoomAsync(chatRoomId, userToAdd.Id);
+            await _chatRoomService.AddUserAsync(chatRoomId, userToAdd.Id);
 
             return Ok();
         }
@@ -40,7 +40,7 @@ namespace Chatter.Controllers
         [HttpDelete("{chatRoomId}/user/{userId}")]
         public async Task<ActionResult> RemoveUserFromChatRoomAsync([FromRoute] string chatRoomId, [FromRoute] long userId)
         {
-            await _chatRoomService.RemoveUserFromChatRoomAsync(chatRoomId, userId);
+            await _chatRoomService.RemoveUserAsync(chatRoomId, userId);
 
             return Ok();
         }
@@ -85,7 +85,7 @@ namespace Chatter.Controllers
             }
 
             var messages =
-                await _chatRoomService.GetLatestMessagesForChatRoomAsync(chatRoomId, offset.Value, count.Value);
+                await _chatRoomService.GetMessagesAsync(chatRoomId, offset.Value, count.Value);
 
             return Ok(messages.ToModels());
         }

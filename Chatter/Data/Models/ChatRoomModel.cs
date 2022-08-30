@@ -16,22 +16,27 @@ namespace Chatter.Data.Models
 
         public ICollection<string>? Users { get; set; }
 
+        public MessageModel? LatestMessage { get; set; }
+
         [JsonConstructor]
         public ChatRoomModel(
             string id,
             string description,
+            MessageModel? latestMessage,
             ICollection<string>? users
         )
         {
             Id = id;
             Description = description;
             Users = users;
+            LatestMessage = latestMessage;
         }
 
         public ChatRoomModel(ChatRoom chatRoomEntity)
         {
             Id = chatRoomEntity.Id;
             Description = chatRoomEntity.Description;
+            LatestMessage = chatRoomEntity.Messages.FirstOrDefault().ToModel();
             Users = chatRoomEntity.Users
                 .Select(userEntity => userEntity.Username)
                 .ToList();

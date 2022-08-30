@@ -62,7 +62,7 @@ namespace Chatter.Tests.Services
 
             // Act
             var uex = await Assert.ThrowsAsync<UserException>(
-                () => _sut.AddUserToChatRoomAsync(chatRoomId, userId)
+                () => _sut.AddUserAsync(chatRoomId, userId)
             );
 
             // Assert
@@ -82,7 +82,7 @@ namespace Chatter.Tests.Services
 
             // Act
             var uex = await Assert.ThrowsAsync<UserException>(
-                () => _sut.AddUserToChatRoomAsync(chatRoomId, userId)
+                () => _sut.AddUserAsync(chatRoomId, userId)
             );
 
             // Assert
@@ -112,7 +112,7 @@ namespace Chatter.Tests.Services
 
             // Act
             var uex = await Assert.ThrowsAsync<UserException>(
-                () => _sut.AddUserToChatRoomAsync(chatRoomId, userId)
+                () => _sut.AddUserAsync(chatRoomId, userId)
             );
 
             // Assert

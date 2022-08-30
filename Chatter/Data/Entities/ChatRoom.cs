@@ -6,8 +6,8 @@
 
         public string Description { get; set; }
 
-        public ICollection<User> Users { get; set; } = new List<User>();
+        public List<User> Users { get; set; } = new List<User>();
 
-        public ICollection<Message> Messages { get; set; } = new List<Message>();
+        public List<Message> Messages { get; set; } = new List<Message>();
     }
 }

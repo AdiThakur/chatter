@@ -5,12 +5,12 @@ namespace Chatter.Services
 {
     public interface IChatRoomService
     {
-        Task AddUserToChatRoomAsync(string? chatRoomId, long? userId);
-        Task RemoveUserFromChatRoomAsync(string chatRoomId, long userId);
+        Task AddUserAsync(string? chatRoomId, long? userId);
+        Task RemoveUserAsync(string chatRoomId, long userId);
         Task CreateChatRoomAsync(string chatRoomId, string chatRoomDesc);
         Task<ChatRoom?> GetChatRoomAsync(string? chatRoomId);
         Task<List<ChatRoom>> GetChatRoomsAsync(string? nameToMatch);
-        Task<List<Message>> GetLatestMessagesForChatRoomAsync(string chatRoomId, int offset, int count);
+        Task<List<Message>> GetMessagesAsync(string chatRoomId, int offset, int count);
     }
 
     public class ChatRoomService : IChatRoomService
@@ -49,7 +49,7 @@ namespace Chatter.Services
             );
         }
 
-        public async Task AddUserToChatRoomAsync(string? chatRoomId, long? userId)
+        public async Task AddUserAsync(string? chatRoomId, long? userId)
         {
             var user = await ValidateUserAsync(userId);
             var chatRoom = await ValidateChatRoomAsync(chatRoomId);
@@ -62,7 +62,7 @@ namespace Chatter.Services
             await _chatRoomsRepo.AddUserToChatRoom(chatRoom, user);
         }
 
-        public async Task RemoveUserFromChatRoomAsync(string chatRoomId, long userId)
+        public async Task RemoveUserAsync(string chatRoomId, long userId)
         {
             var user = await ValidateUserAsync(userId);
             var chatRoom = await ValidateChatRoomAsync(chatRoomId);
@@ -105,7 +105,16 @@ namespace Chatter.Services
 
         public async Task<ChatRoom?> GetChatRoomAsync(string? chatRoomId)
         {
-            return await _chatRoomsRepo.GetChatRoomAsync(chatRoomId);
+            var chatRoom = await _chatRoomsRepo.GetChatRoomAsync(chatRoomId);
+            if (chatRoom == null)
+            {
+                return null;
+            }
+
+            var latestMessage = await GetMessagesAsync(chatRoom.Id, 0, 1);
+            chatRoom.Messages = new List<Message>(latestMessage);
+
+            return chatRoom;
         }
 
         public async Task<List<ChatRoom>> GetChatRoomsAsync(string? nameToMatch)
@@ -124,7 +133,7 @@ namespace Chatter.Services
                 .ToList();
         }
 
-        public async Task<List<Message>> GetLatestMessagesForChatRoomAsync(string chatRoomId, int offset, int count)
+        public async Task<List<Message>> GetMessagesAsync(string chatRoomId, int offset, int count)
         {
             return await _messagesRepo.GetLatestMessagesForChatRoomAsync(chatRoomId, offset, count);
         }
