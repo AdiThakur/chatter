@@ -73,7 +73,7 @@ namespace Chatter.Services
             {
                 throw new UserException(
                      "Invalid Credentials",
-                     "The supplied Username or Password is not correct"
+                     "Incorrect username or password"
                  );
             }
 

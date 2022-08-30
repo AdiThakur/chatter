@@ -6,11 +6,25 @@
 	color: #363636;
 }
 
+.toast-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
 .toast-title {
 	font-weight: normal;
 	font-size: 1.1rem;
 	font-style: oblique;
 }
+
+.toast-close-button {
+	cursor: pointer;
+}
+.toast-close-button:hover {
+	transform: scale(1.1);
+}
+
 .toast-content {
-	font-size: 1rem;
+	font-size: 0.9rem;
 }

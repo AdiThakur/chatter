@@ -1,13 +1,22 @@
 <div class="toast-container">
-	<span
-		class="toast-title"
-		[matTooltip]="title"
+	<div
+		class="toast-header"
 	>
-		{{ truncatedTitle }}
-	</span>
+		<span
+			class="toast-title"
+		>
+			{{ truncatedTitle }}
+		</span>
+		<mat-icon
+			class="toast-close-button"
+			(click)="dismissToast()"
+		>
+			close
+		</mat-icon>
+	</div>
 	<span
 		class="toast-content"
-		[matTooltip]="description"
+		[matTooltip]="description === truncatedDescription ? '' : description"
 		*ngIf="description != undefined"
 	>
 		{{ truncatedDescription }}

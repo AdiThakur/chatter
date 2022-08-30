@@ -1,11 +1,13 @@
 import { Injectable }  from '@angular/core';
-import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
+import { MatSnackBar, MatSnackBarConfig, MatSnackBarRef } from "@angular/material/snack-bar";
 import { ToastComponent } from "./toast.component";
 
 @Injectable({
 	providedIn: 'root'
 })
 export class ToastService {
+
+	private snackBarRef?: MatSnackBarRef<ToastComponent>;
 
 	constructor(private snackbar: MatSnackBar) {}
 
@@ -41,10 +43,16 @@ export class ToastService {
 			snackbarConfig.duration = options.duration;
 		}
 
-		this.snackbar.openFromComponent(
+		this.snackBarRef = this.snackbar.openFromComponent(
 			ToastComponent,
 			snackbarConfig
 		);
+	}
+
+	public dismissToast(): void {
+		if (this.snackBarRef) {
+			this.snackBarRef.dismiss();
+		}
 	}
 }
 
