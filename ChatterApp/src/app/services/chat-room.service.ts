@@ -10,20 +10,14 @@ import { ToastService } from "../toast/toast.service";
 import { ChatService } from "./chat.service";
 import { PageDetails } from "../helpers/Paginator";
 
-type ChatRoomViewModel = ChatRoomModel & {
-	latestMessage: null | MessageModel
-};
-
 @Injectable()
 export class ChatRoomService {
 
 	private selectedChatRoomSubject = new ReplaySubject<string>(1);
 	public selectedChatRoom$ = this.selectedChatRoomSubject.asObservable();
 
-	private _chatRooms = new Array<ChatRoomViewModel>();
-	private chatRoomsMap = new Map<string, ChatRoomViewModel>();
-
-	public get chatRooms(): ChatRoomViewModel[] {
+	private _chatRooms = new Array<ChatRoomModel>();
+	public get chatRooms(): ChatRoomModel[] {
 		return this._chatRooms;
 	}
 
@@ -50,48 +44,23 @@ export class ChatRoomService {
 				.getChatRoomIds()
 				.map(id => this.getChatRoom(id))
 		)
-		.pipe(defaultIfEmpty(new Array<MessageModel[]>()))
+		.pipe(defaultIfEmpty(new Array<ChatRoomModel>()))
 		.subscribe(() => {
 			this.sortChatRooms();
 			this.loader.finishLoad();
 		});
 	}
 
-	private getChatRoom(chatRoomId: string): Observable<MessageModel[]> {
+	private getChatRoom(chatRoomId: string): Observable<ChatRoomModel> {
 		return this.httpService
 			.get<ChatRoomModel>(
 				`api/ChatRoom/${chatRoomId}`
 			)
 			.pipe(
-				switchMap(chatRoom => {
-					this._chatRooms.push(chatRoom as ChatRoomViewModel);
-					this.chatRoomsMap.set(chatRoomId, chatRoom as ChatRoomViewModel);
-					return this.fetchLatestMessage(chatRoomId);
+				tap(chatRoom => {
+					this._chatRooms.push(chatRoom);
 				})
 			);
-	}
-
-	private fetchLatestMessage(chatRoomId: string): Observable<MessageModel[]> {
-		return this.httpService
-			.get<MessageModel[]>(
-				`api/ChatRoom/${chatRoomId}/message?count=1`
-			)
-			.pipe(
-				tap(messages => {
-					this.setLatestMessageForChatRoom(messages, chatRoomId);
-				})
-			);
-	}
-
-	private setLatestMessageForChatRoom(messages: MessageModel[], chatRoomId: string): void {
-		let chatRoom = this.chatRoomsMap.get(chatRoomId);
-		if (chatRoom) {
-			if (messages.length == 1) {
-				chatRoom.latestMessage = messages[0];
-			} else {
-				chatRoom.latestMessage = null;
-			}
-		}
 	}
 
 	private sortChatRooms(): void {
@@ -121,20 +90,14 @@ export class ChatRoomService {
 	}
 
 	public getMemberCount(chatRoomId: string): number {
-		let chatRoom = this.chatRoomsMap.get(chatRoomId);
+		let chatRoom = this._chatRooms.find(chatRoom => {
+			return chatRoom.id === chatRoomId;
+		});
+
 		if (chatRoom) {
 			return chatRoom.users.length;
 		} else {
 			return 0;
-		}
-	}
-
-	public getLatestMessage(chatRoomId: string): null | MessageModel {
-		let chatRoom = this.chatRoomsMap.get(chatRoomId);
-		if (chatRoom) {
-			return chatRoom.latestMessage;
-		} else {
-			return null;
 		}
 	}
 
@@ -152,7 +115,7 @@ export class ChatRoomService {
 			);
 	}
 
-	public joinChatRoom(chatRoomId: string): Observable<MessageModel[]> {
+	public joinChatRoom(chatRoomId: string): Observable<ChatRoomModel> {
 		return this.httpService
 			.post<void>(
 				`api/ChatRoom/${chatRoomId}/user`,
@@ -185,7 +148,6 @@ export class ChatRoomService {
 			this.chatRooms.findIndex(chatRoom => chatRoom.id === chatRoomId);
 		if (chatRoomIndex >= 0) {
 			this.chatRooms.splice(chatRoomIndex, 1);
-			this.chatRoomsMap.delete(chatRoomId);
 		}
 	}
 }

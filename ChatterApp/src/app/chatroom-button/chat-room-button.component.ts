@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ChatRoomModel } from "../../types/chat-room-model";
-import { MessageModel } from "../../types/message-model";
 import { ChatRoomService } from "../services/chat-room.service";
 import { Router } from "@angular/router";
 import { AbsolutePath } from "../routing/absolute-paths";
@@ -16,7 +15,6 @@ export class ChatRoomButtonComponent implements OnInit {
 
 	@Input()
 	public chatRoom: ChatRoomModel;
-	public latestMessage: null | MessageModel;
 	public isSelected = false;
 
 	constructor(
@@ -27,7 +25,6 @@ export class ChatRoomButtonComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-		this.latestMessage = this.chatRoomService.getLatestMessage(this.chatRoom.id);
 		this.observeSelectedChatRoom();
 		this.observeMessages();
 	}
@@ -43,7 +40,7 @@ export class ChatRoomButtonComponent implements OnInit {
 	private observeMessages(): void {
 		this.chatService.messages$.subscribe(message => {
 			if (message.chatRoomId == this.chatRoom.id) {
-				this.latestMessage = message;
+				this.chatRoom.latestMessage = message;
 			}
 		});
 	}

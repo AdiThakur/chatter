@@ -43,7 +43,7 @@
 	<!-- No messages in chatroom-->
 	<div
 		class="chatroom-button-message-container"
-		*ngIf="latestMessage == null"
+		*ngIf="chatRoom.latestMessage == null"
 	>
 		<div class="chatroom-button-message-details">
 			<p class="chatroom-button-message-content">
@@ -55,19 +55,19 @@
 	<!-- Chatroom has at least one message -->
 	<div
 		class="chatroom-button-message-container"
-		*ngIf="latestMessage != null"
+		*ngIf="chatRoom.latestMessage != null"
 	>
 		<img
 			class="chatroom-button-message-user-icon"
-			[src]="latestMessage.authorAvatarUri"
-			alt="{{ latestMessage.authorAvatarUri }}"
+			[src]="chatRoom.latestMessage.authorAvatarUri"
+			alt="{{ chatRoom.latestMessage.authorAvatarUri }}"
 		>
 		<div class="chatroom-button-message-details">
 			<p class="chatroom-button-message-sender">
-				{{ latestMessage.authorName }}
+				{{ chatRoom.latestMessage.authorName }}
 			</p>
 			<p class="chatroom-button-message-content">
-				{{ latestMessage.content }}
+				{{ chatRoom.latestMessage.content }}
 			</p>
 		</div>
 	</div>
