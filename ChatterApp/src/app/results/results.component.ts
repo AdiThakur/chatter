@@ -85,4 +85,8 @@ export class ResultsComponent implements OnInit {
 				this.toastService.createSuccessToast(`Joined ${chatRoomId}`);
 			});
 	}
+
+	public refreshSearch(): void {
+		this.fetchMatchingChatRooms();
+	}
 }

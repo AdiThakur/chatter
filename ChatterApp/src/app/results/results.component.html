@@ -5,6 +5,12 @@
 			<span class="results-title">
 				Results for <p class="results-query">{{ query }}</p>
 			</span>
+			<mat-icon
+				class="results-refresh-button"
+				(click)="refreshSearch()"
+			>
+				refresh
+			</mat-icon>
 		</div>
 		<mat-progress-bar
 			mode="indeterminate"

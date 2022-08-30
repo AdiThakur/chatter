@@ -11,8 +11,13 @@
 .results-header {
 	display: flex;
 	flex-direction: column;
+
+	color: gray;
+	font-weight: lighter;
 }
 .results-header-details {
+	display: flex;
+	align-items: center;
 	height: fit-content;
 	padding: 1.35rem 1rem;
 
@@ -25,13 +30,22 @@
 	margin: 0;
 
 	box-sizing: border-box;
-	color: gray;
-	font-weight: lighter;
 	font-size: 2rem;
 	text-align: center;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+}
+.results-refresh-button {
+	height: 2rem;
+	width: 2rem;
+	font-size: 2rem;
+	margin-left: auto;
+	cursor: pointer;
+}
+.results-refresh-button:hover {
+	transform: scale(1.1);
+	rotate: 45deg;
 }
 .results-query {
 	margin: 0 0 0 0.3rem;
