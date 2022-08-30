@@ -42,7 +42,6 @@ export class ChatRoomComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.memberCount = this.chatRoomService.getMemberCount(this.chatRoomId);
 		this.observeRouteParams();
 		this.observeMessages();
 		this.fetchMessages();
@@ -52,6 +51,8 @@ export class ChatRoomComponent implements OnInit {
 		this.activatedRoute.params.subscribe(params => {
 			this.chatRoomId = params['chatRoomId'];
 			if (this.chatRoomId != null && this.chatRoomId != '') {
+				this.memberCount =
+					this.chatRoomService.getMemberCount(this.chatRoomId);
 				this.chatRoomService.selectChatRoom(this.chatRoomId);
 			}
 		});

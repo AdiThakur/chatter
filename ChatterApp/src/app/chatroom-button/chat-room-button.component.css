@@ -9,15 +9,14 @@
 	border-radius: 0.25rem;
 	background-color: palegreen;
 	color: gray;
+	cursor: pointer;
 }
 .chatroom-button-selected-container {
-	background-color: #7087f7;
-	color: white;
+	background-color: lightblue;
 }
 .chatroom-button-container:hover {
-	cursor: pointer;
-	background-color: lightblue;
-	color: gray;
+	background-color: #7087f7;
+	color: white;
 	transform: scale(101%);
 }
 
