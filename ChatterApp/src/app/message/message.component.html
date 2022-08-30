@@ -1,27 +1,25 @@
 <div
-	class="chat-room-message"
+	class="chat-room-message-container"
 	[style.flex-direction]="isSender ? 'row-reverse' : 'row'"
+	[style.margin-bottom]="message.isLatest ? '0.5rem' : '0'"
 >
 	<img
-		*ngIf="showProfilePic == true"
+		*ngIf="message.isLatest == true"
 		class="chat-room-message-user-icon"
 		alt="{{ message.authorAvatarUri }}"
 		[src]="message.authorAvatarUri"
+		[matTooltip]="message.authorName"
 	>
 	<div
-		*ngIf="showProfilePic == false"
+		*ngIf="message.isLatest == false"
 		class="chat-room-message-user-icon"
 	></div>
+
 	<div
 		class="chat-room-message-details"
-		[style.background-color]="isSender ? 'lightgreen' : 'lightblue'"
+		[style]="styles"
+		[matTooltip]="shortenedTimeStamp"
 	>
-		<p
-			class="chat-room-message-sender"
-			[style.align-self]="isSender ? 'end' : 'start'"
-		>
-			{{ message.authorName }}
-		</p>
 		<p
 			class="chat-room-message-content"
 			[style.align-self]="isSender ? 'end' : 'start'"

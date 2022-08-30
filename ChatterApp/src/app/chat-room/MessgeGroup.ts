@@ -1,9 +1,5 @@
 import { MessageModel } from "../../types/message-model";
-
-type MessageViewModel = MessageModel & {
-	isEarliest: boolean,
-	isLatest: boolean
-}
+import { MessageViewModel } from "../../types/message-view-model";
 
 export class MessageGroup {
 
@@ -28,9 +24,11 @@ export class MessageGroup {
 	}
 
 	private addEarliestMessage(message: MessageModel): void {
-		let prevEarliest = this.messages[this.messages.length - 1];
-		if (prevEarliest) {
-			prevEarliest.isEarliest = false;
+		let prevEarliestIndex = this.messages.length - 1;
+		if (prevEarliestIndex >= 0) {
+			this.messages[prevEarliestIndex] = {
+				...(this.messages[prevEarliestIndex]), isEarliest: false
+			};
 		}
 
 		let viewMessage = message as MessageViewModel;
@@ -43,7 +41,9 @@ export class MessageGroup {
 	private addLatestMessage(message: MessageModel): void {
 		let prevLatest = this.messages[0];
 		if (prevLatest) {
-			prevLatest.isLatest = false;
+			this.messages[0] = {
+				...this.messages[0], isLatest: false
+			};
 		}
 
 		let viewMessage = message as MessageViewModel;

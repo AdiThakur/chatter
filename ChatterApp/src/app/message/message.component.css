@@ -1,14 +1,16 @@
-.chat-room-message {
+.chat-room-message-container {
 	display: flex;
+	align-items: center;
 	height: fit-content;
 	width: 100%;
-	padding: 0.25rem 0 0.25rem 0;
+	padding: 0.1rem 0 0.1rem 0;
 	box-sizing: border-box;
 }
 .chat-room-message-user-icon {
-	height: 4rem;
-	width: 4rem;
+	height: 3rem;
+	width: 3rem;
 }
+
 .chat-room-message-details {
 	display: flex;
 	flex-direction: column;
@@ -17,10 +19,10 @@
 	padding: 1.25rem;
 	margin: 0 0.25rem;
 
+	border-radius: 0.5rem;
 	background-color: lightblue;
 	font-weight: lighter;
 	color: gray;
-	border-radius: 0.75rem;
 }
 .chat-room-message-sender,
 .chat-room-message-content {

@@ -10,8 +10,6 @@ import { finalize } from "rxjs/operators";
 import { MessageManager } from "./MessageManager";
 import { Paginator } from "../helpers/Paginator";
 
-type ViewMessage = MessageModel & { showProfilePic: boolean };
-
 @Component({
 	selector: 'app-chat-room',
 	templateUrl: './chat-room.component.html',
