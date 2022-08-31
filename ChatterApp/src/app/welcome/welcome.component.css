@@ -62,9 +62,9 @@
 
 .welcome-user-icon {
 	align-self: flex-end;
-	height: 4rem;
-	width: 4rem;
-	margin: 0.4rem;
+	height: 3.5rem;
+	width: 3.5rem;
+	margin: 0 0 1rem 0.5rem;
 }
 
 @media only screen and (max-width: 600px) {

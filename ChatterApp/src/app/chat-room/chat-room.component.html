@@ -1,11 +1,24 @@
 <div class="chat-room-container">
+
 	<!-- Chatroom Header -->
 	<div  class="chat-room-header">
 		<div class="chat-room-header-details">
-			<h1 class="chat-room-title">{{ chatRoomId }}</h1>
+			<mat-icon
+				class="chat-room-back-icon"
+				(click)="navigateBack()"
+			>
+				arrow_back
+			</mat-icon>
+			<h1 class="chat-room-title">
+				{{ chatRoomId }}
+			</h1>
 			<div class="chat-room-member-details">
-				<mat-icon class="chat-room-member-icon">person</mat-icon>
-				<p class="chat-room-member-count">{{ memberCount }}</p>
+				<mat-icon class="chat-room-member-icon">
+					person
+				</mat-icon>
+				<p class="chat-room-member-count">
+					{{ memberCount }}
+				</p>
 			</div>
 		</div>
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute } from "@angular/router";
 import { ChatRoomService } from "../services/chat-room.service";
 import { ChatService } from "../services/chat.service";
@@ -27,6 +28,7 @@ export class ChatRoomComponent implements OnInit {
 	public keyHandler: KeyPressHandler;
 
 	constructor(
+		private location: Location,
 		private activatedRoute: ActivatedRoute,
 		private userService: UserService,
 		private chatRoomService: ChatRoomService,
@@ -103,5 +105,9 @@ export class ChatRoomComponent implements OnInit {
 
 	public scrollThresholdReached(): void {
 		this.fetchMessages();
+	}
+
+	public navigateBack(): void {
+		this.location.back();
 	}
 }

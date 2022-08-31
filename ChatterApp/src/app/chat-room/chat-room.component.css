@@ -12,14 +12,13 @@
 .chat-room-header-details {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
 	height: fit-content;
 	padding: 1.35rem 1rem;
 
 	background-color: #c9c9c9;
 }
 .chat-room-title {
-	margin: 0;
+	margin: 0 0 0 0.75rem;
 
 	box-sizing: border-box;
 	color: gray;
@@ -31,15 +30,22 @@
 	margin-right: auto;
 }
 .chat-room-member-details {
+	margin-left: auto;
 	display: flex;
 	align-items: center;
 }
-.chat-room-member-icon {
+.chat-room-member-icon,
+.chat-room-back-icon {
 	height: 2rem;
 	width: 2rem;
 	color: dimgray;
 	font-size: 2rem;
 }
+.chat-room-back-icon:hover {
+	cursor: pointer;
+	transform: scale(1.1);
+}
+
 .chat-room-member-count {
 	margin: 0;
 	color: dimgray;
