@@ -27,7 +27,20 @@
 	</div>
 
 	<!-- Chatrooms List -->
-	<div class="chatroom-list-chatrooms">
+	<div
+		*ngIf="chatRooms.length == 0"
+		class="chatroom-list-empty"
+	>
+		<span class="chatroom-list-empty-message">
+			you haven't joined any
+			chatrooms yet
+		</span>
+	</div>
+
+	<div
+		*ngIf="chatRooms.length > 0"
+		class="chatroom-list-chatrooms"
+	>
 		<div
 			*ngFor="let chatRoom of filteredChatRooms"
 		>
