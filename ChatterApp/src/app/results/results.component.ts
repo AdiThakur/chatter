@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute } from "@angular/router";
 import { ChatRoomService } from "../services/chat-room.service";
 import { ChatRoomModel } from "../../types/chat-room-model";
@@ -21,6 +22,7 @@ export class ResultsComponent implements OnInit {
 	public chatRooms: ChatRoomViewModel[] = [];
 
 	constructor(
+		private location: Location,
 		private route: ActivatedRoute,
 		private toastService: ToastService,
 		private userService: UserService,
@@ -88,5 +90,9 @@ export class ResultsComponent implements OnInit {
 
 	public refreshSearch(): void {
 		this.fetchMatchingChatRooms();
+	}
+
+	public navigateBack(): void {
+		this.location.back();
 	}
 }

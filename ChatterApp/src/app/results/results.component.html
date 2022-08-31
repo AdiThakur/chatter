@@ -2,6 +2,12 @@
 
 	<div class="results-header">
 		<div class="results-header-details">
+			<mat-icon
+				class="results-back-icon"
+				(click)="navigateBack()"
+			>
+				arrow_back
+			</mat-icon>
 			<span class="results-title">
 				Results for <p class="results-query">{{ query }}</p>
 			</span>

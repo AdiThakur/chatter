@@ -23,11 +23,22 @@
 
 	background-color: #c9c9c9;
 }
+.results-back-icon {
+	height: 2rem;
+	width: 2rem;
+	color: dimgray;
+	font-size: 2rem;
+}
+.results-back-icon:hover {
+	cursor: pointer;
+	transform: scale(1.1);
+}
+
 .results-title {
 	display: flex;
 	align-items: center;
 	padding: 0.35rem;
-	margin: 0;
+	margin: 0 0 0 0.5rem;
 
 	box-sizing: border-box;
 	font-size: 2rem;
