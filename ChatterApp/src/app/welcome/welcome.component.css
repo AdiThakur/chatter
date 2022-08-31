@@ -2,11 +2,9 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	align-items: center;
 	height: 100%;
 	width: 65%;
 	margin: 0 auto 0 auto;
-	padding: 1rem;
 	box-sizing: border-box;
 
 	color: gray;
@@ -14,7 +12,6 @@
 
 .welcome-title {
 	align-self: flex-start;
-	width: 90%;
 	padding: 0;
 	margin: 0;
 
@@ -35,6 +32,7 @@
 
 .welcome-hint-container {
 	display: flex;
+	margin-left: auto;
 }
 
 .welcome-hint-list {
