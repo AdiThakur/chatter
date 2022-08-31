@@ -34,6 +34,7 @@ import { ScrollMonitorDirective } from './scroll-monitor.directive';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
 	declarations: [
@@ -48,7 +49,8 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
 		MessageComponent,
 		NavbarComponent,
 		ResultsComponent,
-		ScrollMonitorDirective
+		ScrollMonitorDirective,
+		WelcomeComponent
 	],
 	imports: [
 		CommonModule,

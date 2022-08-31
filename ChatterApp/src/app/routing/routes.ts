@@ -6,6 +6,7 @@ import { HomeComponent } from "../home/home.component";
 import { AuthGuard } from "../guards/auth.guard";
 import { ChatRoomComponent } from "../chat-room/chat-room.component";
 import { ResultsComponent } from "../results/results.component";
+import { WelcomeComponent } from "../welcome/welcome.component";
 
 export const Routes: Route[] = [
 	{
@@ -29,6 +30,10 @@ export const Routes: Route[] = [
 			{
 				path: 'results',
 				component: ResultsComponent
+			},
+			{
+				path: '**',
+				component: WelcomeComponent
 			}
 		]
 	},
