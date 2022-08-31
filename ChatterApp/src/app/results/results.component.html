@@ -24,7 +24,19 @@
 		></mat-progress-bar>
 	</div>
 
-	<div class="results-chatrooms-container">
+	<div
+		*ngIf="chatRooms.length == 0"
+		class="results-chatrooms-empty"
+	>
+		<p class="results-chatrooms-empty-message">
+			no results found
+		</p>
+	</div>
+
+	<div
+		*ngIf="chatRooms.length > 0"
+		class="results-chatrooms-container"
+	>
 		<div
 			class="results-chatroom-container"
 			*ngFor="let chatRoom of chatRooms"
