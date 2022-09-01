@@ -31,7 +31,7 @@ export class ChatRoomComponent implements OnInit {
 	constructor(
 		private location: Location,
 		private activatedRoute: ActivatedRoute,
-		private viewportService: ViewPortService,
+		private viewPortService: ViewPortService,
 		private userService: UserService,
 		private chatRoomService: ChatRoomService,
 		private chatService: ChatService
@@ -48,7 +48,7 @@ export class ChatRoomComponent implements OnInit {
 	private initPaginator(): void {
 		const minMessageSizeInPixels = 60;
 		let messagesPerPage =
-			Math.round(this.viewportService.height / minMessageSizeInPixels);
+			Math.round(this.viewPortService.height / minMessageSizeInPixels);
 		this.paginator = new Paginator(messagesPerPage);
 	}
 

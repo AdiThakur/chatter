@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { MatDrawerMode } from "@angular/material/sidenav";
+import { ViewPortService } from "./view-port.service";
 
 @Injectable({
 	providedIn: 'root'
 })
 export class SidenavService {
 
-	private isScreenSmall = false;
-	private isDismissible = false;
 	private _isOpen = true;
 	public get isOpen(): boolean {
 		return this._isOpen;
 	}
 
+	private isScreenSmall = false;
 	private lastState = this._isOpen;
 
 	public get mode(): MatDrawerMode {
@@ -25,35 +24,20 @@ export class SidenavService {
 	}
 
 	constructor(
-		private breakpointObserver: BreakpointObserver
+		private viewPortService: ViewPortService
 	) {
-		this.observeBreakPoints();
+		this.observeScreenSize();
 	}
 
-	private observeBreakPoints(): void {
-		this.breakpointObserver
-			.observe([
-				Breakpoints.XSmall,
-				Breakpoints.Small
-			])
-			.subscribe(state => {
-				let isSmall =
-					state.breakpoints[Breakpoints.XSmall] ||
-					state.breakpoints[Breakpoints.Small];
-				if (isSmall == undefined) {
-					return;
-				}
-
-				this.isScreenSmall = isSmall;
-
-				if (this.isScreenSmall) {
-					this._isOpen = false;
-					this.isDismissible = true;
-				} else {
-					this._isOpen = this.lastState
-					this.isDismissible = false;
-				}
-			})
+	private observeScreenSize(): void {
+		this.viewPortService.isScreenSmall$.subscribe(isSmall => {
+			this.isScreenSmall = isSmall;
+			if (this.isScreenSmall) {
+				this._isOpen = false;
+			} else {
+				this._isOpen = this.lastState;
+			}
+		});
 	}
 
 	public open(): void {
