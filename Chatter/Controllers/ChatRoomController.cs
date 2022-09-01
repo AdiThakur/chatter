@@ -66,7 +66,7 @@ namespace Chatter.Controllers
         public async Task<ActionResult<List<ChatRoomModel>>> GetMessagesInChatRoom(
             [FromRoute] string? chatRoomId,
             [FromQuery] int? offset,
-            [FromQuery] int? count
+            [FromQuery] int? itemsPerPage
         )
         {
             if (chatRoomId == null)
@@ -79,13 +79,13 @@ namespace Chatter.Controllers
                 offset = 0;
             }
 
-            if (count is null or < 1 or > 100)
+            if (itemsPerPage is null or < 1 or > 100)
             {
                 return BadRequest("Invalid count specified");
             }
 
             var messages =
-                await _chatRoomService.GetMessagesAsync(chatRoomId, offset.Value, count.Value);
+                await _chatRoomService.GetMessagesAsync(chatRoomId, offset.Value, itemsPerPage.Value);
 
             return Ok(messages.ToModels());
         }

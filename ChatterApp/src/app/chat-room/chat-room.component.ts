@@ -10,6 +10,7 @@ import { KeyPressHandler } from "../helpers/key-press-handler";
 import { finalize } from "rxjs/operators";
 import { MessageManager } from "./MessageManager";
 import { Paginator } from "../helpers/Paginator";
+import { ViewPortService } from "../services/view-port.service";
 
 @Component({
 	selector: 'app-chat-room',
@@ -30,17 +31,25 @@ export class ChatRoomComponent implements OnInit {
 	constructor(
 		private location: Location,
 		private activatedRoute: ActivatedRoute,
+		private viewportService: ViewPortService,
 		private userService: UserService,
 		private chatRoomService: ChatRoomService,
 		private chatService: ChatService
 	) {
-		this.paginator = new Paginator(10);
+		this.initPaginator();
 		this.loader = new InfiniteLoader(1000);
 		this.messageManager = new MessageManager();
 		this.keyHandler = new KeyPressHandler([{
 			key: "enter",
 			handler: () => this.sendMessage()
 		}]);
+	}
+
+	private initPaginator(): void {
+		const minMessageSizeInPixels = 60;
+		let messagesPerPage =
+			Math.round(this.viewportService.height / minMessageSizeInPixels);
+		this.paginator = new Paginator(messagesPerPage);
 	}
 
 	ngOnInit(): void {

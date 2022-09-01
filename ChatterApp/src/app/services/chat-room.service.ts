@@ -104,7 +104,7 @@ export class ChatRoomService {
 	public fetchMessages(chatRoomId: string, page: PageDetails): Observable<MessageModel[]> {
 		return this.httpService
 			.get<MessageModel[]>(
-				`api/ChatRoom/${chatRoomId}/message?offset=${page.offset}&count=${page.count}`
+				`api/ChatRoom/${chatRoomId}/message?offset=${page.offset}&itemsPerPage=${page.itemsPerPage}`
 			);
 	}
 
