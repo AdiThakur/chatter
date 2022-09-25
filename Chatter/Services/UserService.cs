@@ -79,8 +79,8 @@ namespace Chatter.Services
 
             var claims = new List<Claim>
             {
-                new Claim("id", user.Id.ToString()),
-                new Claim("name", user.Username)
+                new("id", user.Id.ToString()),
+                new("name", user.Username)
             };
 
             return GenerateJwt(claims);
