@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder, HubConnectionState } from "@microsoft/signalr";
 import { AuthService } from "./auth.service";
 import { MessageModel } from "../../types/message-model";
-import { Observable, Subject } from "rxjs";
+import { Subject } from "rxjs";
 import { HttpService } from "./http.service";
 
 @Injectable()
 export class ChatService {
 
-	private readonly chatHubUrl = 'http://localhost:5001/chat';
+	private readonly chatHubUrl = '/chat';
 	private connection: HubConnection;
 
 	private messagesSubject = new Subject<MessageModel>();
@@ -36,10 +36,6 @@ export class ChatService {
 	private registerCallBacks(): void {
 		this.connection.on("ReceiveMessage", (message: MessageModel) => {
 			this.messagesSubject.next(message);
-		});
-		this.connection.on("UserConnected", (chatRoomId: string) => {
-		});
-		this.connection.on("UserDisconnected", (chatRoomId: string) => {
 		});
 	}
 

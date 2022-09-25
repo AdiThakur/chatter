@@ -43,7 +43,7 @@
 .chatroom-list-chatrooms {
 	flex: 1;
 	overflow-x: hidden;
-	overflow-y: auto;
+	overflow-y: scroll;
 }
 .chatroom-list-empty-message {
 	color: gray;

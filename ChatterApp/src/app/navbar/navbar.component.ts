@@ -11,7 +11,7 @@ import { KeyPressHandler } from "../helpers/key-press-handler";
 	templateUrl: './navbar.component.html',
 	styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
 
 	public query = "";
 	public keyPressHandler: KeyPressHandler;
@@ -27,8 +27,6 @@ export class NavbarComponent implements OnInit {
 			handler: () => this.search()
 		}])
 	}
-
-	ngOnInit(): void {}
 
 	public search(): void {
 		if (this.query == "") {

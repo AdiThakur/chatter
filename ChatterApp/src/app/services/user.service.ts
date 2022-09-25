@@ -25,7 +25,7 @@ export class UserService {
 			.get<UserModel>(`api/User/${userId}`)
 			.pipe(
 				tap((userModel) => {
-						this.user = userModel;
+					this.user = userModel;
 				})
 			);
 	}

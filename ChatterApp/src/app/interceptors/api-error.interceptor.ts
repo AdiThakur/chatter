@@ -7,7 +7,7 @@ import {
 	HttpErrorResponse
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { ToastService } from "../toast/toast.service";
+import { ToastService } from "../services/toast.service";
 import { catchError } from "rxjs/operators";
 import { TypeAssertions } from "../helpers/type-assertions";
 

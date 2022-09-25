@@ -4,7 +4,7 @@ import { ActivatedRoute } from "@angular/router";
 import { ChatRoomService } from "../services/chat-room.service";
 import { ChatRoomModel } from "../../types/chat-room-model";
 import { UserService } from "../services/user.service";
-import { ToastService } from "../toast/toast.service";
+import { ToastService } from "../services/toast.service";
 import { InfiniteLoader } from "../helpers/loader";
 import { finalize } from "rxjs/operators";
 

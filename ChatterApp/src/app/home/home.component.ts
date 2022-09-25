@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../services/auth.service";
 import { UserService } from "../services/user.service";
 import { Router } from "@angular/router";
-import { ToastService } from "../toast/toast.service";
+import { ToastService } from "../services/toast.service";
 import { ChatRoomService } from "../services/chat-room.service";
 import { ChatService } from "../services/chat.service";
 import { SidenavService } from "../services/sidenav.service";

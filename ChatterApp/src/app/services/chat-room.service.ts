@@ -6,7 +6,7 @@ import { UserService } from "./user.service";
 import { MessageModel } from "../../types/message-model";
 import { FiniteLoader } from "../helpers/loader";
 import { defaultIfEmpty, switchMap, tap } from "rxjs/operators";
-import { ToastService } from "../toast/toast.service";
+import { ToastService } from "../services/toast.service";
 import { ChatService } from "./chat.service";
 import { PageDetails } from "../helpers/Paginator";
 
@@ -65,23 +65,14 @@ export class ChatRoomService {
 
 	private sortChatRooms(): void {
 		this._chatRooms.sort((chatRoom1, chatRoom2) => {
-			if (chatRoom1.latestMessage == null &&
-				chatRoom2.latestMessage != null) {
+			if (chatRoom1.latestMessage == null && chatRoom2.latestMessage != null) {
 				return 1;
 			} else if (
-				chatRoom1.latestMessage != null &&
-				chatRoom2.latestMessage == null) {
+				chatRoom1.latestMessage != null && chatRoom2.latestMessage == null) {
 				return -1;
-			} else if (
-				(chatRoom1.latestMessage == null && chatRoom2.latestMessage == null) ||
-				(chatRoom1.latestMessage != null && chatRoom2.latestMessage != null)) {
-				if (chatRoom1.id >= chatRoom2.id) {
-					return 1;
-				} else {
-					return -1;
-				}
 			}
-			return 0;
+
+			return chatRoom1.id.localeCompare(chatRoom2.id);
 		});
 	}
 
@@ -126,6 +117,9 @@ export class ChatRoomService {
 					this.chatService.joinChatRoom(chatRoomId);
 					this.userService.joinChatRoom(chatRoomId);
 					return this.getChatRoom(chatRoomId);
+				}),
+				tap(() => {
+					this.sortChatRooms();
 				})
 			);
 	}

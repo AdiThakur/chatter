@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ToastService } from "../toast/toast.service";
+import { ToastService } from "../services/toast.service";
 import { HttpService } from "../services/http.service";
 import { InfiniteLoader } from "../helpers/loader";
 import { finalize } from "rxjs/operators";

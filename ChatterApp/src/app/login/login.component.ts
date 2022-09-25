@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../services/auth.service";
 import { Router } from "@angular/router";
-import { ToastService } from "../toast/toast.service";
+import { ToastService } from "../services/toast.service";
 import { NavigationStateExtras } from "../guards/auth.guard";
 import { AbsolutePath } from "../routing/absolute-paths";
 import { InfiniteLoader } from "../helpers/loader";

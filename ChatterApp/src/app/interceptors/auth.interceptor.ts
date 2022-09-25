@@ -9,7 +9,7 @@ import { Observable, throwError } from 'rxjs';
 import { LocalStorageService } from "../services/storage.service";
 import { catchError } from "rxjs/operators";
 import { AuthService } from "../services/auth.service";
-import { ToastService } from "../toast/toast.service";
+import { ToastService } from "../services/toast.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {

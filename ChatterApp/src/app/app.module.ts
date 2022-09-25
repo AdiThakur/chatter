@@ -30,7 +30,7 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { NavbarComponent } from './navbar/navbar.component';
 import { MatMenuModule } from "@angular/material/menu";
 import { ResultsComponent } from './results/results.component';
-import { ScrollMonitorDirective } from './scroll-monitor.directive';
+import { ScrollMonitorDirective } from './directives/scroll-monitor.directive';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
