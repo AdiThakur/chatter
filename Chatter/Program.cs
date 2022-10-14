@@ -41,6 +41,10 @@ namespace Chatter
                         OnMessageReceived = OnMessageReceivedHook
                     };
                 });
+            builder.Services.AddSpaStaticFiles(config =>
+            {
+                config.RootPath = "../ChatterApp/dist";
+            });
 
             RegisterRepos(builder.Services);
             RegisterServices(builder.Services);
@@ -73,6 +77,13 @@ namespace Chatter
 
             app.MapControllers();
             app.MapHub<ChatHub>(builder.Configuration["SignalR:ChatHubEndpoint"]);
+
+            app.UseStaticFiles();
+            app.UseSpaStaticFiles();
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ChatterApp";
+            });
 
             app.Run();
         }
